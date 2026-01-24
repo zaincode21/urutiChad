@@ -1,14 +1,14 @@
 module.exports = {
   apps: [
     {
-      name: 'atelier_uruti',
+      name: 'uruti_chad_api',
       script: 'server/index.js',
       instances: 1,
       exec_mode: 'fork',
       env: {
         NODE_ENV: 'development',
         PORT: 5000,
-        DATABASE_URL: 'postgresql://postgres:Serge123@localhost:5432/atelier_uruti',
+        DATABASE_URL: 'postgresql://postgres:Serge123@localhost:5432/uruti_chad',
         JWT_SECRET: 'your-super-secret-jwt-key-change-in-production',
         JWT_EXPIRES_IN: '24h',
         DEFAULT_CURRENCY: 'USD',
@@ -19,7 +19,7 @@ module.exports = {
       env_production: {
         NODE_ENV: 'production',
         PORT: 5000,
-        DATABASE_URL: 'postgresql://postgres:Serge123@localhost:5432/atelier_uruti',
+        DATABASE_URL: 'postgresql://postgres:Serge123@localhost:5432/uruti_chad',
         JWT_SECRET: 'your-super-secret-jwt-key-change-in-production',
         JWT_EXPIRES_IN: '24h',
         DEFAULT_CURRENCY: 'USD',
@@ -27,7 +27,7 @@ module.exports = {
         UPLOAD_PATH: './uploads',
         MAX_FILE_SIZE: '5242880'
       },
-      cwd: '/home/atelierosJules2',
+      cwd: '/home/urutiChad',
       watch: false,
       ignore_watch: ['node_modules', 'client', 'uploads', 'database/*.db'],
       max_memory_restart: '1G',
@@ -54,10 +54,10 @@ module.exports = {
       }
     },
     {
-      name: 'atelier_uruti_frontend',
+      name: 'uruti_chad_frontend',
       script: 'npm',
       args: 'run dev',
-      cwd: '/home/atelierosJules2/client',
+      cwd: '/home/urutiChad/client',
       env: {
         NODE_ENV: 'development',
         PORT: 3000
@@ -82,8 +82,8 @@ module.exports = {
       user: 'root',
       host: '84.247.131.178',
       ref: 'origin/main',
-      repo: 'https://github.com/zaincode21/atelierosJules2.git',
-      path: '/home/atelierosJules2',
+      repo: 'https://github.com/zaincode21/urutiChad.git',
+      path: '/home/urutiChad',
       'pre-deploy-local': '',
       'post-deploy': 'npm install && cd client && npm install && cd .. && pm2 reload ecosystem.config.js --env production',
       'pre-setup': ''

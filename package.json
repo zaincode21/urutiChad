@@ -1,7 +1,7 @@
 {
-  "name": "likaperfumes",
+  "name": "uruti-chad",
   "version": "1.0.0",
-  "description": "LikaBoutiques - Boutique Management Platform",
+  "description": "UrutiChad - Retail Management Platform",
   "main": "server/index.js",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
