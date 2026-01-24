@@ -110,7 +110,7 @@ const FinancialReports = () => {
     setDateRange(prev => ({ ...prev, [field]: value }));
   };
 
-  const formatCurrency = (amount, currency = 'RWF') => {
+  const formatCurrency = (amount, currency = 'CFA') => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: currency

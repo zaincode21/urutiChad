@@ -33,7 +33,7 @@ const getCurrentLocale = () => {
 /**
  * Format a number as currency
  * @param {number} amount - The amount to format
- * @param {string} currency - The currency code (default: RWF)
+ * @param {string} currency - The currency code (default: CFA)
  * @returns {string} Formatted currency string
  */
 export const formatCurrency = (amount, currency = 'CFA') => {

@@ -269,7 +269,7 @@ const Inventory = () => {
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'RWF'
+      currency: 'CFA'
     }).format(amount || 0);
   };
 

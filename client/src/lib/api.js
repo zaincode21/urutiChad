@@ -310,7 +310,7 @@ export const integrationsAPI = {
 // - Material forecasting and analytics
 // - Low stock alerts
 // - Production planning and optimization
-// - Currency conversion (USD to RWF)
+// - Currency conversion (USD to CFA)
 // Uncomment the block below to enable Smart Bottling API
 /*
 export const smartBottlingAPI = {

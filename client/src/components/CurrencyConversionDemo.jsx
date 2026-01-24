@@ -25,8 +25,8 @@ const CurrencyConversionDemo = () => {
             <span className="text-sm font-medium text-blue-800">How it works:</span>
           </div>
           <p className="text-xs text-blue-700">
-            Enter an amount in any currency (USD, EUR, GBP, etc.) and see the automatic conversion to RWF. 
-            Click "Use RWF" to apply the converted amount.
+            Enter an amount in any currency (USD, EUR, GBP, etc.) and see the automatic conversion to CFA. 
+            Click "Use CFA" to apply the converted amount.
           </p>
         </div>
 
@@ -37,7 +37,7 @@ const CurrencyConversionDemo = () => {
           onCurrencyChange={setCurrency}
           placeholder="100.00"
           defaultCurrency="USD"
-          targetCurrency="RWF"
+          targetCurrency="CFA"
           showConversion={true}
         />
 
@@ -47,7 +47,7 @@ const CurrencyConversionDemo = () => {
               <div className="flex items-center space-x-2">
                 <ArrowRightLeft className="h-4 w-4 text-green-600" />
                 <span className="text-sm text-green-800">
-                  {formatCurrency(parseFloat(amount), currency)} = {formatCurrency(convertedAmount, 'RWF')}
+                  {formatCurrency(parseFloat(amount), currency)} = {formatCurrency(convertedAmount, 'CFA')}
                 </span>
               </div>
             </div>
@@ -56,7 +56,7 @@ const CurrencyConversionDemo = () => {
 
         <div className="text-xs text-gray-500 text-center">
           <p>Conversion rates are updated every 5 minutes</p>
-          <p>Approximate rates: 1 USD ≈ 1,300 RWF</p>
+          <p>Approximate rates: 1 USD ≈ 1,300 CFA</p>
         </div>
       </div>
     </div>

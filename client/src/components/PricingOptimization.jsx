@@ -76,7 +76,7 @@ const PricingOptimization = ({ productIds, onOptimizationComplete }) => {
       </h3>
       
       <p className="text-sm text-gray-600 mb-6">
-        Find the optimal pricing strategy (in RWF) for maximum profitability while maintaining market competitiveness.
+        Find the optimal pricing strategy (in CFA) for maximum profitability while maintaining market competitiveness.
       </p>
 
       {/* Optimization Constraints */}
@@ -179,10 +179,10 @@ const PricingOptimization = ({ productIds, onOptimizationComplete }) => {
                       Strategy
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Price (RWF)
+                      Price (CFA)
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Expected Profit (RWF)
+                      Expected Profit (CFA)
                     </th>
                   </tr>
                 </thead>
@@ -206,12 +206,12 @@ const PricingOptimization = ({ productIds, onOptimizationComplete }) => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {result.recommended_price !== undefined && result.recommended_price !== null
-                          ? `${Number(result.recommended_price).toLocaleString()} RWF`
+                          ? `${Number(result.recommended_price).toLocaleString()} CFA`
                           : 'N/A'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {result.expected_profit !== undefined && result.expected_profit !== null
-                          ? `${Number(result.expected_profit).toLocaleString()} RWF`
+                          ? `${Number(result.expected_profit).toLocaleString()} CFA`
                           : 'N/A'}
                       </td>
                     </tr>

@@ -67,7 +67,7 @@ const IncomeReport = () => {
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-RW', {
       style: 'currency',
-      currency: 'RWF',
+      currency: 'CFA',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(amount || 0);

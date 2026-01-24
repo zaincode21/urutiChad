@@ -617,7 +617,7 @@ export default function Discounts() {
                     <span className="text-sm text-gray-600">{tSync('Value')}:</span>
                     <span className="font-medium">
                       {discount.type === 'percentage' ? `${discount.value}%` :
-                        discount.type === 'fixed_amount' ? `RWF ${discount.value.toLocaleString()}` :
+                        discount.type === 'fixed_amount' ? `CFA ${discount.value.toLocaleString()}` :
                           `${discount.bottle_return_count || 5} ${tSync('bottles')}`}
                     </span>
                   </div>
@@ -625,7 +625,7 @@ export default function Discounts() {
                   {discount.min_purchase_amount && (
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-600">{tSync('Min. Purchase')}:</span>
-                      <span className="font-medium">RWF {discount.min_purchase_amount.toLocaleString()}</span>
+                      <span className="font-medium">CFA {discount.min_purchase_amount.toLocaleString()}</span>
                     </div>
                   )}
 
@@ -877,7 +877,7 @@ export default function Discounts() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {tSync('Minimum Purchase Amount (RWF)')}
+                    {tSync('Minimum Purchase Amount (CFA)')}
                   </label>
                   <input
                     type="number"

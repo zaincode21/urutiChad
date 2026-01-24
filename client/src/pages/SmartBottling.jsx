@@ -349,7 +349,7 @@ const SmartBottling = () => {
     if (amount === null || amount === undefined || isNaN(amount)) return 'FRw 0.00';
     return new Intl.NumberFormat('en-RW', {
       style: 'currency',
-      currency: 'RWF'
+      currency: 'CFA'
     }).format(amount);
   };
 
@@ -1826,7 +1826,7 @@ const RawMaterialModal = ({ onClose, onSubmit, isLoading, suppliers, supplierMat
         ...prev,
         supplier_id: supplierId,
         supplier: supplier.name,
-        currency: supplier.country === 'Germany' ? 'EUR' : 'RWF'
+        currency: supplier.country === 'Germany' ? 'EUR' : 'CFA'
       }));
     }
   };
@@ -1875,7 +1875,7 @@ const RawMaterialModal = ({ onClose, onSubmit, isLoading, suppliers, supplierMat
       batch_number: formData.batch_number?.trim() || null,
       expiry_date: formData.expiry_date || null,
       quality_grade: formData.quality_grade?.trim() || null,
-      currency: formData.currency || 'RWF',
+      currency: formData.currency || 'CFA',
       location: formData.location?.trim() || null,
       bin_number: formData.bin_number?.trim() || null,
       lot_number: formData.lot_number?.trim() || null,
@@ -2568,7 +2568,7 @@ const RecipeModal = ({ onClose, onSubmit, rawMaterials, isLoading, bottleSizes, 
     target_cost: recipe?.target_cost || '',
     markup_percentage: recipe?.markup_percentage || '',
     selling_price: recipe?.selling_price || '',
-    currency: recipe?.currency || 'RWF',
+    currency: recipe?.currency || 'CFA',
 
     // Quality & Standards
     quality_standards: recipe?.quality_standards || '',
@@ -3630,7 +3630,7 @@ const BatchModal = ({ onClose, onSubmit, recipes, isLoading, bulkPerfumesData, u
                     <p><span className="font-medium">Profit Margin:</span> {formData.profit_margin}%</p>
                     <p><span className="font-medium">Markup Multiplier:</span> {((parseFloat(formData.profit_margin) || 0) / 100 + 1).toFixed(2)}x</p>
                     <p className="text-xs text-blue-600 mt-2">
-                      💡 Example: If unit cost is 13,000 RWF, selling price will be {((parseFloat(formData.profit_margin) || 0) / 100 + 1) * 13000} RWF per bottle
+                      💡 Example: If unit cost is 13,000 CFA, selling price will be {((parseFloat(formData.profit_margin) || 0) / 100 + 1) * 13000} CFA per bottle
                     </p>
                   </div>
                 </div>
@@ -3987,7 +3987,7 @@ const BottleSizesTab = ({
                         (bottleSize.label_cost || 0) +
                         (bottleSize.packaging_cost || 0) +
                         (bottleSize.labor_cost || 0),
-                        'RWF'
+                        'CFA'
                       )}
                     </span>
                   </div>
@@ -4096,7 +4096,7 @@ const BottleSizeModal = ({ onClose, onSubmit, bottleSize, isLoading, formatCurre
             {/* Bottle Cost */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Bottle Cost (RWF) *
+                Bottle Cost (CFA) *
               </label>
               <input
                 type="number"
@@ -4117,7 +4117,7 @@ const BottleSizeModal = ({ onClose, onSubmit, bottleSize, isLoading, formatCurre
             {/* Label Cost */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Label Cost (RWF)
+                Label Cost (CFA)
               </label>
               <input
                 type="number"
@@ -4137,7 +4137,7 @@ const BottleSizeModal = ({ onClose, onSubmit, bottleSize, isLoading, formatCurre
             {/* Packaging Cost */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Packaging Cost (RWF)
+                Packaging Cost (CFA)
               </label>
               <input
                 type="number"

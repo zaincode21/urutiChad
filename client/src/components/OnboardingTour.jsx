@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { X, ChevronRight, ChevronLeft, CheckCircle } from 'lucide-react';
 import TranslatedText from './TranslatedText';
 
-const OnboardingTour = ({ 
-  isVisible, 
-  onComplete, 
+const OnboardingTour = ({
+  isVisible,
+  onComplete,
   userRole = 'cashier',
-  className = '' 
+  className = ''
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -43,7 +43,7 @@ const OnboardingTour = ({
     } else {
       return [
         {
-          title: "Welcome to Likaperfumes! 🎉",
+          title: "Welcome to LikaBoutiques! 🎉",
           content: "This comprehensive dashboard gives you complete control over your retail operations.",
           highlight: "dashboard-header"
         },
@@ -146,7 +146,7 @@ const OnboardingTour = ({
 
         {/* Progress Bar */}
         <div className="w-full bg-gray-200 rounded-full h-2 mb-6">
-          <div 
+          <div
             className="bg-blue-600 h-2 rounded-full transition-all duration-300"
             style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
           ></div>
@@ -167,11 +167,10 @@ const OnboardingTour = ({
           <button
             onClick={handlePrevious}
             disabled={currentStep === 0}
-            className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
-              currentStep === 0
+            className={`flex items-center px-4 py-2 rounded-lg transition-colors ${currentStep === 0
                 ? 'text-gray-400 cursor-not-allowed'
                 : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-            }`}
+              }`}
           >
             <ChevronLeft className="h-4 w-4 mr-1" />
             Previous
@@ -181,9 +180,8 @@ const OnboardingTour = ({
             {steps.map((_, index) => (
               <div
                 key={index}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  index === currentStep ? 'bg-blue-600' : 'bg-gray-300'
-                }`}
+                className={`w-2 h-2 rounded-full transition-colors ${index === currentStep ? 'bg-blue-600' : 'bg-gray-300'
+                  }`}
               />
             ))}
           </div>

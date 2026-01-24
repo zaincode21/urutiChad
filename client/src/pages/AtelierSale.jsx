@@ -242,7 +242,7 @@ export default function AtelierSale() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'RWF' }).format(order.total_amount)}
+                      {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'CFA' }).format(order.total_amount)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {new Date(order.created_at).toLocaleDateString()}

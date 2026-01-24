@@ -199,10 +199,10 @@ const Expenses = () => {
               <p className="text-2xl font-bold text-gray-900">
                 {formatCurrency(
                   (expenses?.reduce((sum, e) => {
-                    const rwfAmount = convertToRwf(e.amount, e.currency || 'RWF') || 0;
+                    const rwfAmount = convertToRwf(e.amount, e.currency || 'CFA') || 0;
                     return sum + rwfAmount;
                   }, 0) || 0),
-                  'RWF'
+                  'CFA'
                 )}
               </p>
             </div>
@@ -224,10 +224,10 @@ const Expenses = () => {
                     return expenseDate.getMonth() === now.getMonth() &&
                       expenseDate.getFullYear() === now.getFullYear();
                   })?.reduce((sum, e) => {
-                    const rwfAmount = convertToRwf(e.amount, e.currency || 'RWF') || 0;
+                    const rwfAmount = convertToRwf(e.amount, e.currency || 'CFA') || 0;
                     return sum + rwfAmount;
                   }, 0) || 0),
-                  'RWF'
+                  'CFA'
                 )}
               </p>
             </div>
@@ -244,10 +244,10 @@ const Expenses = () => {
               <p className="text-2xl font-bold text-gray-900">
                 {formatCurrency(
                   (expenses?.filter(e => e.is_recurring)?.reduce((sum, e) => {
-                    const rwfAmount = convertToRwf(e.amount, e.currency || 'RWF') || 0;
+                    const rwfAmount = convertToRwf(e.amount, e.currency || 'CFA') || 0;
                     return sum + rwfAmount;
                   }, 0) || 0),
-                  'RWF'
+                  'CFA'
                 )}
               </p>
             </div>
@@ -356,7 +356,7 @@ const Expenses = () => {
             <div>
               <h3 className="text-sm font-medium text-blue-900"><TranslatedText text="Currency Conversion" /></h3>
               <p className="text-xs text-blue-700">
-                {showRwfConversions ? <TranslatedText text="Showing amounts in RWF" /> : <TranslatedText text="RWF conversion hidden" />}
+                {showRwfConversions ? <TranslatedText text="Showing amounts in CFA" /> : <TranslatedText text="CFA conversion hidden" />}
                 {lastUpdated && (
                   <span className="ml-2">• <TranslatedText text="Updated at" /> {new Date(lastUpdated).toLocaleTimeString()}</span>
                 )}
@@ -377,7 +377,7 @@ const Expenses = () => {
                 onChange={(e) => setShowRwfConversions(e.target.checked)}
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
-              <span className="text-sm text-blue-700"><TranslatedText text="Show RWF" /></span>
+              <span className="text-sm text-blue-700"><TranslatedText text="Show CFA" /></span>
             </label>
           </div>
         </div>
@@ -610,8 +610,8 @@ const Expenses = () => {
                       <div className="text-right">
                         <div className="font-semibold text-red-600">
                           {formatCurrency(
-                            convertToRwf(expense.amount, expense.currency || 'RWF') || expense.amount,
-                            'RWF'
+                            convertToRwf(expense.amount, expense.currency || 'CFA') || expense.amount,
+                            'CFA'
                           )}
                         </div>
                       </div>
@@ -628,7 +628,7 @@ const Expenses = () => {
                     </div>
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-gray-600"><TranslatedText text="Currency" />:</span>
-                      <span className="text-gray-900">RWF</span>
+                      <span className="text-gray-900">CFA</span>
                     </div>
                   </div>
 

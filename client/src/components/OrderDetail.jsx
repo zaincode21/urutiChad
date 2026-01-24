@@ -475,13 +475,13 @@ const OrderDetail = ({ orderId, onClose, onEdit }) => {
                           {item.sku || 'N/A'}
                         </p>
                         <p className="text-sm text-gray-500">
-                          ${(item.unit_price || item.price || 0).toFixed(2)} {item.currency || 'RWF'} × {item.quantity || 0}
+                          ${(item.unit_price || item.price || 0).toFixed(2)} {item.currency || 'CFA'} × {item.quantity || 0}
                         </p>
                       </div>
 
                       <div className="text-right">
                         <p className="font-medium text-gray-900">
-                          ${(item.total_price || item.total || 0).toFixed(2)} {item.currency || 'RWF'}
+                          ${(item.total_price || item.total || 0).toFixed(2)} {item.currency || 'CFA'}
                         </p>
                         {item.discount_percent > 0 && (
                           <p className="text-xs text-green-600">

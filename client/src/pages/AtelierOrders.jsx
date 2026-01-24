@@ -88,7 +88,7 @@ const AtelierOrders = () => {
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'RWF',
+      currency: 'CFA',
       minimumFractionDigits: 0,
     }).format(amount || 0);
   };

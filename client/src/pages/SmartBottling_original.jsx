@@ -1694,7 +1694,7 @@ const RawMaterialModal = ({ onClose, onSubmit, isLoading, suppliers, supplierMat
     
     // Quality & Compliance
     quality_grade: '',
-    currency: 'RWF',
+    currency: 'CFA',
     compliance_standards: '',
     regulatory_approval: '',
     
@@ -1757,7 +1757,7 @@ const RawMaterialModal = ({ onClose, onSubmit, isLoading, suppliers, supplierMat
         ...prev,
         supplier_id: supplierId,
         supplier: supplier.name,
-        currency: supplier.country === 'Germany' ? 'EUR' : 'RWF'
+        currency: supplier.country === 'Germany' ? 'EUR' : 'CFA'
       }));
     }
   };
@@ -1806,7 +1806,7 @@ const RawMaterialModal = ({ onClose, onSubmit, isLoading, suppliers, supplierMat
       batch_number: formData.batch_number?.trim() || null,
       expiry_date: formData.expiry_date || null,
       quality_grade: formData.quality_grade?.trim() || null,
-      currency: formData.currency || 'RWF',
+      currency: formData.currency || 'CFA',
       location: formData.location?.trim() || null,
       bin_number: formData.bin_number?.trim() || null,
       lot_number: formData.lot_number?.trim() || null,
@@ -1968,7 +1968,7 @@ const RawMaterialModal = ({ onClose, onSubmit, isLoading, suppliers, supplierMat
                   placeholder="0.00"
                   required
                   defaultCurrency={formData.currency}
-                  targetCurrency="RWF"
+                  targetCurrency="CFA"
                   showConversion={true}
                 />
               </div>
@@ -2503,7 +2503,7 @@ const RecipeModal = ({ onClose, onSubmit, rawMaterials, isLoading, bottleSizes, 
     target_cost: '',
     markup_percentage: '',
     selling_price: '',
-    currency: 'RWF',
+    currency: 'CFA',
     
     // Quality & Standards
     quality_standards: '',
@@ -2753,7 +2753,7 @@ const RecipeModal = ({ onClose, onSubmit, rawMaterials, isLoading, bottleSizes, 
                   onCurrencyChange={(currency) => setFormData({...formData, currency})}
                   placeholder="15.00"
                   defaultCurrency={formData.currency}
-                  targetCurrency="RWF"
+                  targetCurrency="CFA"
                   showConversion={true}
                 />
               </div>
@@ -2781,7 +2781,7 @@ const RecipeModal = ({ onClose, onSubmit, rawMaterials, isLoading, bottleSizes, 
                   onCurrencyChange={(currency) => setFormData({...formData, currency})}
                   placeholder="22.50"
                   defaultCurrency={formData.currency}
-                  targetCurrency="RWF"
+                  targetCurrency="CFA"
                   showConversion={true}
                 />
               </div>
@@ -3857,19 +3857,19 @@ const BottleSizesTab = ({
               <div className="mt-4 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Bottle Cost:</span>
-                  <span className="font-medium">{formatCurrency(bottleSize.bottle_cost, 'RWF')}</span>
+                  <span className="font-medium">{formatCurrency(bottleSize.bottle_cost, 'CFA')}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Label Cost:</span>
-                  <span className="font-medium">{formatCurrency(bottleSize.label_cost, 'RWF')}</span>
+                  <span className="font-medium">{formatCurrency(bottleSize.label_cost, 'CFA')}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Packaging Cost:</span>
-                  <span className="font-medium">{formatCurrency(bottleSize.packaging_cost, 'RWF')}</span>
+                  <span className="font-medium">{formatCurrency(bottleSize.packaging_cost, 'CFA')}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Labor Cost:</span>
-                  <span className="font-medium">{formatCurrency(bottleSize.labor_cost, 'RWF')}</span>
+                  <span className="font-medium">{formatCurrency(bottleSize.labor_cost, 'CFA')}</span>
                 </div>
                 <div className="border-t pt-2 mt-2">
                   <div className="flex justify-between text-sm font-medium">
@@ -3880,7 +3880,7 @@ const BottleSizesTab = ({
                         (bottleSize.label_cost || 0) + 
                         (bottleSize.packaging_cost || 0) + 
                         (bottleSize.labor_cost || 0), 
-                        'RWF'
+                        'CFA'
                       )}
                     </span>
                   </div>
@@ -3990,7 +3990,7 @@ const BottleSizeModal = ({ onClose, onSubmit, bottleSize, isLoading }) => {
             {/* Bottle Cost */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Bottle Cost (RWF) *
+                Bottle Cost (CFA) *
               </label>
               <input
                 type="number"
@@ -4012,7 +4012,7 @@ const BottleSizeModal = ({ onClose, onSubmit, bottleSize, isLoading }) => {
             {/* Label Cost */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Label Cost (RWF)
+                Label Cost (CFA)
               </label>
               <input
                 type="number"
@@ -4033,7 +4033,7 @@ const BottleSizeModal = ({ onClose, onSubmit, bottleSize, isLoading }) => {
             {/* Packaging Cost */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Packaging Cost (RWF)
+                Packaging Cost (CFA)
               </label>
               <input
                 type="number"
@@ -4054,7 +4054,7 @@ const BottleSizeModal = ({ onClose, onSubmit, bottleSize, isLoading }) => {
             {/* Labor Cost */}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Labor Cost (RWF)
+                Labor Cost (CFA)
               </label>
               <input
                 type="number"
@@ -4080,7 +4080,7 @@ const BottleSizeModal = ({ onClose, onSubmit, bottleSize, isLoading }) => {
               {((formData.bottle_cost || 0) + 
                 (formData.label_cost || 0) + 
                 (formData.packaging_cost || 0) + 
-                (formData.labor_cost || 0)).toLocaleString()} RWF
+                (formData.labor_cost || 0)).toLocaleString()} CFA
             </div>
           </div>
 

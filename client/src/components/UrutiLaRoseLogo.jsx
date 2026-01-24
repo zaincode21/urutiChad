@@ -47,7 +47,7 @@ const UrutiLaRoseLogo = ({ className = "h-8 w-8", showText = false }) => {
 
         {/* Company name - larger and more visible */}
         <g>
-          {/* "Likaperfumes" */}
+          {/* Company name */}
           <text x="80" y="40" fontFamily="Arial, sans-serif" fontSize="18" fontWeight="bold" fill="#2c3e50">
             LikaBoutiques
           </text>

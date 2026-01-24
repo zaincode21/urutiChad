@@ -138,7 +138,7 @@ const CreateOrder = () => {
               <div className="hidden lg:flex items-center gap-4 text-sm text-gray-600">
                 <div className="flex items-center gap-1">
                   <TrendingUp className="h-4 w-4 text-green-500" />
-                  <span>Today: 266,847 RWF</span>
+                  <span>Today: 266,847 CFA</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Users className="h-4 w-4 text-blue-500" />

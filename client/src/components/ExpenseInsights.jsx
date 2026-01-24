@@ -125,7 +125,7 @@ const ExpenseInsights = ({ insights, loading, onPeriodChange, onRefresh }) => {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Total Expenses</p>
               <p className="text-2xl font-bold text-gray-900">
-                {formatCurrency(insights.summary.totalExpenses.totalRwf, 'RWF')}
+                {formatCurrency(insights.summary.totalExpenses.totalRwf, 'CFA')}
               </p>
               <p className="text-sm text-gray-500">
                 {insights.summary.totalCount} transactions
@@ -142,10 +142,10 @@ const ExpenseInsights = ({ insights, loading, onPeriodChange, onRefresh }) => {
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Monthly Average</p>
               <p className="text-2xl font-bold text-gray-900">
-                {formatCurrency(insights.budgetInsights.averageMonthly, 'RWF')}
+                {formatCurrency(insights.budgetInsights.averageMonthly, 'CFA')}
               </p>
               <p className="text-sm text-gray-500">
-                Projected: {formatCurrency(insights.budgetInsights.projectedAnnual, 'RWF')}
+                Projected: {formatCurrency(insights.budgetInsights.projectedAnnual, 'CFA')}
               </p>
             </div>
           </div>
@@ -269,7 +269,7 @@ const ExpenseInsights = ({ insights, loading, onPeriodChange, onRefresh }) => {
           </div>
           <div className="mt-4 pt-4 border-t border-gray-100">
             <p className="text-sm text-gray-500">
-              Average: {formatCurrency(insights.efficiencyMetrics.averageExpenseSize, 'RWF')}
+              Average: {formatCurrency(insights.efficiencyMetrics.averageExpenseSize, 'CFA')}
             </p>
           </div>
         </div>
@@ -298,7 +298,7 @@ const ExpenseInsights = ({ insights, loading, onPeriodChange, onRefresh }) => {
           </div>
           <div className="mt-4 pt-4 border-t border-gray-100">
             <p className="text-sm text-gray-500">
-              Total: {formatCurrency(insights.recurringAnalysis.recurring.totalAmount.totalRwf, 'RWF')}
+              Total: {formatCurrency(insights.recurringAnalysis.recurring.totalAmount.totalRwf, 'CFA')}
             </p>
           </div>
         </div>

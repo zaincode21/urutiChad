@@ -22,7 +22,7 @@ const ExpenseForm = ({ isOpen, onClose, expense = null, onSuccess, shops = [] })
     category: '',
     description: '',
     amount: '',
-    currency: 'RWF',
+    currency: 'CFA',
     expense_date: new Date().toISOString().split('T')[0],
     shop_id: '',
     receipt_url: '',
@@ -282,7 +282,7 @@ const ExpenseForm = ({ isOpen, onClose, expense = null, onSuccess, shops = [] })
               placeholder="0.00"
               required
               defaultCurrency={formData.currency}
-              targetCurrency="RWF"
+              targetCurrency="CFA"
               error={errors.amount}
               showConversion={true}
             />

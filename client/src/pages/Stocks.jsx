@@ -660,7 +660,7 @@ const Stocks = () => {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">{tSync('Total Stock Value')}</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {Math.floor(stats.total_stock_value || 0).toLocaleString()} RWF
+                  {Math.floor(stats.total_stock_value || 0).toLocaleString()} CFA
                 </p>
               </div>
             </div>
@@ -1543,7 +1543,7 @@ const Stocks = () => {
                               </div>
                               <div>
                                 <span className="text-purple-700 font-medium">Price:</span>
-                                <span className="ml-2 text-purple-900">{Math.floor(selectedProduct.price || 0).toLocaleString()} RWF</span>
+                                <span className="ml-2 text-purple-900">{Math.floor(selectedProduct.price || 0).toLocaleString()} CFA</span>
                               </div>
                             </>
                           ) : null;

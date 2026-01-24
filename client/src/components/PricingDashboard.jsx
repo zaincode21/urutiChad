@@ -212,7 +212,7 @@ const PricingDashboard = ({ onProductSelect, onProductAnalysis }) => {
                         {product.name}
                       </p>
                       <p className="text-sm text-gray-500">
-                        Current: {product.price ? Number(product.price).toLocaleString() + ' RWF' : '0 RWF'}
+                        Current: {product.price ? Number(product.price).toLocaleString() + ' CFA' : '0 CFA'}
                       </p>
                     </div>
                   </label>
@@ -387,16 +387,16 @@ const PricingDashboard = ({ onProductSelect, onProductAnalysis }) => {
                           Product
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Base Cost (RWF)
+                          Base Cost (CFA)
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          New Price (RWF)
+                          New Price (CFA)
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Profit Margin
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Markup (RWF)
+                          Markup (CFA)
                         </th>
                       </tr>
                     </thead>
@@ -413,12 +413,12 @@ const PricingDashboard = ({ onProductSelect, onProductAnalysis }) => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {result.base_cost !== undefined && result.base_cost !== null
-                              ? `${Number(result.base_cost).toLocaleString()} RWF`
+                              ? `${Number(result.base_cost).toLocaleString()} CFA`
                               : 'N/A'}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {result.calculated_price !== undefined && result.calculated_price !== null
-                              ? `${Number(result.calculated_price).toLocaleString()} RWF`
+                              ? `${Number(result.calculated_price).toLocaleString()} CFA`
                               : 'N/A'}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -428,7 +428,7 @@ const PricingDashboard = ({ onProductSelect, onProductAnalysis }) => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {result.price_breakdown && result.price_breakdown.markup !== undefined && result.price_breakdown.markup !== null
-                              ? `${Number(result.price_breakdown.markup).toLocaleString()} RWF`
+                              ? `${Number(result.price_breakdown.markup).toLocaleString()} CFA`
                               : 'N/A'}
                           </td>
                         </tr>
@@ -465,12 +465,12 @@ const PricingDashboard = ({ onProductSelect, onProductAnalysis }) => {
                     <p className="text-sm font-medium text-purple-600">Total Markup</p>
                     <p className="text-2xl font-bold text-purple-900">
                       {pricingResults.length > 0 ? 
-                        `${pricingResults.reduce((sum, r) => sum + (r.price_breakdown?.markup || 0), 0).toLocaleString()} RWF` :
+                        `${pricingResults.reduce((sum, r) => sum + (r.price_breakdown?.markup || 0), 0).toLocaleString()} CFA` :
                         `${products.reduce((sum, p) => {
                           const costPrice = parseFloat(p.cost_price) || 0;
                           const sellingPrice = parseFloat(p.price) || 0;
                           return sum + (sellingPrice - costPrice);
-                        }, 0).toLocaleString()} RWF`
+                        }, 0).toLocaleString()} CFA`
                       }
                     </p>
                   </div>

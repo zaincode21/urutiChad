@@ -995,7 +995,7 @@ const Perfumes = () => {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Bulk Inventory Value</p>
-                <p className="text-2xl font-bold text-indigo-600">RWF {frontendStats.totalValue}</p>
+                <p className="text-2xl font-bold text-indigo-600">CFA {frontendStats.totalValue}</p>
               </div>
             </div>
           </div>
@@ -1019,7 +1019,7 @@ const Perfumes = () => {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Bulk Inventory Value</p>
-                <p className="text-2xl font-bold text-gray-900">RWF {parseFloat(frontendStats.totalValue || 0).toLocaleString()}</p>
+                <p className="text-2xl font-bold text-gray-900">CFA {parseFloat(frontendStats.totalValue || 0).toLocaleString()}</p>
               </div>
             </div>
           </div>
@@ -1157,7 +1157,7 @@ const Perfumes = () => {
                   )}
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-600">Cost per ML:</span>
-                    <span className="font-semibold text-gray-900">RWF {parseFloat(perfume.cost_per_ml || 0).toLocaleString()}</span>
+                    <span className="font-semibold text-gray-900">CFA {parseFloat(perfume.cost_per_ml || 0).toLocaleString()}</span>
                   </div>
                   {perfume.batch_number && (
                     <div className="flex items-center justify-between text-sm">
@@ -1400,7 +1400,7 @@ const Perfumes = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    <TranslatedText text="Cost per Milliliter (RWF)" /> *
+                    <TranslatedText text="Cost per Milliliter (CFA)" /> *
                   </label>
                   <input
                     type="number"
@@ -1538,7 +1538,7 @@ const Perfumes = () => {
                   </div>
                   <div>
                     <span className="text-gray-600">Cost/ML:</span>
-                    <span className="ml-2 font-medium">RWF {parseFloat(selectedPerfume.cost_per_ml || 0).toLocaleString()}</span>
+                    <span className="ml-2 font-medium">CFA {parseFloat(selectedPerfume.cost_per_ml || 0).toLocaleString()}</span>
                   </div>
                   <div>
                     <span className="text-gray-600">Supplier:</span>
@@ -1639,7 +1639,7 @@ const Perfumes = () => {
                 {bottlingForm.bottle_size && selectedPerfume && (
                   <div className="bg-green-50 border border-green-200 rounded-lg p-3">
                     <p className="text-sm text-green-800">
-                      <strong>Selling Price per ML:</strong> RWF {getSellingPricePerMl(getPricingCategory(), parseInt(bottlingForm.bottle_size)).toLocaleString()}
+                      <strong>Selling Price per ML:</strong> CFA {getSellingPricePerMl(getPricingCategory(), parseInt(bottlingForm.bottle_size)).toLocaleString()}
                       {selectedPerfume.category_name && (
                         <span className="ml-2 text-xs text-gray-600">
                           ({selectedPerfume.category_name})
@@ -1691,27 +1691,27 @@ const Perfumes = () => {
                         <h5 className="font-medium text-blue-800 mb-2">💰 Cost Breakdown</h5>
                         <div className="flex justify-between">
                           <span className="text-blue-700">Perfume Cost:</span>
-                          <span className="font-medium text-blue-900">RWF {batchDetails.perfumeCost.toLocaleString()}</span>
+                          <span className="font-medium text-blue-900">CFA {batchDetails.perfumeCost.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-blue-700">Bottle Cost:</span>
-                          <span className="font-medium text-blue-900">RWF {batchDetails.bottleCost.toLocaleString()}</span>
+                          <span className="font-medium text-blue-900">CFA {batchDetails.bottleCost.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-blue-700">Label Cost:</span>
-                          <span className="font-medium text-blue-900">RWF {batchDetails.labelCost.toLocaleString()}</span>
+                          <span className="font-medium text-blue-900">CFA {batchDetails.labelCost.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-blue-700">Packaging Cost:</span>
-                          <span className="font-medium text-blue-900">RWF {batchDetails.packagingCost.toLocaleString()}</span>
+                          <span className="font-medium text-blue-900">CFA {batchDetails.packagingCost.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between border-t pt-1">
                           <span className="text-blue-700 font-medium">Total Cost:</span>
-                          <span className="font-bold text-blue-900">RWF {batchDetails.totalCost.toLocaleString()}</span>
+                          <span className="font-bold text-blue-900">CFA {batchDetails.totalCost.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-blue-700 font-medium">Unit Cost:</span>
-                          <span className="font-bold text-blue-900">RWF {batchDetails.unitCost.toLocaleString()}</span>
+                          <span className="font-bold text-blue-900">CFA {batchDetails.unitCost.toLocaleString()}</span>
                         </div>
                       </div>
 
@@ -1719,7 +1719,7 @@ const Perfumes = () => {
                         <h5 className="font-medium text-blue-800 mb-2">💵 Pricing</h5>
                         <div className="flex justify-between">
                           <span className="text-blue-700">Selling Price per ML:</span>
-                          <span className="font-medium text-blue-900">RWF {batchDetails.sellingPricePerMl?.toLocaleString() || '0'}</span>
+                          <span className="font-medium text-blue-900">CFA {batchDetails.sellingPricePerMl?.toLocaleString() || '0'}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-blue-700">Bottle Size:</span>
@@ -1731,11 +1731,11 @@ const Perfumes = () => {
                         </div>
                         <div className="flex justify-between border-t pt-1">
                           <span className="text-blue-700 font-medium">Selling Price:</span>
-                          <span className="font-bold text-green-600">RWF {batchDetails.sellingPrice.toLocaleString()}</span>
+                          <span className="font-bold text-green-600">CFA {batchDetails.sellingPrice.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-blue-700">Profit per Bottle:</span>
-                          <span className="font-bold text-green-600">RWF {(batchDetails.sellingPrice - batchDetails.unitCost).toLocaleString()}</span>
+                          <span className="font-bold text-green-600">CFA {(batchDetails.sellingPrice - batchDetails.unitCost).toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-blue-700">Status:</span>
@@ -1945,20 +1945,20 @@ const Perfumes = () => {
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
                           <span className="text-gray-600">Bottle Cost:</span>
-                          <span className="font-medium">RWF {parseFloat(size.bottle_cost || 0).toLocaleString()}</span>
+                          <span className="font-medium">CFA {parseFloat(size.bottle_cost || 0).toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-gray-600">Label Cost:</span>
-                          <span className="font-medium">RWF {parseFloat(size.label_cost || 0).toLocaleString()}</span>
+                          <span className="font-medium">CFA {parseFloat(size.label_cost || 0).toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-gray-600">Packaging Cost:</span>
-                          <span className="font-medium">RWF {parseFloat(size.packaging_cost || 0).toLocaleString()}</span>
+                          <span className="font-medium">CFA {parseFloat(size.packaging_cost || 0).toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between border-t pt-2 mt-2">
                           <span className="text-gray-600 font-medium">Total Cost:</span>
                           <span className="font-semibold text-blue-600">
-                            RWF {(parseFloat(size.bottle_cost || 0) + parseFloat(size.label_cost || 0) + parseFloat(size.packaging_cost || 0)).toLocaleString()}
+                            CFA {(parseFloat(size.bottle_cost || 0) + parseFloat(size.label_cost || 0) + parseFloat(size.packaging_cost || 0)).toLocaleString()}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
@@ -2183,7 +2183,7 @@ const BottleSizeModal = ({ onClose, onSubmit, bottleSize, isLoading }) => {
   };
 
   const formatCurrency = (amount) => {
-    return `RWF ${parseFloat(amount || 0).toLocaleString()}`;
+    return `CFA ${parseFloat(amount || 0).toLocaleString()}`;
   };
 
   return (
@@ -2227,7 +2227,7 @@ const BottleSizeModal = ({ onClose, onSubmit, bottleSize, isLoading }) => {
             {/* Bottle Cost */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                <TranslatedText text="Bottle Cost (RWF)" /> *
+                <TranslatedText text="Bottle Cost (CFA)" /> *
               </label>
               <input
                 type="number"
@@ -2248,7 +2248,7 @@ const BottleSizeModal = ({ onClose, onSubmit, bottleSize, isLoading }) => {
             {/* Label Cost */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                <TranslatedText text="Label Cost (RWF)" />
+                <TranslatedText text="Label Cost (CFA)" />
               </label>
               <input
                 type="number"
@@ -2268,7 +2268,7 @@ const BottleSizeModal = ({ onClose, onSubmit, bottleSize, isLoading }) => {
             {/* Packaging Cost */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                <TranslatedText text="Packaging Cost (RWF)" />
+                <TranslatedText text="Packaging Cost (CFA)" />
               </label>
               <input
                 type="number"

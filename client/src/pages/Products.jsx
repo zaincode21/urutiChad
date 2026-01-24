@@ -2155,7 +2155,7 @@ const ProductModal = ({ product, onClose, onSubmit, isLoading, categories, brand
     image_url: product?.image_url || '',
     categories: product?.categories?.map(c => c.id) || [],
     is_active: product?.is_active ?? true,
-    currency: 'RWF' // Force RWF as the only currency
+    currency: 'CFA' // Force CFA as the only currency
   });
 
   const [imageFile, setImageFile] = useState(null);

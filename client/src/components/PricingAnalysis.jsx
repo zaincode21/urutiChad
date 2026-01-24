@@ -90,14 +90,14 @@ const PricingAnalysis = ({ productId }) => {
           <div className="bg-blue-50 p-4 rounded-lg">
             <p className="text-sm font-medium text-blue-600">Base Cost</p>
             <p className="text-2xl font-bold text-blue-900">
-              {analysis.current_pricing?.base_cost ? `${Number(analysis.current_pricing.base_cost).toLocaleString()} RWF` : 'N/A'}
+              {analysis.current_pricing?.base_cost ? `${Number(analysis.current_pricing.base_cost).toLocaleString()} CFA` : 'N/A'}
             </p>
           </div>
           
           <div className="bg-green-50 p-4 rounded-lg">
             <p className="text-sm font-medium text-green-600">Current Price</p>
             <p className="text-2xl font-bold text-green-900">
-              {analysis.current_pricing?.calculated_price ? `${Number(analysis.current_pricing.calculated_price).toLocaleString()} RWF` : 'N/A'}
+              {analysis.current_pricing?.calculated_price ? `${Number(analysis.current_pricing.calculated_price).toLocaleString()} CFA` : 'N/A'}
             </p>
           </div>
           
@@ -124,7 +124,7 @@ const PricingAnalysis = ({ productId }) => {
                   Strategy
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Price (RWF)
+                  Price (CFA)
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Profit Margin
@@ -144,7 +144,7 @@ const PricingAnalysis = ({ productId }) => {
                     {data.error ? (
                       <span className="text-red-500">Error</span>
                     ) : (
-                      data.price ? `${Number(data.price).toLocaleString()} RWF` : 'N/A'
+                      data.price ? `${Number(data.price).toLocaleString()} CFA` : 'N/A'
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -158,7 +158,7 @@ const PricingAnalysis = ({ productId }) => {
                     {data.error ? (
                       <span className="text-red-500">-</span>
                     ) : (
-                      data.markup ? `${Number(data.markup).toLocaleString()} RWF` : 'N/A'
+                      data.markup ? `${Number(data.markup).toLocaleString()} CFA` : 'N/A'
                     )}
                   </td>
                 </tr>
@@ -211,7 +211,7 @@ const PricingAnalysis = ({ productId }) => {
                 <div className="flex-1">
                   <div className="flex items-center space-x-3">
                     <span className="text-sm font-medium text-gray-900">
-                      {Number(change.old_price).toLocaleString()} RWF → {Number(change.new_price).toLocaleString()} RWF
+                      {Number(change.old_price).toLocaleString()} CFA → {Number(change.new_price).toLocaleString()} CFA
                     </span>
                     <span className="text-xs text-gray-500">
                       {new Date(change.created_at).toLocaleDateString()}

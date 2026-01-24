@@ -115,7 +115,7 @@ const PricingManagement = () => {
                   <div>
                     <h3 className="font-medium text-gray-900">{product.name}</h3>
                     <p className="text-sm text-gray-500">ID: {product.id}</p>
-                    <p className="text-sm text-gray-600">Current Price: {Number(product.price).toLocaleString()} RWF</p>
+                    <p className="text-sm text-gray-600">Current Price: {Number(product.price).toLocaleString()} CFA</p>
                   </div>
                   <div className="text-right">
                     <span className="text-xs text-gray-400">
@@ -164,7 +164,7 @@ const PricingManagement = () => {
                     Pricing Dashboard
                   </h3>
                   <p className="text-sm text-gray-600">
-                    Overview of current pricing (RWF), strategies, and market positioning
+                    Overview of current pricing (CFA), strategies, and market positioning
                   </p>
                 </div>
                 <PricingDashboard 
@@ -181,7 +181,7 @@ const PricingManagement = () => {
                     Pricing Analysis
                   </h3>
                   <p className="text-sm text-gray-600">
-                    Detailed analysis of pricing strategies (RWF) and market insights
+                    Detailed analysis of pricing strategies (CFA) and market insights
                   </p>
                   {!selectedProductId && (
                     <p className="text-sm text-yellow-600 mt-2">
@@ -202,7 +202,7 @@ const PricingManagement = () => {
                     Pricing Optimization
                   </h3>
                   <p className="text-sm text-gray-600">
-                    Find optimal pricing strategies (RWF) for maximum profitability
+                    Find optimal pricing strategies (CFA) for maximum profitability
                   </p>
                   {selectedProducts.length === 0 && (
                     <p className="text-sm text-yellow-600 mt-2">
@@ -230,7 +230,7 @@ const PricingManagement = () => {
               <div className="text-center">
                 <div className="text-2xl mb-2">📊</div>
                 <h4 className="font-medium text-gray-900">View Dashboard</h4>
-                <p className="text-sm text-gray-600">See pricing overview (RWF)</p>
+                <p className="text-sm text-gray-600">See pricing overview (CFA)</p>
               </div>
             </button>
 
@@ -242,7 +242,7 @@ const PricingManagement = () => {
               <div className="text-center">
                 <div className="text-2xl mb-2">⚡</div>
                 <h4 className="font-medium text-gray-900">Run Optimization</h4>
-                <p className="text-sm text-gray-600">Optimize selected products (RWF)</p>
+                <p className="text-sm text-gray-600">Optimize selected products (CFA)</p>
               </div>
             </button>
 

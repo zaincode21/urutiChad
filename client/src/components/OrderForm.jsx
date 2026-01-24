@@ -394,11 +394,11 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
   };
 
   // Currency formatter
-  const formatCurrency = (value, currencyCode = 'RWF') => {
+  const formatCurrency = (value, currencyCode = 'CFA') => {
     try {
       const numericValue = Number(value || 0);
-      if (currencyCode === 'RWF') {
-        return `RWF ${numericValue.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+      if (currencyCode === 'CFA') {
+        return `CFA ${numericValue.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
       }
       return new Intl.NumberFormat('rw-RW', {
         style: 'currency',
@@ -407,7 +407,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
       }).format(numericValue);
     } catch {
       const numeric = Number(value || 0);
-      return `RWF ${numeric.toLocaleString()}`;
+      return `CFA ${numeric.toLocaleString()}`;
     }
   };
 
@@ -551,11 +551,11 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
               <div class="item-row">
                 <div>
                   <div class="item-name">${item.name}</div>
-                  <div class="item-details">${item.quantity} x ${formatCurrency(item.price).replace('RWF', '').trim()} RWF</div>
+                  <div class="item-details">${item.quantity} x ${formatCurrency(item.price).replace('CFA', '').trim()} CFA</div>
                   ${item.sku ? `<div class="item-details">SKU: ${item.sku}</div>` : ''}
                 </div>
                 <div style="text-align: right; font-weight: bold;">
-                  ${formatCurrency(parseFloat(item.total) || 0).replace('RWF', '').trim()} RWF
+                  ${formatCurrency(parseFloat(item.total) || 0).replace('CFA', '').trim()} CFA
                 </div>
               </div>
             `).join('')}
@@ -564,30 +564,30 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
           <div class="totals-section">
             <div class="total-row">
               <span>Subtotal:</span>
-              <span>${formatCurrency(calculateSubtotal()).replace('RWF', '').trim()} RWF</span>
+              <span>${formatCurrency(calculateSubtotal()).replace('CFA', '').trim()} CFA</span>
             </div>
             ${discountAmount > 0 ? `
               <div class="total-row" style="color: #666;">
                 <span>Discount:</span>
-                <span>-${formatCurrency(discountAmount).replace('RWF', '').trim()} RWF</span>
+                <span>-${formatCurrency(discountAmount).replace('CFA', '').trim()} CFA</span>
               </div>
             ` : ''}
             <div class="total-row">
               <span>Tax (18%):</span>
-              <span>${formatCurrency(calculateTax()).replace('RWF', '').trim()} RWF</span>
+              <span>${formatCurrency(calculateTax()).replace('CFA', '').trim()} CFA</span>
             </div>
             <div class="total-row final-total">
               <span>{tSync('TOTAL')}:</span>
-              <span>${formatCurrency(calculateTotal()).replace('RWF', '').trim()} RWF</span>
+              <span>${formatCurrency(calculateTotal()).replace('CFA', '').trim()} CFA</span>
             </div>
             ${paymentStatus === 'pending' ? `
               <div class="total-row" style="margin-top: 8px; color: #666;">
                 <span>{tSync('Paid')} (50%):</span>
-                <span>${formatCurrency(calculateTotal() * 0.5).replace('RWF', '').trim()} RWF</span>
+                <span>${formatCurrency(calculateTotal() * 0.5).replace('CFA', '').trim()} CFA</span>
               </div>
               <div class="total-row" style="color: #666;">
                 <span>{tSync('Balance')}:</span>
-                <span>${formatCurrency(calculateTotal() * 0.5).replace('RWF', '').trim()} RWF</span>
+                <span>${formatCurrency(calculateTotal() * 0.5).replace('CFA', '').trim()} CFA</span>
               </div>
             ` : ''}
           </div>
@@ -1462,7 +1462,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
         payment_method: paymentMethod,
         payment_status: paymentStatus,
         notes: notes.trim() || null,
-        currency: 'RWF',
+        currency: 'CFA',
         subtotal: subtotal,
         tax_amount: tax,
         discount_amount: discountAmount,
@@ -2024,7 +2024,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                               <span className="ml-2 text-xs text-gray-500">📊 {item.barcode}</span>
                             )}
                           </p>
-                          <p className="text-xs sm:text-sm text-gray-500">{formatCurrency(item.price, 'RWF')} each</p>
+                          <p className="text-xs sm:text-sm text-gray-500">{formatCurrency(item.price, 'CFA')} each</p>
                         </div>
                         <div className="flex items-center justify-between sm:justify-end space-x-2 sm:ml-4">
                           <div className="flex flex-col space-y-2">
@@ -2135,7 +2135,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                           </div>
                           <div className="flex items-center space-x-2">
                             <div className="w-16 sm:w-20 text-right">
-                              <p className="font-semibold text-sm sm:text-base">{formatCurrency(parseFloat(item.total) || 0, 'RWF')}</p>
+                              <p className="font-semibold text-sm sm:text-base">{formatCurrency(parseFloat(item.total) || 0, 'CFA')}</p>
                             </div>
                             <button
                               onClick={() => removeItemFromOrder(item.product_id)}
@@ -2158,21 +2158,21 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                 <div className="space-y-1.5 sm:space-y-2 text-sm sm:text-base">
                   <div className="flex justify-between">
                     <span>Subtotal:</span>
-                    <span>{formatCurrency(calculateSubtotal(), 'RWF')}</span>
+                    <span>{formatCurrency(calculateSubtotal(), 'CFA')}</span>
                   </div>
                   {discountAmount > 0 && (
                     <div className="flex justify-between text-green-600">
                       <span>Discount:</span>
-                      <span>-{formatCurrency(discountAmount, 'RWF')}</span>
+                      <span>-{formatCurrency(discountAmount, 'CFA')}</span>
                     </div>
                   )}
                   <div className="flex justify-between">
                     <span>Tax (18%):</span>
-                    <span>{formatCurrency(calculateTax(), 'RWF')}</span>
+                    <span>{formatCurrency(calculateTax(), 'CFA')}</span>
                   </div>
                   <div className="border-t border-gray-200 pt-2 sm:pt-3 flex justify-between font-semibold">
                     <span>Total:</span>
-                    <span>{formatCurrency(calculateTotal(), 'RWF')}</span>
+                    <span>{formatCurrency(calculateTotal(), 'CFA')}</span>
                   </div>
                 </div>
 
@@ -2214,7 +2214,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                           </div>
                           <div className="text-xs sm:text-sm font-medium text-primary-600">
                             {discount.type === 'percentage' && `${discount.value}%`}
-                            {discount.type === 'fixed_amount' && formatCurrency(discount.value, 'RWF')}
+                            {discount.type === 'fixed_amount' && formatCurrency(discount.value, 'CFA')}
                             {discount.type === 'bottle_return' && `${discount.bottle_return_count} bottles`}
                           </div>
                         </div>
@@ -2377,7 +2377,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                               <div className="text-xs mt-1">
                                 {discount.min_purchase_amount && (
                                   <span className="text-green-600">
-                                    <TranslatedText text="Min purchase" />: RWF {discount.min_purchase_amount.toLocaleString()}
+                                    <TranslatedText text="Min purchase" />: CFA {discount.min_purchase_amount.toLocaleString()}
                                   </span>
                                 )}
                                 {discount.usage_limit && (
@@ -2389,12 +2389,12 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                           <div className="text-right">
                             <div className="font-semibold text-primary-600">
                               {discount.type === 'percentage' && `${discount.value}%`}
-                              {discount.type === 'fixed_amount' && `RWF ${discount.value.toLocaleString()}`}
+                              {discount.type === 'fixed_amount' && `CFA ${discount.value.toLocaleString()}`}
                               {discount.type === 'bottle_return' && `${discount.bottle_return_count} bottles`}
                             </div>
                             <div className="text-xs text-gray-500">
-                              {discount.type === 'percentage' && tSync("Save up to RWF {{amount}}", { amount: (calculateSubtotal() * discount.value / 100).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) })}
-                              {discount.type === 'fixed_amount' && tSync("Save RWF {{amount}}", { amount: Math.min(discount.value, calculateSubtotal()).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) })}
+                              {discount.type === 'percentage' && tSync("Save up to CFA {{amount}}", { amount: (calculateSubtotal() * discount.value / 100).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) })}
+                              {discount.type === 'fixed_amount' && tSync("Save CFA {{amount}}", { amount: Math.min(discount.value, calculateSubtotal()).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) })}
                               {discount.type === 'bottle_return' && <TranslatedText text="Eco-friendly discount" />}
                             </div>
                           </div>

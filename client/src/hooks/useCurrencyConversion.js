@@ -6,7 +6,7 @@ export const useCurrencyConversion = () => {
   const [conversionRates, setConversionRates] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch RWF conversion rates
+  // Fetch CFA conversion rates
   const { data: rwfRatesData, isLoading: ratesLoading } = useQuery({
     queryKey: ['rwf-rates'],
     queryFn: () => currencyAPI.getRwfRates(),
@@ -28,29 +28,29 @@ export const useCurrencyConversion = () => {
     }
   }, [rwfRatesData]);
 
-  // Convert amount from any currency to RWF
+  // Convert amount from any currency to CFA
   const convertToRwf = (amount, fromCurrency) => {
     if (!amount || !fromCurrency) {
       return null;
     }
 
-    if (fromCurrency === 'RWF') {
+    if (fromCurrency === 'CFA') {
       return amount;
     }
 
     // For demo purposes, use approximate rates
     // In production, these would come from the API
     const approximateRates = {
-      'USD': 1300, // 1 USD ≈ 1300 RWF
-      'EUR': 1400, // 1 EUR ≈ 1400 RWF
-      'GBP': 1650, // 1 GBP ≈ 1650 RWF
-      'JPY': 8.7,  // 1 JPY ≈ 8.7 RWF
-      'CNY': 180,  // 1 CNY ≈ 180 RWF
-      'INR': 15.6, // 1 INR ≈ 15.6 RWF
-      'AED': 354,  // 1 AED ≈ 354 RWF
-      'CAD': 950,  // 1 CAD ≈ 950 RWF
-      'AUD': 850,  // 1 AUD ≈ 850 RWF
-      'CHF': 1450  // 1 CHF ≈ 1450 RWF
+      'USD': 1300, // 1 USD ≈ 1300 CFA
+      'EUR': 1400, // 1 EUR ≈ 1400 CFA
+      'GBP': 1650, // 1 GBP ≈ 1650 CFA
+      'JPY': 8.7,  // 1 JPY ≈ 8.7 CFA
+      'CNY': 180,  // 1 CNY ≈ 180 CFA
+      'INR': 15.6, // 1 INR ≈ 15.6 CFA
+      'AED': 354,  // 1 AED ≈ 354 CFA
+      'CAD': 950,  // 1 CAD ≈ 950 CFA
+      'AUD': 850,  // 1 AUD ≈ 850 CFA
+      'CHF': 1450  // 1 CHF ≈ 1450 CFA
     };
 
     const rate = approximateRates[fromCurrency];
@@ -59,18 +59,18 @@ export const useCurrencyConversion = () => {
     return parseFloat((amount * rate).toFixed(2));
   };
 
-  // Convert amount from RWF to any currency
+  // Convert amount from CFA to any currency
   const convertFromRwf = (rwfAmount, toCurrency) => {
     if (!rwfAmount || !toCurrency || !conversionRates[toCurrency]) {
       return null;
     }
 
-    if (toCurrency === 'RWF') {
+    if (toCurrency === 'CFA') {
       return rwfAmount;
     }
 
-    // Convert from RWF through USD
-    const usdAmount = rwfAmount / conversionRates['RWF']?.rwf_rate;
+    // Convert from CFA through USD
+    const usdAmount = rwfAmount / conversionRates['CFA']?.rwf_rate;
     const targetAmount = usdAmount * conversionRates[toCurrency].usd_rate;
     
     return targetAmount ? parseFloat(targetAmount.toFixed(2)) : null;
@@ -88,7 +88,7 @@ export const useCurrencyConversion = () => {
       'CNY': '¥',
       'INR': '₹',
       'AED': 'د.إ',
-      'RWF': 'FRw'
+      'CFA': 'FRw'
     };
 
     const symbol = symbols[currency] || currency;
@@ -100,14 +100,14 @@ export const useCurrencyConversion = () => {
     return `${symbol}${parseFloat(amount).toFixed(2)}`;
   };
 
-  // Get RWF equivalent display
+  // Get CFA equivalent display
   const getRwfDisplay = (amount, currency) => {
     if (!amount || !currency) return null;
     
     const rwfAmount = convertToRwf(amount, currency);
     if (rwfAmount === null) return null;
     
-    return `≈ ${formatCurrency(rwfAmount, 'RWF')}`;
+    return `≈ ${formatCurrency(rwfAmount, 'CFA')}`;
   };
 
   return {

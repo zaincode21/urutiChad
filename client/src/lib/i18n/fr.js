@@ -204,7 +204,7 @@ export const staticTranslations = {
     "Seasonal": "Saisonnier",
     "Annual": "Annuel",
     "Different categories have different duration limits based on business rules": "Différentes catégories ont des durées limites selon les règles métier",
-    "Minimum Purchase Amount (RWF)": "Montant minimum d'achat (RWF)",
+    "Minimum Purchase Amount (CFA)": "Montant minimum d'achat (CFA)",
     "Total Usage Limit": "Limite d'utilisation totale",
     "Leave empty for unlimited": "Laisser vide pour illimité",
     "Usage Per Customer": "Utilisation par client",

@@ -108,7 +108,7 @@ export class ExpenseAnalyticsService {
       USD: 0,
       EUR: 0,
       GBP: 0,
-      RWF: 0,
+      CFA: 0,
       totalRwf: 0
     };
 
@@ -122,7 +122,7 @@ export class ExpenseAnalyticsService {
         totals.USD += amount; // Default to USD for unknown currencies
       }
 
-      // Convert to RWF for total
+      // Convert to CFA for total
       const rwfAmount = this.convertToRwf(amount, currency);
       totals.totalRwf += rwfAmount || 0;
     });
@@ -520,9 +520,9 @@ export class ExpenseAnalyticsService {
     });
   }
 
-  // Convert amount to RWF
+  // Convert amount to CFA
   convertToRwf(amount, fromCurrency) {
-    if (fromCurrency === 'RWF') return amount;
+    if (fromCurrency === 'CFA') return amount;
 
     // Approximate rates (in production, use real-time rates)
     const rates = {
@@ -539,7 +539,7 @@ export class ExpenseAnalyticsService {
   getEmptyInsights() {
     return {
       summary: {
-        totalExpenses: { USD: 0, EUR: 0, GBP: 0, RWF: 0, totalRwf: 0 },
+        totalExpenses: { USD: 0, EUR: 0, GBP: 0, CFA: 0, totalRwf: 0 },
         totalCount: 0,
         period: 'all',
         lastUpdated: new Date().toISOString()

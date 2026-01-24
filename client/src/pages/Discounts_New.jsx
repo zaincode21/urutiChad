@@ -519,7 +519,7 @@ export default function Discounts() {
                     <div className="mt-4">
                       <div className="text-lg font-semibold text-gray-900">
                         {discount.type === 'percentage' && `${discount.value}%`}
-                        {discount.type === 'fixed_amount' && `RWF ${discount.value.toLocaleString()}`}
+                        {discount.type === 'fixed_amount' && `CFA ${discount.value.toLocaleString()}`}
                         {discount.type === 'bottle_return' && `${discount.bottle_return_count} bottles`}
                       </div>
                       
