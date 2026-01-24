@@ -1,0 +1,1529 @@
+
+> smart-retail-platform@1.0.0 server
+> nodemon server/index.js
+
+[33m[nodemon] 3.1.10[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+🚀 Server running on port 5000
+📊 Environment: development
+🔗 Health check: http://localhost:5000/api/health
+📚 API Documentation: http://localhost:5000/api-docs
+✅ Connected to SQLite database
+✅ All tables created successfully
+✅ GL accounts already initialized
+[32m[nodemon] restarting child process[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+🚀 Server running on port 5000
+📊 Environment: development
+🔗 Health check: http://localhost:5000/api/health
+📚 API Documentation: http://localhost:5000/api-docs
+✅ Connected to SQLite database
+✅ All tables created successfully
+✅ GL accounts already initialized
+127.0.0.1 - - [26/Aug/2025:14:13:16 +0000] "GET /api/perfume/bulk HTTP/1.1" 200 3414 "http://localhost:5173/smart-bottling" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+127.0.0.1 - - [26/Aug/2025:14:13:20 +0000] "GET /api/auth/users HTTP/1.1" 200 628 "http://localhost:5173/smart-bottling" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+127.0.0.1 - - [26/Aug/2025:14:13:21 +0000] "GET /api/perfume/bulk HTTP/1.1" 304 - "http://localhost:5173/smart-bottling" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejection127.0.0.1 - - [26/Aug/2025:14:21:53 +0000] "GET /api/perfume/bulk HTTP/1.1" 304 - "http://localhost:5173/perfumes" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+[32m[nodemon] rest[32m[nodemon] restarting due [32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.proces[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejecnode:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+   [32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:1[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+🚀 Server running on port 5000
+📊 Environment: development
+🔗 Health check: http://localhost:5000/api/health
+📚 API Documentation: http://localhost:5000/api-docs
+✅ Connected to SQLite database
+✅ All tables created successfully
+✅ GL accounts already initialized
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+🚀 Server running on port 5000
+📊 Environment: development
+🔗 Health check: http://localhost:5000/api/health
+📚 API Documentation: http://localhost:5000/api-docs
+✅ Connected to SQLite database
+✅ All tables created successfully
+✅ GL accounts already initialized
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+🚀 Server running on port 5000
+📊 Environment: development
+🔗 Health check: http://localhost:5000/api/health
+📚 API Documentation: http://localhost:5000/api-docs
+✅ Connected to SQLite database
+✅ All tables created successfully
+✅ GL accounts already initialized
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+🚀 Server running on port 5000
+📊 Environment: development
+🔗 Health check: http://localhost:5000/api/health
+📚 API Documentation: http://localhost:5000/api-docs
+✅ Connected to SQLite database
+✅ All tables created successfully
+✅ GL accounts already initialized
+127.0.0.1 - - [26/Aug/2025:15:16:41 +0000] "GET /api/health HTTP/1.1" 200 82 "-" "curl/8.14.1"
+127.0.0.1 - - [26/Aug/2025:15:16:47 +0000] "GET /api/smart-bottling/raw-materials HTTP/1.1" 401 45 "-" "curl/8.14.1"
+127.0.0.1 - - [26/Aug/2025:15:17:06 +0000] "GET /api/smart-bottling/raw-materials HTTP/1.1" 304 - "http://localhost:5173/smart-bottling" "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36"
+127.0.0.1 - - [26/Aug/2025:15:17:06 +0000] "GET /api/smart-bottling/batches HTTP/1.1" 304 - "http://localhost:5173/smart-bottling" "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36"
+127.0.0.1 - - [26/Aug/2025:15:17:06 +0000] "GET /api/smart-bottling/forecast HTTP/1.1" 304 - "http://localhost:5173/smart-bottling" "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36"
+127.0.0.1 - - [26/Aug/2025:15:17:06 +0000] "GET /api/smart-bottling/low-stock-alerts HTTP/1.1" 304 - "http://localhost:5173/smart-bottling" "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36"
+127.0.0.1 - - [26/Aug/2025:15:17:06 +0000] "GET /api/smart-bottling/popular-sizes HTTP/1.1" 304 - "http://localhost:5173/smart-bottling" "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36"
+127.0.0.1 - - [26/Aug/2025:15:17:06 +0000] "GET /api/smart-bottling/stats HTTP/1.1" 304 - "http://localhost:5173/smart-bottling" "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36"
+127.0.0.1 - - [26/Aug/2025:15:17:07 +0000] "GET /api/smart-bottling/recipes HTTP/1.1" 304 - "http://localhost:5173/smart-bottling" "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36"
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+🚀 Server running on port 5000
+📊 Environment: development
+🔗 Health check: http://localhost:5000/api/health
+📚 API Documentation: http://localhost:5000/api-docs
+✅ Connected to SQLite database
+✅ All tables created successfully
+✅ GL accounts already initialized
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+/home/serge/Desktop/project/urutirose/server/routes/smartBottling.js:240
+          validatedLastPurchaseCost, validatedAverageCost, last_audit_date];
+                                                                          ^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1472:18)
+    at Module._compile (node:internal/modules/cjs/loader:1501:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/home/serge/Desktop/project/urutirose/server/index.js:27:29)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+/home/serge/Desktop/project/urutirose/server/routes/smartBottling.js:240
+          validatedLastPurchaseCost, validatedAverageCost, last_audit_date];
+                                                                          ^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1472:18)
+    at Module._compile (node:internal/modules/cjs/loader:1501:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/home/serge/Desktop/project/urutirose/server/index.js:27:29)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+/home/serge/Desktop/project/urutirose/server/routes/smartBottling.js:240
+          validatedLastPurchaseCost, validatedAverageCost, last_audit_date];
+                                                                          ^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1472:18)
+    at Module._compile (node:internal/modules/cjs/loader:1501:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/home/serge/Desktop/project/urutirose/server/index.js:27:29)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+/home/serge/Desktop/project/urutirose/server/routes/smartBottling.js:240
+          validatedLastPurchaseCost, validatedAverageCost, last_audit_date];
+                                                                          ^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1472:18)
+    at Module._compile (node:internal/modules/cjs/loader:1501:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/home/serge/Desktop/project/urutirose/server/index.js:27:29)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+/home/serge/Desktop/project/urutirose/server/routes/smartBottling.js:240
+          validatedLastPurchaseCost, validatedAverageCost, last_audit_date];
+                                                                          ^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1472:18)
+    at Module._compile (node:internal/modules/cjs/loader:1501:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/home/serge/Desktop/project/urutirose/server/index.js:27:29)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+/home/serge/Desktop/project/urutirose/server/routes/smartBottling.js:240
+          validatedLastPurchaseCost, validatedAverageCost, last_audit_date];
+                                                                          ^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1472:18)
+    at Module._compile (node:internal/modules/cjs/loader:1501:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/home/serge/Desktop/project/urutirose/server/index.js:27:29)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+/home/serge/Desktop/project/urutirose/server/routes/smartBottling.js:240
+          validatedLastPurchaseCost, validatedAverageCost, last_audit_date];
+                                                                          ^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1472:18)
+    at Module._compile (node:internal/modules/cjs/loader:1501:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/home/serge/Desktop/project/urutirose/server/index.js:27:29)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+/home/serge/Desktop/project/urutirose/server/routes/smartBottling.js:240
+          validatedLastPurchaseCost, validatedAverageCost, last_audit_date];
+                                                                          ^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1472:18)
+    at Module._compile (node:internal/modules/cjs/loader:1501:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/home/serge/Desktop/project/urutirose/server/index.js:27:29)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+/home/serge/Desktop/project/urutirose/server/routes/smartBottling.js:240
+          validatedLastPurchaseCost, validatedAverageCost, last_audit_date];
+                                                                          ^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1472:18)
+    at Module._compile (node:internal/modules/cjs/loader:1501:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/home/serge/Desktop/project/urutirose/server/index.js:27:29)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+/home/serge/Desktop/project/urutirose/server/routes/smartBottling.js:240
+          validatedLastPurchaseCost, validatedAverageCost, last_audit_date];
+                                                                          ^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1472:18)
+    at Module._compile (node:internal/modules/cjs/loader:1501:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/home/serge/Desktop/project/urutirose/server/index.js:27:29)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+/home/serge/Desktop/project/urutirose/server/routes/smartBottling.js:240
+          validatedLastPurchaseCost, validatedAverageCost, last_audit_date];
+                                                                          ^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1472:18)
+    at Module._compile (node:internal/modules/cjs/loader:1501:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/home/serge/Desktop/project/urutirose/server/index.js:27:29)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+/home/serge/Desktop/project/urutirose/server/routes/smartBottling.js:240
+          validatedLastPurchaseCost, validatedAverageCost, last_audit_date];
+                                                                          ^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1472:18)
+    at Module._compile (node:internal/modules/cjs/loader:1501:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/home/serge/Desktop/project/urutirose/server/index.js:27:29)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+/home/serge/Desktop/project/urutirose/server/routes/smartBottling.js:240
+          validatedLastPurchaseCost, validatedAverageCost, last_audit_date];
+                                                                          ^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1472:18)
+    at Module._compile (node:internal/modules/cjs/loader:1501:20)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Module.require (node:internal/modules/cjs/loader:1298:19)
+    at require (node:internal/modules/helpers:182:18)
+    at Object.<anonymous> (/home/serge/Desktop/project/urutirose/server/index.js:27:29)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+🚀 Server running on port 5000
+📊 Environment: development
+🔗 Health check: http://localhost:5000/api/health
+📚 API Documentation: http://localhost:5000/api-docs
+✅ Connected to SQLite database
+✅ All tables created successfully
+✅ GL accounts already initialized
+127.0.0.1 - - [26/Aug/2025:15:57:47 +0000] "POST /api/auth/login HTTP/1.1" 200 383 "-" "curl/8.14.1"
+127.0.0.1 - - [26/Aug/2025:15:57:56 +0000] "GET /api/smart-bottling/stats HTTP/1.1" 200 181 "-" "curl/8.14.1"
+127.0.0.1 - - [26/Aug/2025:15:58:09 +0000] "GET /api/procurement/suppliers HTTP/1.1" 200 2166 "-" "curl/8.14.1"
+127.0.0.1 - - [26/Aug/2025:15:58:17 +0000] "GET /api/perfume/bottle-sizes HTTP/1.1" 200 1631 "-" "curl/8.14.1"
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+ Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+node:events:502
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:5000
+    at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+    at listenInCluster (node:net:1965:12)
+    at doListen (node:net:2139:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1944:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 5000
+}
+
+Node.js v20.19.4
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server/index.js`[39m
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+✅ Cron Scheduler initialized successfully
+🚀 Server running on port 5000
+📊 Environment: development
+🔗 Health check: http://localhost:5000/api/health
+📚 API Documentation: http://localhost:5000/api-docs
+✅ Connected to SQLite database
+✅ All tables created successfully
+✅ GL accounts already initialized
+127.0.0.1 - - [27/Aug/2025:07:24:09 +0000] "GET /api/procurement/suppliers HTTP/1.1" 304 - "http://localhost:5173/production/suppliers" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+127.0.0.1 - - [27/Aug/2025:07:24:09 +0000] "GET /api/procurement/purchase-orders HTTP/1.1" 304 - "http://localhost:5173/production/suppliers" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+127.0.0.1 - - [27/Aug/2025:07:24:09 +0000] "GET /api/procurement/requisitions HTTP/1.1" 304 - "http://localhost:5173/production/suppliers" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+127.0.0.1 - - [27/Aug/2025:07:24:09 +0000] "GET /api/procurement/analytics HTTP/1.1" 200 389 "http://localhost:5173/production/suppliers" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36"
+[32m[nodemon] restarting child process[39m

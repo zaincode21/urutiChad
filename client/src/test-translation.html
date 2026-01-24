@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation System Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Translation System Test</h1>
+    
+    <div class="test-section">
+        <h2>Manual API Test</h2>
+        <p>This test directly calls the MyMemory Translation API to verify it's working.</p>
+        
+        <button onclick="testTranslationAPI()">Test Translation API</button>
+        <button onclick="testBatchTranslation()">Test Batch Translation</button>
+        <button onclick="testCaching()">Test Caching</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Instructions</h2>
+        <ol>
+            <li>Click "Test Translation API" to verify the MyMemory API is working</li>
+            <li>Click "Test Batch Translation" to test multiple translations</li>
+            <li>Click "Test Caching" to verify localStorage caching</li>
+            <li>Open your browser's developer console to see detailed logs</li>
+            <li>Check localStorage to see cached translations</li>
+        </ol>
+    </div>
+
+    <script>
+        const resultsDiv = document.getElementById('results');
+        
+        function log(message, type = 'info') {
+            console.log(message);
+            const div = document.createElement('div');
+            div.className = type;
+            div.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+            resultsDiv.appendChild(div);
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+
+        async function testTranslationAPI() {
+            log('Testing MyMemory Translation API...');
+            
+            try {
+                const url = 'https://api.mymemory.translated.net/get';
+                const params = new URLSearchParams({
+                    q: 'Hello World',
+                    langpair: 'en|fr'
+                });
+
+                const response = await fetch(`${url}?${params}`);
+                const data = await response.json();
+                
+                if (data.responseStatus === 200 && data.responseData) {
+                    log(`✅ Translation successful: "Hello World" → "${data.responseData.translatedText}"`, 'success');
+                    log(`Match quality: ${data.matches?.[0]?.quality || 'N/A'}`);
+                } else {
+                    log(`❌ Translation failed: ${JSON.stringify(data)}`, 'error');
+                }
+            } catch (error) {
+                log(`❌ API Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testBatchTranslation() {
+            log('Testing batch translation...');
+            
+            const texts = ['Save', 'Cancel', 'Delete', 'Create'];
+            const results = [];
+            
+            for (const text of texts) {
+                try {
+                    const url = 'https://api.mymemory.translated.net/get';
+                    const params = new URLSearchParams({
+                        q: text,
+                        langpair: 'en|fr'
+                    });
+
+                    const response = await fetch(`${url}?${params}`);
+                    const data = await response.json();
+                    
+                    if (data.responseStatus === 200 && data.responseData) {
+                        results.push(`"${text}" → "${data.responseData.translatedText}"`);
+                    } else {
+                        results.push(`"${text}" → FAILED`);
+                    }
+                    
+                    // Small delay to avoid rate limiting
+                    await new Promise(resolve => setTimeout(resolve, 200));
+                } catch (error) {
+                    results.push(`"${text}" → ERROR: ${error.message}`);
+                }
+            }
+            
+            log('✅ Batch translation results:', 'success');
+            results.forEach(result => log(`  ${result}`));
+        }
+
+        async function testCaching() {
+            log('Testing localStorage caching...');
+            
+            // Test cache write
+            const testCache = {
+                'hello': { 'fr': 'bonjour', 'es': 'hola' },
+                'goodbye': { 'fr': 'au revoir', 'es': 'adiós' }
+            };
+            
+            try {
+                localStorage.setItem('translation_cache_test', JSON.stringify(testCache));
+                log('✅ Cache write successful', 'success');
+                
+                // Test cache read
+                const cached = JSON.parse(localStorage.getItem('translation_cache_test'));
+                if (cached && cached.hello && cached.hello.fr === 'bonjour') {
+                    log('✅ Cache read successful', 'success');
+                    log(`Cached data: ${JSON.stringify(cached, null, 2)}`);
+                } else {
+                    log('❌ Cache read failed', 'error');
+                }
+                
+                // Clean up
+                localStorage.removeItem('translation_cache_test');
+                log('✅ Cache cleanup successful', 'success');
+                
+            } catch (error) {
+                log(`❌ Cache error: ${error.message}`, 'error');
+            }
+        }
+
+        // Initial message
+        log('Translation system test page loaded. Click buttons above to run tests.');
+        log('Current browser language: ' + navigator.language);
+        log('LocalStorage available: ' + (typeof Storage !== 'undefined' ? 'Yes' : 'No'));
+    </script>
+</body>
+</html>
