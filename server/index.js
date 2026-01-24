@@ -7,7 +7,8 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swagger');
 
 // Load environment variables FIRST
-require('dotenv').config();
+// Load environment variables FIRST
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 // Import database AFTER environment variables are loaded
 const database = require('./database/database');
