@@ -47,6 +47,7 @@ const salesAnalyticsRoutes = require('./routes/salesAnalytics');
 const usersRoutes = require('./routes/users');
 const pricingRoutes = require('./routes/pricing');
 const settingsRoutes = require('./routes/settings');
+const rawMaterialsRoutes = require('./routes/raw_materials');
 const translationsRoutes = require('./routes/translations');
 
 const app = express();
@@ -171,7 +172,7 @@ app.use('/api/sales-analytics', salesAnalyticsRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/pricing', pricingRoutes);
 app.use('/api/settings', settingsRoutes);
-app.use('/api/raw-materials', require('./routes/raw_materials'));
+app.use('/api/raw-materials', rawMaterialsRoutes);
 app.use('/api/v1/translations', translationsRoutes);
 
 // Health check endpoint
