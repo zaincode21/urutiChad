@@ -47,7 +47,8 @@ const Navigation = () => {
     ordersManager: false,
     salesManager: false,
     production: false,
-    inventory: false
+    inventory: false,
+    atelier: false
   });
 
   // Debug: Log state changes
@@ -185,6 +186,25 @@ const Navigation = () => {
               description: tSync('Perfume production')
             }
           ]
+        },
+        {
+          id: 'atelier',
+          name: tSync('Atelier'),
+          icon: ClipboardList,
+          description: tSync('Atelier management'),
+          hasSubmenu: true,
+          submenu: [
+            {
+              name: tSync('Atelier Orders'),
+              href: '/orders/atelier',
+              description: tSync('Manage atelier orders')
+            },
+            {
+              name: tSync('Raw Materials'),
+              href: '/atelier/materials',
+              description: tSync('Manage raw materials')
+            }
+          ]
         }
       ];
     }
@@ -275,6 +295,25 @@ const Navigation = () => {
           name: tSync('Discounts'),
           href: '/discounts',
           description: tSync('Manage discount programs')
+        }
+      ]
+    },
+    {
+      id: 'atelier',
+      name: tSync('Atelier'),
+      icon: ClipboardList,
+      description: tSync('Atelier management'),
+      hasSubmenu: true,
+      submenu: [
+        {
+          name: tSync('Atelier Orders'),
+          href: '/orders/atelier',
+          description: tSync('Manage atelier orders')
+        },
+        {
+          name: tSync('Raw Materials'),
+          href: '/atelier/materials',
+          description: tSync('Manage raw materials')
         }
       ]
     },
@@ -398,7 +437,8 @@ const Navigation = () => {
         ordersManager: false,
         salesManager: false,
         production: false,
-        inventory: false
+        inventory: false,
+        atelier: false
       });
 
       await logout();
