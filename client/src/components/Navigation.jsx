@@ -278,25 +278,7 @@ const Navigation = () => {
         }
       ]
     },
-    {
-      id: 'salesManager',
-      name: tSync('Atelier'),
-      icon: Palette,
-      description: tSync('Atelier and custom sales'),
-      hasSubmenu: true,
-      submenu: [
-        {
-          name: tSync('Atelier Sale'),
-          href: '/orders/atelier',
-          description: tSync('Custom atelier orders')
-        },
-        {
-          name: tSync('Atelier Materials'),
-          href: '/atelier/materials',
-          description: tSync('Manage atelier materials')
-        }
-      ]
-    },
+
     {
       id: 'inventory',
       name: tSync('Inventory'),
