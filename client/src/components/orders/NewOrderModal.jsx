@@ -6,12 +6,14 @@ import { useState, useEffect } from "react";
 import { clientsApi } from "../../lib/clients-api";
 
 import { inventoryApi } from "../../lib/inventory-api";
-import { calculateFabricQuantity, formatCalculationResult } from "../../utils/fabric-calculator";
+// import { calculateFabricQuantity, formatCalculationResult } from "../../utils/fabric-calculator";
 import toast from "react-hot-toast";
 import { ordersApi } from "../../lib/orders-api";
 import { userApi } from "../../lib/user-api";
 import { useTranslation } from "../../hooks/useTranslation";
 import TranslatedText from "../TranslatedText";
+import { customersAPI } from "../../lib/api";
+import InvoiceGenerator from "../InvoiceGenerator";
 
 export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
     const { tSync, translateBatch } = useTranslation();
@@ -41,6 +43,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
 
     // New Order Parameters
     const [targetDate, setTargetDate] = useState("");
+    const [firstFittingDate, setFirstFittingDate] = useState("");
     const [orderPriority, setOrderPriority] = useState("Standard");
     const [assignedReceptionist, setAssignedReceptionist] = useState("Elena Gilbert (Current)");
 
@@ -58,6 +61,8 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
     // Submission State
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [createdOrderNumber, setCreatedOrderNumber] = useState(null);
+    const [createdOrderId, setCreatedOrderId] = useState(null);
+    const [showInvoice, setShowInvoice] = useState(false);
 
     // Tailor State
     const [tailors, setTailors] = useState([]);
@@ -96,29 +101,29 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
     // Measurement field configurations per garment type
     const measurementFields = {
         suit: [
-            { key: "jacket_length", label: <TranslatedText text="Jacket Length" />, shortLabel: "Jacket" },
-            { key: "shoulder_width", label: <TranslatedText text="Shoulder Width" />, shortLabel: "Shoulder" },
-            { key: "sleeve_length", label: <TranslatedText text="Sleeve Length" />, shortLabel: "Sleeve" },
-            { key: "chest", label: <TranslatedText text="Chest" />, shortLabel: "Chest" },
-            { key: "waist", label: <TranslatedText text="Waist" />, shortLabel: "Waist" },
-            { key: "back_width", label: <TranslatedText text="Back Width" />, shortLabel: "Back" },
-            { key: "lapel_width", label: <TranslatedText text="Lapel Width" />, shortLabel: "Lapel" },
+            { key: "jacket_length", label: "Jacket Length", shortLabel: "Jacket" },
+            { key: "shoulder_width", label: "Shoulder Width", shortLabel: "Shoulder" },
+            { key: "sleeve_length", label: "Sleeve Length", shortLabel: "Sleeve" },
+            { key: "chest", label: "Chest", shortLabel: "Chest" },
+            { key: "waist", label: "Waist", shortLabel: "Waist" },
+            { key: "back_width", label: "Back Width", shortLabel: "Back" },
+            { key: "lapel_width", label: "Lapel Width", shortLabel: "Lapel" },
         ],
         dress: [
-            { key: "neck", label: <TranslatedText text="Neck" />, shortLabel: "Neck" },
-            { key: "chest", label: <TranslatedText text="Chest" />, shortLabel: "Chest" },
-            { key: "waist", label: <TranslatedText text="Waist" />, shortLabel: "Waist" },
-            { key: "hips", label: <TranslatedText text="Hips" />, shortLabel: "Hips" },
-            { key: "shoulder", label: <TranslatedText text="Shoulder" />, shortLabel: "Shoulder" },
-            { key: "sleeve", label: <TranslatedText text="Sleeve" />, shortLabel: "Sleeve" },
+            { key: "neck", label: "Neck", shortLabel: "Neck" },
+            { key: "chest", label: "Chest", shortLabel: "Chest" },
+            { key: "waist", label: "Waist", shortLabel: "Waist" },
+            { key: "hips", label: "Hips", shortLabel: "Hips" },
+            { key: "shoulder", label: "Shoulder", shortLabel: "Shoulder" },
+            { key: "sleeve", label: "Sleeve", shortLabel: "Sleeve" },
         ],
         shirt: [
-            { key: "collar", label: <TranslatedText text="Collar" />, shortLabel: "Collar" },
-            { key: "chest", label: <TranslatedText text="Chest" />, shortLabel: "Chest" },
-            { key: "waist", label: <TranslatedText text="Waist" />, shortLabel: "Waist" },
-            { key: "shirt_length", label: <TranslatedText text="Shirt Length" />, shortLabel: "Length" },
-            { key: "sleeve_length", label: <TranslatedText text="Sleeve Length" />, shortLabel: "Sleeve" },
-            { key: "cuff", label: <TranslatedText text="Cuff" />, shortLabel: "Cuff" },
+            { key: "collar", label: "Collar", shortLabel: "Collar" },
+            { key: "chest", label: "Chest", shortLabel: "Chest" },
+            { key: "waist", label: "Waist", shortLabel: "Waist" },
+            { key: "shirt_length", label: "Shirt Length", shortLabel: "Length" },
+            { key: "sleeve_length", label: "Sleeve Length", shortLabel: "Sleeve" },
+            { key: "cuff", label: "Cuff", shortLabel: "Cuff" },
         ],
     };
 
@@ -166,25 +171,25 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
         let calculatedQuantity = 1; // default
         let calculationInfo = '';
 
-        // Auto-calculate for fabric items
-        if ((item.itemType === 'fabric' || item.type === 'fabric') && measurementValues && Object.keys(measurementValues).length > 0) {
-            try {
-                const result = calculateFabricQuantity({
-                    garmentType,
-                    measurements: measurementValues,
-                    fabricWidth: item.widthCm || 140,
-                    includeBuffer: true
-                });
-
-                calculatedQuantity = result.quantity;
-                calculationInfo = result.breakdown;
-
-                toast.success(`Auto-calculated: ${formatCalculationResult(result)}`);
-            } catch (error) {
-                console.error('Fabric calculation error:', error);
-                toast.error('Could not auto-calculate fabric quantity, using default');
-            }
-        }
+        // Auto-calculation disabled as per user request
+        // if ((item.itemType === 'fabric' || item.type === 'fabric') && measurementValues && Object.keys(measurementValues).length > 0) {
+        //     try {
+        //         const result = calculateFabricQuantity({
+        //             garmentType,
+        //             measurements: measurementValues,
+        //             fabricWidth: item.widthCm || 140,
+        //             includeBuffer: true
+        //         });
+        //
+        //         calculatedQuantity = result.quantity;
+        //         calculationInfo = result.breakdown;
+        //
+        //         toast.success(`Auto-calculated: ${formatCalculationResult(result)}`);
+        //     } catch (error) {
+        //         console.error('Fabric calculation error:', error);
+        //         toast.error('Could not auto-calculate fabric quantity, using default');
+        //     }
+        // }
 
         setSelectedOrderItems(prev => [...prev, {
             inventoryItemId: item.id,
@@ -282,7 +287,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                 ],
                 payment_method: 'cash',
 
-                notes: `${orderDescription} | Priority: ${orderPriority} | Target: ${targetDate}`,
+                notes: `${orderDescription} | Priority: ${orderPriority} | Target: ${targetDate} | Fitting: ${firstFittingDate}`,
                 currency: 'CFA',
                 subtotal: subtotal,
                 tax_amount: tax,
@@ -303,8 +308,26 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
             console.log('Selected client:', selectedClient);
             console.log('Selected order items:', selectedOrderItems);
 
+            // Save measurements to client profile if they exist
+            if (finalClientId && measurementValues && Object.keys(measurementValues).length > 0) {
+                try {
+                    // Update client with new measurements
+                    // measurements can be stored as JSON string or object depending on backend handling.
+                    // Based on schema it is TEXT, so stringify.
+                    const measurementsToSave = JSON.stringify(measurementValues);
+                    await customersAPI.update(finalClientId, {
+                        measurements: measurementsToSave
+                    });
+                    console.log("Updated client measurements");
+                } catch (updateErr) {
+                    console.error("Failed to update client measurements", updateErr);
+                    // Don't block order creation, just log it
+                }
+            }
+
             const newOrder = await ordersApi.create(payload);
             setCreatedOrderNumber(newOrder.order_number);
+            setCreatedOrderId(newOrder.order_id || newOrder.id);
             if (onOrderCreated) {
                 onOrderCreated(newOrder);
             }
@@ -381,11 +404,11 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
     if (!isOpen) return null;
 
     const steps = [
-        { number: 1, label: <TranslatedText text="Client Details" /> },
-        { number: 2, label: <TranslatedText text="Design & Measurements" /> },
-        { number: 3, label: <TranslatedText text="Fabric Selection" /> },
-        { number: 4, label: <TranslatedText text="Review & Confirm" /> },
-        { number: 5, label: <TranslatedText text="Payment" /> },
+        { number: 1, label: "Client Details" },
+        { number: 2, label: "Design & Measurements" },
+        { number: 3, label: "Fabric Selection" },
+        { number: 4, label: "Review & Confirm" },
+        { number: 5, label: "Payment" },
     ];
 
     const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 5));
@@ -449,7 +472,9 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                         <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-all duration-300 ${circleClass} ${isActive ? 'scale-110 shadow-lg shadow-blue-700/30' : ''}`}>
                                             {isCompleted ? <MaterialIcon name="check" className="text-sm" /> : step.number}
                                         </div>
-                                        <span className={`text-xs font-bold transition-all duration-300 ${textClass} ${isActive ? 'scale-105' : ''}`}>{step.label}</span>
+                                        <span className={`text-xs font-bold transition-all duration-300 ${textClass} ${isActive ? 'scale-105' : ''}`}>
+                                            <TranslatedText text={step.label} />
+                                        </span>
                                     </div>
                                 );
                             })}
@@ -567,6 +592,20 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                                 <input
                                                     value={targetDate}
                                                     onChange={(e) => setTargetDate(e.target.value)}
+                                                    className="w-full pl-10 px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none"
+                                                    type="date"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-[#4e5a97] dark:text-[#8a95c9] mb-2 uppercase tracking-tighter"><TranslatedText text="FIRST FITTING DATE" /></label>
+                                            <div className="relative">
+                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#4e5a97]">
+                                                    <MaterialIcon name="straighten" />
+                                                </span>
+                                                <input
+                                                    value={firstFittingDate}
+                                                    onChange={(e) => setFirstFittingDate(e.target.value)}
                                                     className="w-full pl-10 px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none"
                                                     type="date"
                                                 />
@@ -708,7 +747,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                     {measurementFields[garmentType].map((field) => (
                                         <div key={field.key} className="flex flex-col gap-1.5">
                                             <label className="text-xs font-bold uppercase tracking-wider text-[#4e5a97] dark:text-gray-400">
-                                                {field.label}
+                                                <TranslatedText text={field.label} />
                                             </label>
                                             <input
                                                 value={measurementValues[field.key] || ''}
@@ -959,13 +998,13 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                         </div>
                                         <div className="flex-1">
                                             <h4 className="font-bold text-[#0e101b] dark:text-white">
-                                                {selectedClient ? `${selectedClient.first_name} ${selectedClient.last_name}` : quickClient.fullName || 'Unknown Client'}
+                                                {selectedClient ? `${selectedClient.first_name} ${selectedClient.last_name}` : quickClient.fullName || tSync('review.unknownClient')}
                                             </h4>
                                             <p className="text-sm text-[#4e5a97] dark:text-gray-400 mt-1">
-                                                {selectedClient?.email || quickClient.email || 'No email'}
+                                                {selectedClient?.email || quickClient.email || tSync('review.noEmail')}
                                             </p>
                                             <p className="text-sm text-[#4e5a97] dark:text-gray-400">
-                                                {selectedClient?.phone || quickClient.phone || 'No phone'}
+                                                {selectedClient?.phone || quickClient.phone || tSync('review.noPhone')}
                                             </p>
                                         </div>
                                     </div>
@@ -1002,7 +1041,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                     <div className="grid grid-cols-3 gap-4">
                                         {measurementFields[garmentType].slice(0, 6).map((field) => (
                                             <div key={field.key} className="text-center">
-                                                <p className="text-xs font-bold text-blue-700 uppercase tracking-wider">{field.shortLabel}</p>
+                                                <p className="text-xs font-bold text-blue-700 uppercase tracking-wider"><TranslatedText text={field.shortLabel} /></p>
                                                 <p className="text-lg font-bold text-[#0e101b] dark:text-white mt-1">
                                                     {measurementValues[field.key] || '--'} cm
                                                 </p>
@@ -1084,7 +1123,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
 
                                     {/* First Fitting Date */}
                                     <div className="mb-4">
-                                        <label className="block text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">First Fitting Date</label>
+                                        <label className="block text-xs font-bold text-blue-700 uppercase tracking-wider mb-2">{tSync('review.firstFitting')}</label>
                                         <input
                                             type="date"
                                             value={targetDate}
@@ -1098,7 +1137,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                         <MaterialIcon name="info" className="text-blue-700 text-sm mt-0.5" />
                                         <div>
                                             <p className="text-xs font-semibold text-blue-700">
-                                                Estimated completion date for this order is 24th Nov 2024, subject to fitting results.
+                                                {tSync('review.estimatedCompletion')} 24th Nov 2024.
                                             </p>
                                         </div>
                                     </div>
@@ -1107,17 +1146,17 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
 
                             {/* Order Total Breakdown */}
                             <div className="bg-white dark:bg-[#1a1e2e] p-6 rounded-xl border border-[#e7e9f3] dark:border-[#2d324a] shadow-sm">
-                                <h3 className="text-lg font-bold text-[#0e101b] dark:text-white mb-4">Order Total Breakdown</h3>
+                                <h3 className="text-lg font-bold text-[#0e101b] dark:text-white mb-4">{tSync('review.orderBreakdown')}</h3>
 
                                 <div className="space-y-2">
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-[#4e5a97] dark:text-gray-400">Material Costs</span>
+                                        <span className="text-[#4e5a97] dark:text-gray-400">{tSync('review.materialCosts')}</span>
                                         <span className="font-semibold text-[#0e101b] dark:text-white">${materialCost.toFixed(2)}</span>
                                     </div>
                                     <div className="flex justify-between items-center text-sm">
                                         <div className="flex flex-col">
-                                            <span className="text-[#4e5a97] dark:text-gray-400">Making Service Cost</span>
-                                            <span className="text-[10px] text-gray-400 italic">Labor only (excludes materials)</span>
+                                            <span className="text-[#4e5a97] dark:text-gray-400">{tSync('review.serviceCost')}</span>
+                                            <span className="text-[10px] text-gray-400 italic">{tSync('review.laborOnly')}</span>
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <span className="text-[#0e101b] dark:text-white font-medium">$</span>
@@ -1130,12 +1169,12 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                         </div>
                                     </div>
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-[#4e5a97] dark:text-gray-400">Tax (20%)</span>
+                                        <span className="text-[#4e5a97] dark:text-gray-400">{tSync('review.tax')} (20%)</span>
                                         <span className="font-semibold text-[#0e101b] dark:text-white">${taxAmount.toFixed(2)}</span>
                                     </div>
 
                                     <div className="pt-3 border-t border-[#e7e9f3] dark:border-[#2d324a] flex justify-between items-center">
-                                        <span className="text-lg font-bold text-[#0e101b] dark:text-white">Total Amount</span>
+                                        <span className="text-lg font-bold text-[#0e101b] dark:text-white">{tSync('review.totalAmount')}</span>
                                         <span className="text-3xl font-bold text-blue-700">${totalOrderCost.toFixed(2)}</span>
                                     </div>
 
@@ -1144,8 +1183,8 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                         <div className="flex items-center gap-2">
                                             <MaterialIcon name="payments" className="text-orange-600" />
                                             <div className="flex flex-col">
-                                                <span className="font-bold text-orange-600">REQUIRED DEPOSIT (Materials)</span>
-                                                <span className="text-xs text-orange-600/80">Client pays labor upon pickup</span>
+                                                <span className="font-bold text-orange-600">{tSync('review.requiredDeposit')}</span>
+                                                <span className="text-xs text-orange-600/80">{tSync('review.payLaborPickup')}</span>
                                             </div>
                                         </div>
                                         <span className="text-xl font-bold text-orange-600">${materialCost.toFixed(2)}</span>
@@ -1165,7 +1204,25 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                             <button onClick={onClose} className="mt-8 px-6 py-3 bg-blue-700 text-white rounded-lg font-bold shadow-lg">
                                 Return to Dashboard
                             </button>
+
+                            {createdOrderId && (
+                                <button
+                                    onClick={() => setShowInvoice(true)}
+                                    className="mt-4 px-6 py-3 bg-white border border-gray-200 text-blue-700 rounded-lg font-bold shadow-sm hover:bg-gray-50 flex items-center gap-2"
+                                >
+                                    <MaterialIcon name="receipt" />
+                                    Print Invoice / Receipt
+                                </button>
+                            )}
                         </div>
+                    )}
+
+                    {showInvoice && createdOrderId && (
+                        <InvoiceGenerator
+                            orderId={createdOrderId}
+                            orderNumber={createdOrderNumber}
+                            onClose={() => setShowInvoice(false)}
+                        />
                     )}
                 </div>
 
@@ -1175,7 +1232,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                     {currentStep > 1 && currentStep < 5 && (
                         <button onClick={prevStep} className="mr-auto px-6 py-3 rounded-lg text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#1e2336] transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
                             <MaterialIcon name="arrow_back" className="text-lg" />
-                            Back
+                            {tSync('actions.back')}
                         </button>
                     )}
 
@@ -1184,9 +1241,19 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                         disabled={isSubmitting}
                         className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3.5 rounded-lg text-sm font-bold shadow-lg shadow-blue-700/30 hover:shadow-xl hover:shadow-blue-700/40 hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                     >
-                        {isSubmitting ? 'Processing...' : (
+                        {isSubmitting ? (
+                            <TranslatedText text="Processing..." />
+                        ) : (
                             <>
-                                {currentStep === 4 ? 'Confirm & Create' : currentStep === 5 ? 'Close' : `Next: ${steps[currentStep].label}`}
+                                {currentStep === 4 && <TranslatedText text="Confirm & Create" />}
+                                {currentStep === 5 && <TranslatedText text="Close" />}
+                                {currentStep < 4 && (
+                                    <span className="flex items-center gap-1">
+                                        <TranslatedText text="Next" />
+                                        <span>:</span>
+                                        <TranslatedText text={steps[currentStep]?.label || ''} />
+                                    </span>
+                                )}
                                 {currentStep !== 5 && <MaterialIcon name="arrow_forward" />}
                             </>
                         )}

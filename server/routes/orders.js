@@ -113,7 +113,7 @@ router.post('/', auth, [
     };
 
     const order = await orderService.createOrder(orderData, req.user.id);
-    
+
     res.status(201).json(order);
   } catch (error) {
     if (error.message.includes('Insufficient stock') || error.message.includes('not assigned to your shop')) {
@@ -173,7 +173,7 @@ router.put('/:orderId/confirm', auth, async (req, res) => {
   try {
     const { orderId } = req.params;
     const result = await orderService.confirmOrder(orderId, req.user.id);
-    
+
     res.json(result);
   } catch (error) {
     if (error.message.includes('Order not found')) {
@@ -251,7 +251,7 @@ router.put('/:orderId/process', auth, async (req, res) => {
   try {
     const { orderId } = req.params;
     const result = await orderService.processFulfillment(orderId, req.user.id);
-    
+
     res.json(result);
   } catch (error) {
     if (error.message.includes('Order not found')) {
@@ -334,7 +334,7 @@ router.put('/:orderId/fulfill', auth, [
 
     const { orderId } = req.params;
     const { tracking_number } = req.body;
-    
+
     const result = await orderService.completeFulfillment(orderId, tracking_number, req.user.id);
     res.json(result);
   } catch (error) {
@@ -407,7 +407,7 @@ router.put('/:orderId/cancel', auth, async (req, res) => {
   try {
     const { orderId } = req.params;
     const { reason = '' } = req.body;
-    
+
     const result = await orderService.cancelOrder(orderId, req.user.id, reason);
     res.json(result);
   } catch (error) {
@@ -484,16 +484,16 @@ router.put('/:orderId/status', auth, async (req, res) => {
   try {
     const { orderId } = req.params;
     const { status, notes = '' } = req.body;
-    
+
     if (!status) {
       return res.status(400).json({ error: 'Status is required' });
     }
-    
+
     const validStatuses = ['pending', 'confirmed', 'processing', 'fulfilled', 'completed', 'cancelled'];
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ error: 'Invalid status. Must be one of: ' + validStatuses.join(', ') });
     }
-    
+
     const result = await orderService.updateOrderStatus(orderId, status, req.user.id, notes);
     res.json(result);
   } catch (error) {
@@ -501,6 +501,77 @@ router.put('/:orderId/status', auth, async (req, res) => {
       res.status(404).json({ error: error.message });
     } else {
       console.error('Update order status error:', error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  }
+});
+
+/**
+ * @swagger
+ * /api/orders/{orderId}/payment:
+ *   put:
+ *     summary: Update order payment status
+ *     description: Update the payment details of an existing order
+ *     tags: [Orders]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: orderId
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: Order ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - payment_status
+ *               - amount_paid
+ *               - remaining_amount
+ *             properties:
+ *               payment_status:
+ *                 type: string
+ *                 enum: [pending, partial, completed]
+ *               amount_paid:
+ *                 type: number
+ *               remaining_amount:
+ *                 type: number
+ *     responses:
+ *       200:
+ *         description: Payment status updated successfully
+ *       400:
+ *         description: Invalid input
+ *       404:
+ *         description: Order not found
+ *       500:
+ *         description: Server error
+ */
+router.put('/:orderId/payment', auth, async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { payment_status, amount_paid, remaining_amount } = req.body;
+
+    if (!payment_status || amount_paid === undefined || remaining_amount === undefined) {
+      return res.status(400).json({ error: 'Missing required payment fields' });
+    }
+
+    const result = await orderService.updatePaymentStatus(orderId, {
+      payment_status,
+      amount_paid,
+      remaining_amount
+    }, req.user.id);
+
+    res.json(result);
+  } catch (error) {
+    if (error.message.includes('Order not found')) {
+      res.status(404).json({ error: error.message });
+    } else {
+      console.error('Update payment status error:', error);
       res.status(500).json({ error: 'Server error' });
     }
   }
@@ -601,11 +672,11 @@ router.get('/income-report', auth, async (req, res) => {
   try {
     const database = require('../database/database');
     const { start_date, end_date, shop_id } = req.query;
-    
+
     // Build date filter - use simple date comparison
     let dateFilter = '';
     const params = [];
-    
+
     if (start_date && end_date) {
       // Add time to end_date to include the full day
       const endDateTime = end_date + ' 23:59:59';
@@ -621,7 +692,7 @@ router.get('/income-report', auth, async (req, res) => {
       dateFilter = `AND o.created_at >= ? AND o.created_at <= ?`;
       params.push(startDate.toISOString(), endDate.toISOString());
     }
-    
+
     // Add shop filter
     let shopFilter = '';
     if (shop_id && shop_id !== 'all') {
@@ -631,7 +702,7 @@ router.get('/income-report', auth, async (req, res) => {
       shopFilter = `AND o.shop_id = ?`;
       params.push(req.user.shop_id);
     }
-    
+
     // Get orders with product names and categories aggregated
     // Use a simpler approach that works better with the SQLite-to-PostgreSQL converter
     const orders = await database.all(`
@@ -660,8 +731,8 @@ router.get('/income-report', auth, async (req, res) => {
         WHERE oi.order_id = ?
         ORDER BY COALESCE(p.name, 'Unknown Product')
       `, [order.id]);
-      
-      const productNames = productNamesResult.length > 0 
+
+      const productNames = productNamesResult.length > 0
         ? productNamesResult.map(p => p.product_name).join(', ')
         : 'No products';
 
@@ -677,7 +748,7 @@ router.get('/income-report', auth, async (req, res) => {
           AND (cat.deleted_at IS NULL OR cat.deleted_at = '')
         ORDER BY cat.name
       `, [order.id]);
-      
+
       const categories = categoriesResult.length > 0
         ? categoriesResult.map(c => c.category_name).join(', ')
         : '';
@@ -688,7 +759,7 @@ router.get('/income-report', auth, async (req, res) => {
         categories: categories
       };
     }));
-    
+
     // Calculate total revenue
     const revenueResult = await database.get(`
       SELECT COALESCE(SUM(total_amount), 0) as total_revenue
@@ -696,7 +767,7 @@ router.get('/income-report', auth, async (req, res) => {
       WHERE o.status != 'cancelled' ${dateFilter} ${shopFilter}
     `, params);
     const totalRevenue = parseFloat(revenueResult?.total_revenue || 0);
-    
+
     // Calculate cost of goods sold (COGS) from order items
     const cogsResult = await database.get(`
       SELECT COALESCE(SUM(oi.quantity * COALESCE(p.cost_price, 0)), 0) as total_cogs
@@ -706,14 +777,14 @@ router.get('/income-report', auth, async (req, res) => {
       WHERE o.status != 'cancelled' ${dateFilter} ${shopFilter}
     `, params);
     const totalCOGS = parseFloat(cogsResult?.total_cogs || 0);
-    
+
     // Calculate gross profit
     const grossProfit = totalRevenue - totalCOGS;
-    
+
     // Get expenses for the same period
     let expenseDateFilter = '';
     const expenseParams = [];
-    
+
     if (start_date && end_date) {
       expenseDateFilter = `AND e.expense_date >= ? AND e.expense_date <= ?`;
       expenseParams.push(start_date, end_date);
@@ -724,7 +795,7 @@ router.get('/income-report', auth, async (req, res) => {
       expenseDateFilter = `AND e.expense_date >= ? AND e.expense_date <= ?`;
       expenseParams.push(startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0]);
     }
-    
+
     let expenseShopFilter = '';
     if (shop_id && shop_id !== 'all') {
       expenseShopFilter = `AND e.shop_id = ?`;
@@ -733,17 +804,17 @@ router.get('/income-report', auth, async (req, res) => {
       expenseShopFilter = `AND e.shop_id = ?`;
       expenseParams.push(req.user.shop_id);
     }
-    
+
     const expensesResult = await database.get(`
       SELECT COALESCE(SUM(amount), 0) as total_expenses
       FROM expenses e
       WHERE e.is_active = true ${expenseDateFilter} ${expenseShopFilter}
     `, expenseParams);
     const totalExpenses = parseFloat(expensesResult?.total_expenses || 0);
-    
+
     // Calculate net profit
     const netProfit = grossProfit - totalExpenses;
-    
+
     // Get order items with cost details for detailed breakdown
     const orderItemsWithCost = await database.all(`
       SELECT 
@@ -761,7 +832,7 @@ router.get('/income-report', auth, async (req, res) => {
       WHERE o.status != 'cancelled' ${dateFilter} ${shopFilter}
       ORDER BY o.created_at DESC, oi.id
     `, params);
-    
+
     // Get expenses breakdown
     const expensesBreakdown = await database.all(`
       SELECT 
@@ -776,7 +847,7 @@ router.get('/income-report', auth, async (req, res) => {
       WHERE e.is_active = true ${expenseDateFilter} ${expenseShopFilter}
       ORDER BY e.expense_date DESC
     `, expenseParams);
-    
+
     res.json({
       summary: {
         total_revenue: totalRevenue,
@@ -804,8 +875,8 @@ router.get('/income-report', auth, async (req, res) => {
       detail: error.detail,
       hint: error.hint
     });
-    res.status(500).json({ 
-      error: 'Server error', 
+    res.status(500).json({
+      error: 'Server error',
       details: error.message,
       stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
     });
@@ -856,12 +927,12 @@ router.get('/income-report/pdf', auth, async (req, res) => {
   try {
     const database = require('../database/database');
     const { start_date, end_date, shop_id } = req.query;
-    
+
     // Get the same data as the regular income report
     // Build date filter
     let dateFilter = '';
     const params = [];
-    
+
     if (start_date && end_date) {
       const endDateTime = end_date + ' 23:59:59';
       dateFilter = `AND o.created_at >= ? AND o.created_at <= ?`;
@@ -875,7 +946,7 @@ router.get('/income-report/pdf', auth, async (req, res) => {
       dateFilter = `AND o.created_at >= ? AND o.created_at <= ?`;
       params.push(startDate.toISOString(), endDate.toISOString());
     }
-    
+
     // Add shop filter
     let shopFilter = '';
     let shopName = 'All Shops';
@@ -891,7 +962,7 @@ router.get('/income-report/pdf', auth, async (req, res) => {
       const shop = await database.get('SELECT name FROM shops WHERE id = ?', [req.user.shop_id]);
       shopName = shop?.name || 'Unknown Shop';
     }
-    
+
     // Get orders with details
     const orders = await database.all(`
       SELECT 
@@ -918,8 +989,8 @@ router.get('/income-report/pdf', auth, async (req, res) => {
         WHERE oi.order_id = ?
         ORDER BY COALESCE(p.name, 'Unknown Product')
       `, [order.id]);
-      
-      const productNames = productNamesResult.length > 0 
+
+      const productNames = productNamesResult.length > 0
         ? productNamesResult.map(p => p.product_name).join(', ')
         : 'No products';
 
@@ -934,7 +1005,7 @@ router.get('/income-report/pdf', auth, async (req, res) => {
           AND (cat.deleted_at IS NULL OR cat.deleted_at = '')
         ORDER BY cat.name
       `, [order.id]);
-      
+
       const categories = categoriesResult.length > 0
         ? categoriesResult.map(c => c.category_name).join(', ')
         : '';
@@ -945,7 +1016,7 @@ router.get('/income-report/pdf', auth, async (req, res) => {
         categories: categories
       };
     }));
-    
+
     // Calculate financial metrics
     const revenueResult = await database.get(`
       SELECT COALESCE(SUM(total_amount), 0) as total_revenue
@@ -953,7 +1024,7 @@ router.get('/income-report/pdf', auth, async (req, res) => {
       WHERE o.status != 'cancelled' ${dateFilter} ${shopFilter}
     `, params);
     const totalRevenue = parseFloat(revenueResult?.total_revenue || 0);
-    
+
     const cogsResult = await database.get(`
       SELECT COALESCE(SUM(oi.quantity * COALESCE(p.cost_price, 0)), 0) as total_cogs
       FROM order_items oi
@@ -962,13 +1033,13 @@ router.get('/income-report/pdf', auth, async (req, res) => {
       WHERE o.status != 'cancelled' ${dateFilter} ${shopFilter}
     `, params);
     const totalCOGS = parseFloat(cogsResult?.total_cogs || 0);
-    
+
     const grossProfit = totalRevenue - totalCOGS;
-    
+
     // Get expenses
     let expenseDateFilter = '';
     const expenseParams = [];
-    
+
     if (start_date && end_date) {
       expenseDateFilter = `AND e.expense_date >= ? AND e.expense_date <= ?`;
       expenseParams.push(start_date, end_date);
@@ -979,7 +1050,7 @@ router.get('/income-report/pdf', auth, async (req, res) => {
       expenseDateFilter = `AND e.expense_date >= ? AND e.expense_date <= ?`;
       expenseParams.push(startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0]);
     }
-    
+
     let expenseShopFilter = '';
     if (shop_id && shop_id !== 'all') {
       expenseShopFilter = `AND e.shop_id = ?`;
@@ -988,16 +1059,16 @@ router.get('/income-report/pdf', auth, async (req, res) => {
       expenseShopFilter = `AND e.shop_id = ?`;
       expenseParams.push(req.user.shop_id);
     }
-    
+
     const expensesResult = await database.get(`
       SELECT COALESCE(SUM(amount), 0) as total_expenses
       FROM expenses e
       WHERE e.is_active = true ${expenseDateFilter} ${expenseShopFilter}
     `, expenseParams);
     const totalExpenses = parseFloat(expensesResult?.total_expenses || 0);
-    
+
     const netProfit = grossProfit - totalExpenses;
-    
+
     const expensesBreakdown = await database.all(`
       SELECT 
         e.id,
@@ -1011,7 +1082,7 @@ router.get('/income-report/pdf', auth, async (req, res) => {
       WHERE e.is_active = true ${expenseDateFilter} ${expenseShopFilter}
       ORDER BY e.expense_date DESC
     `, expenseParams);
-    
+
     const reportData = {
       summary: {
         total_revenue: totalRevenue,
@@ -1033,23 +1104,23 @@ router.get('/income-report/pdf', auth, async (req, res) => {
 
     // Generate PDF using jsreport
     const pdfBuffer = await reportService.generateIncomeReportPDF(reportData);
-    
+
     console.log('PDF generated for download:', {
       size: pdfBuffer.length,
       isBuffer: Buffer.isBuffer(pdfBuffer),
       filename: `income-report-${reportData.date_range.start_date}-to-${reportData.date_range.end_date}.pdf`
     });
-    
+
     // Set response headers for PDF download
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename="income-report-${reportData.date_range.start_date}-to-${reportData.date_range.end_date}.pdf"`);
     res.setHeader('Content-Length', pdfBuffer.length);
     res.send(pdfBuffer);
-    
+
   } catch (error) {
     console.error('Generate PDF income report error:', error);
-    res.status(500).json({ 
-      error: 'Server error', 
+    res.status(500).json({
+      error: 'Server error',
       details: error.message
     });
   }
@@ -1099,7 +1170,7 @@ router.get('/income-report/excel', auth, async (req, res) => {
   try {
     // Check if Excel export is supported
     if (!reportService.isExcelSupported()) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'Excel export is not available due to compatibility issues. Please use PDF export instead.',
         alternative: 'Use the PDF export button for professional reports.'
       });
@@ -1107,11 +1178,11 @@ router.get('/income-report/excel', auth, async (req, res) => {
 
     const database = require('../database/database');
     const { start_date, end_date, shop_id } = req.query;
-    
+
     // Get the same data as the PDF report (reuse the same logic)
     let dateFilter = '';
     const params = [];
-    
+
     if (start_date && end_date) {
       const endDateTime = end_date + ' 23:59:59';
       dateFilter = `AND o.created_at >= ? AND o.created_at <= ?`;
@@ -1125,7 +1196,7 @@ router.get('/income-report/excel', auth, async (req, res) => {
       dateFilter = `AND o.created_at >= ? AND o.created_at <= ?`;
       params.push(startDate.toISOString(), endDate.toISOString());
     }
-    
+
     let shopFilter = '';
     let shopName = 'All Shops';
     if (shop_id && shop_id !== 'all') {
@@ -1139,7 +1210,7 @@ router.get('/income-report/excel', auth, async (req, res) => {
       const shop = await database.get('SELECT name FROM shops WHERE id = ?', [req.user.shop_id]);
       shopName = shop?.name || 'Unknown Shop';
     }
-    
+
     // Get orders and financial data (same as PDF endpoint)
     const orders = await database.all(`
       SELECT 
@@ -1165,8 +1236,8 @@ router.get('/income-report/excel', auth, async (req, res) => {
         WHERE oi.order_id = ?
         ORDER BY COALESCE(p.name, 'Unknown Product')
       `, [order.id]);
-      
-      const productNames = productNamesResult.length > 0 
+
+      const productNames = productNamesResult.length > 0
         ? productNamesResult.map(p => p.product_name).join(', ')
         : 'No products';
 
@@ -1181,7 +1252,7 @@ router.get('/income-report/excel', auth, async (req, res) => {
           AND (cat.deleted_at IS NULL OR cat.deleted_at = '')
         ORDER BY cat.name
       `, [order.id]);
-      
+
       const categories = categoriesResult.length > 0
         ? categoriesResult.map(c => c.category_name).join(', ')
         : '';
@@ -1192,7 +1263,7 @@ router.get('/income-report/excel', auth, async (req, res) => {
         categories: categories
       };
     }));
-    
+
     // Calculate financial metrics (same as PDF)
     const revenueResult = await database.get(`
       SELECT COALESCE(SUM(total_amount), 0) as total_revenue
@@ -1200,7 +1271,7 @@ router.get('/income-report/excel', auth, async (req, res) => {
       WHERE o.status != 'cancelled' ${dateFilter} ${shopFilter}
     `, params);
     const totalRevenue = parseFloat(revenueResult?.total_revenue || 0);
-    
+
     const cogsResult = await database.get(`
       SELECT COALESCE(SUM(oi.quantity * COALESCE(p.cost_price, 0)), 0) as total_cogs
       FROM order_items oi
@@ -1209,13 +1280,13 @@ router.get('/income-report/excel', auth, async (req, res) => {
       WHERE o.status != 'cancelled' ${dateFilter} ${shopFilter}
     `, params);
     const totalCOGS = parseFloat(cogsResult?.total_cogs || 0);
-    
+
     const grossProfit = totalRevenue - totalCOGS;
-    
+
     // Get expenses (same as PDF)
     let expenseDateFilter = '';
     const expenseParams = [];
-    
+
     if (start_date && end_date) {
       expenseDateFilter = `AND e.expense_date >= ? AND e.expense_date <= ?`;
       expenseParams.push(start_date, end_date);
@@ -1226,7 +1297,7 @@ router.get('/income-report/excel', auth, async (req, res) => {
       expenseDateFilter = `AND e.expense_date >= ? AND e.expense_date <= ?`;
       expenseParams.push(startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0]);
     }
-    
+
     let expenseShopFilter = '';
     if (shop_id && shop_id !== 'all') {
       expenseShopFilter = `AND e.shop_id = ?`;
@@ -1235,16 +1306,16 @@ router.get('/income-report/excel', auth, async (req, res) => {
       expenseShopFilter = `AND e.shop_id = ?`;
       expenseParams.push(req.user.shop_id);
     }
-    
+
     const expensesResult = await database.get(`
       SELECT COALESCE(SUM(amount), 0) as total_expenses
       FROM expenses e
       WHERE e.is_active = true ${expenseDateFilter} ${expenseShopFilter}
     `, expenseParams);
     const totalExpenses = parseFloat(expensesResult?.total_expenses || 0);
-    
+
     const netProfit = grossProfit - totalExpenses;
-    
+
     const expensesBreakdown = await database.all(`
       SELECT 
         e.id,
@@ -1258,7 +1329,7 @@ router.get('/income-report/excel', auth, async (req, res) => {
       WHERE e.is_active = true ${expenseDateFilter} ${expenseShopFilter}
       ORDER BY e.expense_date DESC
     `, expenseParams);
-    
+
     const reportData = {
       summary: {
         total_revenue: totalRevenue,
@@ -1280,16 +1351,16 @@ router.get('/income-report/excel', auth, async (req, res) => {
 
     // Generate Excel using jsreport
     const excelBuffer = await reportService.generateIncomeReportExcel(reportData);
-    
+
     // Set response headers for Excel download
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     res.setHeader('Content-Disposition', `attachment; filename="income-report-${reportData.date_range.start_date}-to-${reportData.date_range.end_date}.xlsx"`);
     res.send(excelBuffer);
-    
+
   } catch (error) {
     console.error('Generate Excel income report error:', error);
-    res.status(500).json({ 
-      error: 'Server error', 
+    res.status(500).json({
+      error: 'Server error',
       details: error.message
     });
   }
@@ -1299,11 +1370,11 @@ router.get('/:orderId', auth, async (req, res) => {
   try {
     const { orderId } = req.params;
     const order = await orderService.getOrder(orderId);
-    
+
     if (!order) {
       return res.status(404).json({ error: 'Order not found' });
     }
-    
+
     res.json(order);
   } catch (error) {
     console.error('Get order error:', error);
@@ -1366,7 +1437,7 @@ router.get('/:orderId/items', auth, async (req, res) => {
   try {
     const { orderId } = req.params;
     const items = await orderService.getOrderItems(orderId);
-    
+
     res.json(items);
   } catch (error) {
     console.error('Get order items error:', error);
@@ -1523,7 +1594,7 @@ router.get('/:orderId/picking-list', auth, async (req, res) => {
   try {
     const { orderId } = req.params;
     const pickingList = await orderService.generatePickingList(orderId);
-    
+
     res.json(pickingList);
   } catch (error) {
     console.error('Generate picking list error:', error);
@@ -1654,7 +1725,7 @@ router.get('/stats/overview', auth, async (req, res) => {
     const period = parseInt(req.query.period) || 30;
     const dateFrom = new Date();
     dateFrom.setDate(dateFrom.getDate() - period);
-    
+
     const stats = await orderService.getOrderOverviewStats(period, req.user);
     res.json({ stats });
   } catch (error) {
@@ -1710,12 +1781,12 @@ router.get('/stats/overview', auth, async (req, res) => {
 router.delete('/:orderId', auth, async (req, res) => {
   try {
     const { orderId } = req.params;
-    
+
     // Check if user is admin (only admins can delete orders)
     if (req.user.role !== 'admin') {
       return res.status(403).json({ error: 'Only administrators can delete orders' });
     }
-    
+
     const result = await orderService.deleteOrder(orderId, req.user.id);
     res.json(result);
   } catch (error) {

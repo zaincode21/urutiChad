@@ -14,6 +14,7 @@ import {
 import { api } from '../lib/api';
 import toast from 'react-hot-toast';
 import { ordersAPI, productsAPI, customersAPI, discountsAPI } from '../lib/api';
+import { inventoryApi } from '../lib/inventory-api';
 import TranslatedText from './TranslatedText';
 
 import { useTranslation } from '../hooks/useTranslation';
@@ -332,11 +333,40 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
       }
 
       console.log(`✅ Loaded ${productData.length} products from database`);
-      setProducts(productData);
 
-      // Log first few products for debugging
-      if (productData.length > 0) {
-        console.log('📦 Sample products:', productData.slice(0, 3));
+      // Fetch Raw Materials for POS
+      let rawMaterials = [];
+      try {
+        console.log('🧵 Fetching raw materials for POS...');
+        const materialsData = await inventoryApi.getAll();
+        console.log(`✅ Loaded ${materialsData.length} raw materials`);
+
+        // Map raw materials to product structure
+        rawMaterials = materialsData.map(m => ({
+          ...m,
+          id: m.id,
+          name: m.name,
+          sku: m.sku || `MAT-${m.id.substring(0, 6)}`,
+          price: m.selling_price || 0,
+          currency: 'CFA',
+          stock_quantity: m.current_stock || 0,
+          product_type: 'raw_material',
+          barcode: m.barcode || '', // Use if available
+          brand_name: 'Atelier Material',
+          is_atelier_item: true
+        }));
+      } catch (matError) {
+        console.error('❌ Error fetching raw materials:', matError);
+        // Don't fail the whole POS if raw materials fail
+      }
+
+      // Combine products and raw materials
+      const allItems = [...productData, ...rawMaterials];
+      setProducts(allItems);
+
+      // Log first few items for debugging
+      if (allItems.length > 0) {
+        console.log('📦 Sample items (Products + Materials):', allItems.slice(0, 3));
       }
 
     } catch (error) {
@@ -530,11 +560,11 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
         </head>
         <body>
           <div class="receipt-header">
-            <div class="store-name">URUTIROSE STORE</div>
-            <div class="store-info">Your Trusted Shopping Destination</div>
-            <div class="store-info">123 Main Street, City Center</div>
+            <div class="store-name">LikaBoutiques</div>
+            <div class="store-info">{tSync('Your Trusted Shopping Destination')}</div>
+            <div class="store-info">{tSync('Store Address')}</div>
             <div class="store-info">Tel: +1 (555) 123-4567</div>
-            <div class="store-info">www.urutirose.com</div>
+            <div class="store-info">likaboutiques.com</div>
           </div>
           
           <div class="receipt-info">
@@ -622,7 +652,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
     printWindow.document.write(`
       <html>
         <head>
-          <title>Invoice ${invoiceNumber} - URUTIROSE STORE</title>
+          <title>Invoice ${invoiceNumber} - LikaBoutiques</title>
           <style>
             * { box-sizing: border-box; }
             body { 
@@ -815,7 +845,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
       pdfWindow.document.write(`
         <html>
           <head>
-            <title>Invoice ${invoiceNumber} - URUTIROSE STORE</title>
+            <title>Invoice ${invoiceNumber} - LikaBoutiques</title>
             <style>
               * { box-sizing: border-box; }
               body { 
@@ -888,8 +918,8 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
     if (customer.first_name === 'Walk-in' && customer.last_name === 'Customer') {
       return true;
     }
-    // Check by email pattern (walkin*@urutirose.com)
-    if (customer.email && customer.email.startsWith('walkin') && customer.email.endsWith('@urutirose.com')) {
+    // Check by email pattern (walkin*@likaboutiques.com)
+    if (customer.email && customer.email.startsWith('walkin') && customer.email.endsWith('@likaboutiques.com')) {
       return true;
     }
     return false;
@@ -1231,7 +1261,8 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
         quantity: 1,
         available_stock: availableStock,
         total: parseFloat(product.price),
-        addedViaBarcode: addedViaBarcode
+        addedViaBarcode: addedViaBarcode,
+        is_atelier_item: product.is_atelier_item || false
       };
       setOrderItems([...orderItems, newItem]);
       toast.success(`Added ${product.name} to cart`);
@@ -1406,7 +1437,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
           // Generate unique email and phone with timestamp and random suffix
           const timestamp = Date.now();
           const randomSuffix = Math.random().toString(36).substring(2, 8);
-          const uniqueEmail = `walkin${timestamp}${randomSuffix}@urutirose.com`;
+          const uniqueEmail = `walkin${timestamp}${randomSuffix}@likaboutiques.com`;
           const uniquePhone = `WALKIN-${timestamp}-${randomSuffix}`;
 
           const defaultCustomerData = {
@@ -1457,7 +1488,8 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
           product_id: item.product_id,
           quantity: item.quantity,
           price: item.price,
-          total: item.total
+          total: item.total,
+          is_atelier_item: item.is_atelier_item || false
         })),
         payment_method: paymentMethod,
         payment_status: paymentStatus,
@@ -1682,7 +1714,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                 <input
                   id="product-search-input"
                   type="text"
-                  placeholder={tSync("Search products by name, SKU, or brand")}
+                  placeholder={tSync('Search products by name, SKU, or brand')}
                   aria-label="Search products"
                   value={productSearch}
                   onChange={(e) => setProductSearch(e.target.value)}
@@ -1765,7 +1797,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                     </button>
                     <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
                       {productSearch.trim()
-                        ? `${totalProducts} ${tSync('matching products')}`
+                        ? tSync('{{count}} matching products', { count: totalProducts })
                         : `${totalProducts} ${tSync('products')} • ${tSync('Page')} ${currentPage} ${tSync('of')} ${totalPages}`
                       }
                     </span>
@@ -1784,7 +1816,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                       {product.stock_quantity > 0 && product.stock_quantity <= 20 && (
                         <div className="absolute top-2 right-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">
                           <AlertTriangle className="h-3 w-3 mr-1" />
-                          Low stock ({product.stock_quantity})
+                          {tSync('Low stock')} ({product.stock_quantity})
                         </div>
                       )}
                       <div className="p-3 sm:p-4">
@@ -1813,14 +1845,14 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                           </div>
 
                           <div className="flex items-center justify-between">
-                            <span className="text-xs text-gray-600">Stock:</span>
+                            <span className="text-xs text-gray-600">{tSync('Stock')}:</span>
                             {(() => {
                               const user = JSON.parse(localStorage.getItem('user') || '{}');
                               const isAdmin = user.role === 'admin';
                               const displayQuantity = isAdmin ?
                                 (product.global_quantity || product.stock_quantity || 0) :
                                 (product.stock_quantity || 0);
-                              const stockLabel = isAdmin ? 'Global' : 'Shop';
+                              const stockLabel = isAdmin ? tSync('Global') : tSync('Shop');
 
                               return (
                                 <span className={`text-xs font-medium px-2 py-1 rounded-full ${displayQuantity > 10
@@ -1862,7 +1894,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                                 ) : (
                                   <>
                                     <Plus className="h-4 w-4 mr-1" />
-                                    Add to Cart
+                                    {tSync('Add to Cart')}
                                   </>
                                 )}
                               </button>
@@ -2425,16 +2457,16 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
               <div className="bg-primary-600 border-b-2 border-primary-700 p-6">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <h1 className="text-3xl font-bold text-white"><TranslatedText text="URUTIROSE STORE" /></h1>
-                    <p className="text-primary-100 mt-1">Your Trusted Shopping Destination</p>
+                    <h1 className="text-3xl font-bold text-white"><TranslatedText text="LikaBoutiques" /></h1>
+                    <p className="text-primary-100 mt-1"><TranslatedText text="Your Trusted Shopping Destination" /></p>
                     <div className="mt-3 text-sm text-primary-100 space-y-1">
-                      <p>📍 123 Main Street, City Center, Country</p>
-                      <p>📞 +1 (555) 123-4567 | 📧 info@urutirose.com</p>
-                      <p>🌐 www.urutirose.com</p>
+                      <p>📍 {tSync('Store Address')}</p>
+                      <p>📞 +1 (555) 123-4567 | 📧 info@likaboutiques.com</p>
+                      <p>🌐 likaboutiques.com</p>
                     </div>
                   </div>
                   <div className="text-right border-l-2 border-primary-500 pl-6">
-                    <div className="text-2xl font-bold text-white">INVOICE</div>
+                    <div className="text-2xl font-bold text-white"><TranslatedText text="INVOICE" /></div>
                     <div className="mt-2 text-sm text-primary-100 space-y-1">
                       <p><span className="font-medium"><TranslatedText text="Invoice" /> #:</span> {generateInvoiceNumber()}</p>
                       <p><span className="font-medium"><TranslatedText text="Order Ref" />:</span> {orderReference || generateOrderReference()}</p>
@@ -2556,7 +2588,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                                 )}
                               </div>
                             </td>
-                            <td className="px-4 py-3 text-center text-sm font-medium text-gray-900">{item.quantity} unit</td>
+                            <td className="px-4 py-3 text-center text-sm font-medium text-gray-900">{item.quantity} {tSync('unit')}</td>
                             <td className="px-4 py-3 text-right text-sm text-gray-600">{formatCurrency(item.price)}</td>
                             <td className="px-4 py-3 text-right text-sm font-medium text-gray-900">{formatCurrency(parseFloat(item.total) || 0)}</td>
                           </tr>
@@ -2572,7 +2604,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
 
                   <div className="space-y-3">
                     <div className="flex justify-between text-base">
-                      <span className="text-gray-600">Subtotal:</span>
+                      <span className="text-gray-600"><TranslatedText text="Subtotal" />:</span>
                       <span className="font-medium">{formatCurrency(calculateSubtotal())}</span>
                     </div>
                     {discountAmount > 0 && (
@@ -2998,7 +3030,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                           </div>
 
                           <div className="flex items-center justify-between">
-                            <span className="text-xs text-gray-600">Stock:</span>
+                            <span className="text-xs text-gray-600">{tSync('Stock')}:</span>
                             <span className={`text-xs font-medium px-2 py-1 rounded-full ${product.stock_quantity > 10
                               ? 'bg-green-100 text-green-800'
                               : product.stock_quantity > 0
@@ -3424,16 +3456,16 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
             <div className="bg-primary-600 border-b-2 border-primary-700 p-6">
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <h1 className="text-3xl font-bold text-white"><TranslatedText text="URUTIROSE STORE" /></h1>
+                  <h1 className="text-3xl font-bold text-white"><TranslatedText text="LikaBoutiques" /></h1>
                   <p className="text-primary-100 mt-1"><TranslatedText text="Your Trusted Shopping Destination" /></p>
                   <div className="mt-3 text-sm text-primary-100 space-y-1">
-                    <p>📍 123 Main Street, City Center, Country</p>
-                    <p>📞 +1 (555) 123-4567 | 📧 info@urutirose.com</p>
-                    <p>🌐 www.urutirose.com</p>
+                    <p>📍 {tSync('Store Address')}</p>
+                    <p>📞 +1 (555) 123-4567 | 📧 info@likaboutiques.com</p>
+                    <p>🌐 likaboutiques.com</p>
                   </div>
                 </div>
                 <div className="text-right border-l-2 border-primary-500 pl-6">
-                  <div className="text-2xl font-bold text-white">INVOICE</div>
+                  <div className="text-2xl font-bold text-white"><TranslatedText text="INVOICE" /></div>
                   <div className="mt-2 text-sm text-primary-100 space-y-1">
                     <p><span className="font-medium"><TranslatedText text="Invoice" /> #:</span> {generateInvoiceNumber()}</p>
                     <p><span className="font-medium"><TranslatedText text="Order Ref" />:</span> {orderReference || generateOrderReference()}</p>
@@ -3555,7 +3587,7 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                               )}
                             </div>
                           </td>
-                          <td className="px-4 py-3 text-center text-sm font-medium text-gray-900">{item.quantity} unit</td>
+                          <td className="px-4 py-3 text-center text-sm font-medium text-gray-900">{item.quantity} {tSync('unit')}</td>
                           <td className="px-4 py-3 text-right text-sm text-gray-600">{formatCurrency(item.price)}</td>
                           <td className="px-4 py-3 text-right text-sm font-medium text-gray-900">{formatCurrency(parseFloat(item.total) || 0)}</td>
                         </tr>

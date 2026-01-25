@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { 
-  Calendar, 
-  Download, 
-  TrendingUp, 
-  TrendingDown, 
-  DollarSign, 
+import {
+  Calendar,
+  Download,
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
   Building2,
   FileText,
   BarChart3,
@@ -28,12 +28,15 @@ import {
 } from 'lucide-react';
 import { financialReportsAPI } from '../lib/api';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from '../hooks/useTranslation';
 import LoadingSpinner from './LoadingSpinner';
 import SkeletonLoader from './SkeletonLoader';
 import ErrorBoundary from './ErrorBoundary';
 import TranslatedText from './TranslatedText';
 
 const ProfessionalFinancialReports = () => {
+  const { tSync } = useTranslation();
+  const { user, loading: authLoading } = useAuth();
   const [selectedReport, setSelectedReport] = useState('summary');
   const [dateRange, setDateRange] = useState({
     start_date: new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0],
@@ -47,8 +50,6 @@ const ProfessionalFinancialReports = () => {
   const [exportFormat, setExportFormat] = useState('pdf'); // pdf, excel, csv
   const [showCharts, setShowCharts] = useState(true);
   const [period, setPeriod] = useState('monthly');
-
-  const { user, loading: authLoading } = useAuth();
 
   // Debug: Log user authentication status
   console.log('User:', user);
@@ -363,16 +364,14 @@ const ProfessionalFinancialReports = () => {
               <div className="p-3 bg-green-100 rounded-xl">
                 <TrendingUp className="h-6 w-6 text-green-600" />
               </div>
-              <div className={`text-sm font-medium ${
-                (summaryData.income_statement?.net_income || 0) >= 0 ? 'text-green-600' : 'text-red-600'
-              }`}>
+              <div className={`text-sm font-medium ${(summaryData.income_statement?.net_income || 0) >= 0 ? 'text-green-600' : 'text-red-600'
+                }`}>
                 {(summaryData.income_statement?.net_income || 0) >= 0 ? 'Profit' : 'Loss'}
               </div>
             </div>
             <h3 className="text-sm font-medium text-gray-600 mb-1"><TranslatedText text="Net Income" /></h3>
-            <p className={`text-2xl font-bold ${
-              (summaryData.income_statement?.net_income || 0) >= 0 ? 'text-green-900' : 'text-red-900'
-            }`}>
+            <p className={`text-2xl font-bold ${(summaryData.income_statement?.net_income || 0) >= 0 ? 'text-green-900' : 'text-red-900'
+              }`}>
               {formatCurrency(summaryData.income_statement?.net_income || 0)}
             </p>
             <p className="text-xs text-gray-500 mt-2">
@@ -385,9 +384,8 @@ const ProfessionalFinancialReports = () => {
               <div className="p-3 bg-blue-100 rounded-xl">
                 <Building2 className="h-6 w-6 text-blue-600" />
               </div>
-              <div className={`text-sm font-medium ${
-                summaryData.balance_sheet?.is_balanced ? 'text-green-600' : 'text-red-600'
-              }`}>
+              <div className={`text-sm font-medium ${summaryData.balance_sheet?.is_balanced ? 'text-green-600' : 'text-red-600'
+                }`}>
                 {summaryData.balance_sheet?.is_balanced ? 'Balanced' : 'Unbalanced'}
               </div>
             </div>
@@ -405,16 +403,14 @@ const ProfessionalFinancialReports = () => {
               <div className="p-3 bg-purple-100 rounded-xl">
                 <BarChart3 className="h-6 w-6 text-purple-600" />
               </div>
-              <div className={`text-sm font-medium ${
-                (summaryData.cash_flow?.net_cash_flow || 0) >= 0 ? 'text-green-600' : 'text-red-600'
-              }`}>
+              <div className={`text-sm font-medium ${(summaryData.cash_flow?.net_cash_flow || 0) >= 0 ? 'text-green-600' : 'text-red-600'
+                }`}>
                 {(summaryData.cash_flow?.net_cash_flow || 0) >= 0 ? 'Positive' : 'Negative'}
               </div>
             </div>
             <h3 className="text-sm font-medium text-gray-600 mb-1"><TranslatedText text="Cash Flow" /></h3>
-            <p className={`text-2xl font-bold ${
-              (summaryData.cash_flow?.net_cash_flow || 0) >= 0 ? 'text-green-900' : 'text-red-900'
-            }`}>
+            <p className={`text-2xl font-bold ${(summaryData.cash_flow?.net_cash_flow || 0) >= 0 ? 'text-green-900' : 'text-red-900'
+              }`}>
               {formatCurrency(summaryData.cash_flow?.net_cash_flow || 0)}
             </p>
             <p className="text-xs text-gray-500 mt-2">
@@ -427,9 +423,8 @@ const ProfessionalFinancialReports = () => {
               <div className="p-3 bg-orange-100 rounded-xl">
                 <Calculator className="h-6 w-6 text-orange-600" />
               </div>
-              <div className={`text-sm font-medium ${
-                summaryData.trial_balance?.is_balanced ? 'text-green-600' : 'text-red-600'
-              }`}>
+              <div className={`text-sm font-medium ${summaryData.trial_balance?.is_balanced ? 'text-green-600' : 'text-red-600'
+                }`}>
                 {summaryData.trial_balance?.is_balanced ? 'Balanced' : 'Unbalanced'}
               </div>
             </div>
@@ -453,19 +448,19 @@ const ProfessionalFinancialReports = () => {
               </div>
               <div className="text-sm text-gray-600">Profit Margin</div>
               <div className="text-xs text-gray-500 mt-1">
-                {(summaryData.income_statement?.profit_margin || 0) > 10 ? 'Excellent' : 
-                 (summaryData.income_statement?.profit_margin || 0) > 5 ? 'Good' : 'Needs Improvement'}
+                {(summaryData.income_statement?.profit_margin || 0) > 10 ? 'Excellent' :
+                  (summaryData.income_statement?.profit_margin || 0) > 5 ? 'Good' : 'Needs Improvement'}
               </div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-green-600 mb-2">
-                {(summaryData.balance_sheet?.total_assets || 0) > 0 ? 
+                {(summaryData.balance_sheet?.total_assets || 0) > 0 ?
                   (((summaryData.balance_sheet?.total_equity || 0) / (summaryData.balance_sheet?.total_assets || 1)) * 100).toFixed(1) : 0}%
               </div>
               <div className="text-sm text-gray-600">Equity Ratio</div>
               <div className="text-xs text-gray-500 mt-1">
-                {(summaryData.balance_sheet?.total_assets || 0) > 0 && 
-                 ((summaryData.balance_sheet?.total_equity || 0) / (summaryData.balance_sheet?.total_assets || 1)) > 0.3 ? 'Strong' : 'Weak'}
+                {(summaryData.balance_sheet?.total_assets || 0) > 0 &&
+                  ((summaryData.balance_sheet?.total_equity || 0) / (summaryData.balance_sheet?.total_assets || 1)) > 0.3 ? 'Strong' : 'Weak'}
               </div>
             </div>
             <div className="text-center">
@@ -533,17 +528,14 @@ const ProfessionalFinancialReports = () => {
                 {formatCurrency(trialBalanceData.totals?.total_credits || 0)}
               </div>
             </div>
-            <div className={`p-4 rounded-lg ${
-              trialBalanceData.is_balanced ? 'bg-green-50' : 'bg-red-50'
-            }`}>
-              <div className={`text-sm font-medium ${
-                trialBalanceData.is_balanced ? 'text-green-600' : 'text-red-600'
+            <div className={`p-4 rounded-lg ${trialBalanceData.is_balanced ? 'bg-green-50' : 'bg-red-50'
               }`}>
+              <div className={`text-sm font-medium ${trialBalanceData.is_balanced ? 'text-green-600' : 'text-red-600'
+                }`}>
                 Balance Status
               </div>
-              <div className={`text-2xl font-bold ${
-                trialBalanceData.is_balanced ? 'text-green-900' : 'text-red-900'
-              }`}>
+              <div className={`text-2xl font-bold ${trialBalanceData.is_balanced ? 'text-green-900' : 'text-red-900'
+                }`}>
                 {trialBalanceData.is_balanced ? 'Balanced' : 'Unbalanced'}
               </div>
             </div>
@@ -579,13 +571,12 @@ const ProfessionalFinancialReports = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{account.category_name}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          account.account_type === 'asset' ? 'bg-blue-100 text-blue-800' :
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${account.account_type === 'asset' ? 'bg-blue-100 text-blue-800' :
                           account.account_type === 'liability' ? 'bg-red-100 text-red-800' :
-                          account.account_type === 'equity' ? 'bg-purple-100 text-purple-800' :
-                          account.account_type === 'revenue' ? 'bg-green-100 text-green-800' :
-                          'bg-yellow-100 text-yellow-800'
-                        }`}>
+                            account.account_type === 'equity' ? 'bg-purple-100 text-purple-800' :
+                              account.account_type === 'revenue' ? 'bg-green-100 text-green-800' :
+                                'bg-yellow-100 text-yellow-800'
+                          }`}>
                           {account.account_type}
                         </span>
                       </td>
@@ -595,9 +586,8 @@ const ProfessionalFinancialReports = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900">
                         {formatCurrency(account.total_credits)}
                       </td>
-                      <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium text-right ${
-                        (account.balance || 0) > 0 ? 'text-green-600' : (account.balance || 0) < 0 ? 'text-red-600' : 'text-gray-500'
-                      }`}>
+                      <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium text-right ${(account.balance || 0) > 0 ? 'text-green-600' : (account.balance || 0) < 0 ? 'text-red-600' : 'text-gray-500'
+                        }`}>
                         {formatCurrency(Math.abs(account.balance || 0))}
                       </td>
                     </tr>
@@ -662,17 +652,14 @@ const ProfessionalFinancialReports = () => {
                 {formatCurrency(incomeStatementData.expenses?.total || 0)}
               </div>
             </div>
-            <div className={`p-4 rounded-lg ${
-              (incomeStatementData.net_income || 0) >= 0 ? 'bg-green-50' : 'bg-red-50'
-            }`}>
-              <div className={`text-sm font-medium ${
-                (incomeStatementData.net_income || 0) >= 0 ? 'text-green-600' : 'text-red-600'
+            <div className={`p-4 rounded-lg ${(incomeStatementData.net_income || 0) >= 0 ? 'bg-green-50' : 'bg-red-50'
               }`}>
+              <div className={`text-sm font-medium ${(incomeStatementData.net_income || 0) >= 0 ? 'text-green-600' : 'text-red-600'
+                }`}>
                 Net Income
               </div>
-              <div className={`text-2xl font-bold ${
-                (incomeStatementData.net_income || 0) >= 0 ? 'text-green-900' : 'text-red-900'
-              }`}>
+              <div className={`text-2xl font-bold ${(incomeStatementData.net_income || 0) >= 0 ? 'text-green-900' : 'text-red-900'
+                }`}>
                 {formatCurrency(incomeStatementData.net_income || 0)}
               </div>
             </div>
@@ -784,17 +771,14 @@ const ProfessionalFinancialReports = () => {
                 {formatCurrency(cashFlowData.investing_cash_flow || 0)}
               </div>
             </div>
-            <div className={`p-4 rounded-lg ${
-              (cashFlowData.net_cash_flow || 0) >= 0 ? 'bg-green-50' : 'bg-red-50'
-            }`}>
-              <div className={`text-sm font-medium ${
-                (cashFlowData.net_cash_flow || 0) >= 0 ? 'text-green-600' : 'text-red-600'
+            <div className={`p-4 rounded-lg ${(cashFlowData.net_cash_flow || 0) >= 0 ? 'bg-green-50' : 'bg-red-50'
               }`}>
+              <div className={`text-sm font-medium ${(cashFlowData.net_cash_flow || 0) >= 0 ? 'text-green-600' : 'text-red-600'
+                }`}>
                 Net Cash Flow
               </div>
-              <div className={`text-2xl font-bold ${
-                (cashFlowData.net_cash_flow || 0) >= 0 ? 'text-green-900' : 'text-red-900'
-              }`}>
+              <div className={`text-2xl font-bold ${(cashFlowData.net_cash_flow || 0) >= 0 ? 'text-green-900' : 'text-red-900'
+                }`}>
                 {formatCurrency(cashFlowData.net_cash_flow || 0)}
               </div>
             </div>
@@ -1552,14 +1536,14 @@ const ProfessionalFinancialReports = () => {
             </div>
           </div>
           <div className="mt-4 sm:mt-0 flex space-x-2">
-            <button 
+            <button
               onClick={handleExport}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 transition-colors"
             >
               <Download className="h-4 w-4 inline mr-2" />
               Export
             </button>
-            <button 
+            <button
               onClick={handlePrint}
               className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:ring-2 focus:ring-gray-500 transition-colors"
             >
@@ -1574,28 +1558,23 @@ const ProfessionalFinancialReports = () => {
       <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
         <div className="flex flex-wrap gap-2">
           {[
-            { key: 'summary', label: 'Dashboard', icon: Activity },
-            { key: 'trial-balance', label: 'Trial Balance', icon: Calculator },
-            { key: 'income-statement', label: 'Income Statement', icon: TrendingUp },
-            { key: 'balance-sheet', label: 'Balance Sheet', icon: Building2 },
-            { key: 'cash-flow', label: 'Cash Flow', icon: BarChart3 },
-            { key: 'daily-sales', label: 'Daily Sales', icon: ShoppingCart },
-            { key: 'daily-expenses', label: 'Daily Expenses', icon: Receipt },
-            { key: 'monthly-sales', label: 'Monthly Sales', icon: ShoppingCart },
-            { key: 'monthly-expenses', label: 'Monthly Expenses', icon: Receipt },
-            { key: 'yearly-sales', label: 'Yearly Sales', icon: ShoppingCart },
-            { key: 'yearly-expenses', label: 'Yearly Expenses', icon: Receipt }
+            { key: 'summary', label: tSync('Dashboard'), icon: Activity },
+            { key: 'daily-sales', label: tSync('Daily Sales'), icon: ShoppingCart },
+            { key: 'daily-expenses', label: tSync('Daily Expenses'), icon: Receipt },
+            { key: 'monthly-sales', label: tSync('Monthly Sales'), icon: ShoppingCart },
+            { key: 'monthly-expenses', label: tSync('Monthly Expenses'), icon: Receipt },
+            { key: 'yearly-sales', label: tSync('Yearly Sales'), icon: ShoppingCart },
+            { key: 'yearly-expenses', label: tSync('Yearly Expenses'), icon: Receipt }
           ].map((report) => {
             const Icon = report.icon;
             return (
               <button
                 key={report.key}
                 onClick={() => setSelectedReport(report.key)}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                  selectedReport === report.key
-                    ? 'bg-blue-600 text-white shadow-lg'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                }`}
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${selectedReport === report.key
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  }`}
               >
                 <Icon className="h-4 w-4" />
                 <span>{report.label}</span>
@@ -1696,7 +1675,7 @@ const ProfessionalFinancialReports = () => {
               </div>
             </>
           )}
-          
+
           {selectedReport === 'trial-balance' && (
             <div className="flex items-center">
               <input

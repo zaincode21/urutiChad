@@ -10,12 +10,17 @@ import {
     DollarSign,
     Edit,
     Download,
-    CheckCircle
+    CheckCircle,
+    Ruler
 } from 'lucide-react';
 import TranslatedText from '../TranslatedText';
 import toast from 'react-hot-toast';
+import { ordersAPI } from '../../lib/api';
+import MeasurementsModal from './MeasurementsModal';
 
 const OrderDetailModal = ({ isOpen, onClose, order, onEdit, onStatusUpdate }) => {
+    const [showMeasurements, setShowMeasurements] = React.useState(false);
+
     if (!isOpen || !order) return null;
 
     const getStatusColor = (status) => {
@@ -66,6 +71,21 @@ const OrderDetailModal = ({ isOpen, onClose, order, onEdit, onStatusUpdate }) =>
         });
     };
 
+    const handleCompletePayment = async () => {
+        try {
+            await ordersAPI.updatePayment(order.id, {
+                payment_status: 'completed',
+                amount_paid: order.total_amount,
+                remaining_amount: 0
+            });
+            toast.success('Payment completed successfully');
+            if (onStatusUpdate) onStatusUpdate(); // Trigger refresh
+            onClose();
+        } catch (error) {
+            console.error('Failed to complete payment', error);
+            toast.error('Failed to complete payment');
+        }
+    };
     return (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
             <div className="relative top-10 mx-auto p-5 border w-11/12 max-w-6xl shadow-lg rounded-md bg-white">
@@ -314,6 +334,14 @@ const OrderDetailModal = ({ isOpen, onClose, order, onEdit, onStatusUpdate }) =>
                             </button>
 
                             <button
+                                onClick={() => setShowMeasurements(true)}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            >
+                                <Ruler className="h-4 w-4 mr-2 inline" />
+                                <TranslatedText text="View Measurements" />
+                            </button>
+
+                            <button
                                 onClick={() => {
                                     window.print();
                                 }}
@@ -332,6 +360,17 @@ const OrderDetailModal = ({ isOpen, onClose, order, onEdit, onStatusUpdate }) =>
                                     <TranslatedText text="Mark as Processing" />
                                 </button>
                             )}
+
+                            {/* Payment Completion Button */}
+                            {order.remaining_amount > 0 && (
+                                <button
+                                    onClick={handleCompletePayment}
+                                    className="w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                >
+                                    <DollarSign className="h-4 w-4 mr-2 inline" />
+                                    <TranslatedText text="Complete Payment" />
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -345,6 +384,11 @@ const OrderDetailModal = ({ isOpen, onClose, order, onEdit, onStatusUpdate }) =>
                     </button>
                 </div>
             </div>
+            <MeasurementsModal
+                isOpen={showMeasurements}
+                onClose={() => setShowMeasurements(false)}
+                customerId={order.customer_id}
+            />
         </div>
     );
 };

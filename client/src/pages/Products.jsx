@@ -903,7 +903,7 @@ const Products = () => {
               <input
                 ref={searchInputRef}
                 type="text"
-                placeholder="Search products..."
+                placeholder={tSync('Search products...')}
                 value={searchInput}
                 onChange={(e) => {
                   const cursorPosition = e.target.selectionStart;
@@ -927,7 +927,7 @@ const Products = () => {
               />
             </div>
             <span className="text-sm text-gray-600 whitespace-nowrap">
-              {totalProducts} products found
+              {tSync('{count} products found', { count: totalProducts })}
             </span>
           </div>
 
@@ -937,10 +937,10 @@ const Products = () => {
               onChange={(e) => setSortBy(e.target.value)}
               className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
-              <option value="name">Sort by Name</option>
-              <option value="price">Sort by Price</option>
-              <option value="stock">Sort by Stock</option>
-              <option value="created_at">Sort by Date</option>
+              <option value="name">{tSync('Sort by Name')}</option>
+              <option value="price">{tSync('Sort by Price')}</option>
+              <option value="stock">{tSync('Sort by Stock')}</option>
+              <option value="created_at">{tSync('Sort by Date')}</option>
             </select>
 
             <button

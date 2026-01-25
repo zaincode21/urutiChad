@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Plus,
@@ -7,7 +7,6 @@ import {
   FileText,
   DollarSign,
   TrendingUp,
-  TrendingDown,
   Calendar,
   Edit,
   Trash2,
@@ -15,21 +14,11 @@ import {
   BarChart3,
   Receipt,
   AlertTriangle,
-  RefreshCw,
-  PieChart,
-  TrendingUp as TrendingUpIcon,
-  Lightbulb,
-  Building2,
-  Calculator
+  RefreshCw
 } from 'lucide-react';
 import { api, expensesAPI, shopsAPI } from '../lib/api';
 import ExpenseForm from '../components/ExpenseForm';
-import ExpenseInsights from '../components/ExpenseInsights';
-import FinancialReports from '../components/FinancialReports';
-import ProfessionalFinancialReports from '../components/ProfessionalFinancialReports';
-import AccountingDashboard from '../components/AccountingDashboard';
 import { useCurrencyConversion } from '../hooks/useCurrencyConversion';
-import ExpenseAnalyticsService from '../services/expenseAnalyticsService';
 import { useAuth } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
 
@@ -45,23 +34,10 @@ const Expenses = () => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [expenseToDelete, setExpenseToDelete] = useState(null);
   const [showRwfConversions, setShowRwfConversions] = useState(true);
-  const [activeTab, setActiveTab] = useState('expenses');
-  const [insights, setInsights] = useState(null);
-  const [insightsLoading, setInsightsLoading] = useState(false);
 
   const queryClient = useQueryClient();
   const { user } = useAuth();
-  const { formatCurrency, getRwfDisplay, convertToRwf, isLoading: conversionLoading, lastUpdated } = useCurrencyConversion();
-
-  // Initialize analytics service
-  const analyticsService = new ExpenseAnalyticsService();
-
-  // Redirect cashiers to expenses tab if they try to access restricted tabs
-  useEffect(() => {
-    if (user?.role === 'cashier' && !['expenses'].includes(activeTab)) {
-      setActiveTab('expenses');
-    }
-  }, [user?.role, activeTab]);
+  const { formatCurrency, convertToRwf, isLoading: conversionLoading, lastUpdated } = useCurrencyConversion();
 
   const { data: expensesData, isLoading } = useQuery({
     queryKey: ['expenses'],
@@ -72,36 +48,6 @@ const Expenses = () => {
     queryKey: ['shops'],
     queryFn: () => shopsAPI.getAll().then(res => res.data),
   });
-
-  // Calculate insights when expenses data changes
-  useEffect(() => {
-    if (expensesData && expensesData.length > 0) {
-      setInsightsLoading(true);
-      const calculatedInsights = analyticsService.calculateInsights(expensesData, 'all');
-      setInsights(calculatedInsights);
-      setInsightsLoading(false);
-    }
-  }, [expensesData]);
-
-  // Handle period change for insights
-  const handleInsightsPeriodChange = (period) => {
-    if (expensesData && expensesData.length > 0) {
-      setInsightsLoading(true);
-      const calculatedInsights = analyticsService.calculateInsights(expensesData, period);
-      setInsights(calculatedInsights);
-      setInsightsLoading(false);
-    }
-  };
-
-  // Refresh insights
-  const handleRefreshInsights = () => {
-    if (expensesData && expensesData.length > 0) {
-      setInsightsLoading(true);
-      const calculatedInsights = analyticsService.calculateInsights(expensesData, 'all');
-      setInsights(calculatedInsights);
-      setInsightsLoading(false);
-    }
-  };
 
   const expenses = expensesData || [];
   const shops = shopsData?.shops || [];
@@ -136,7 +82,6 @@ const Expenses = () => {
       toast.success('Expense deleted successfully');
       queryClient.invalidateQueries(['expenses']);
       setShowDeleteConfirm(false);
-      setExpenseToDelete(null);
       setExpenseToDelete(null);
     } catch (error) {
       console.error('Error deleting expense:', error);
@@ -269,83 +214,6 @@ const Expenses = () => {
         </div>
       </div>
 
-      {/* Tab Navigation */}
-      <div className="bg-white rounded-2xl p-2 shadow-sm border border-gray-100 mb-6">
-        <div className="flex space-x-1">
-          <button
-            onClick={() => setActiveTab('expenses')}
-            className={`flex-1 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${activeTab === 'expenses'
-              ? 'bg-blue-600 text-white shadow-lg'
-              : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
-          >
-            <div className="flex items-center justify-center space-x-2">
-              <FileText className="h-5 w-5" />
-              <span><TranslatedText text="Expenses" /></span>
-            </div>
-          </button>
-
-          {user?.role !== 'cashier' && (
-            <button
-              onClick={() => setActiveTab('insights')}
-              className={`flex-1 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${activeTab === 'insights'
-                ? 'bg-blue-600 text-white shadow-lg'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                }`}
-            >
-              <div className="flex items-center justify-center space-x-2">
-                <BarChart3 className="h-5 w-5" />
-                <span><TranslatedText text="Analytics" /></span>
-              </div>
-            </button>
-          )}
-
-          {user?.role !== 'cashier' && (
-            <button
-              onClick={() => setActiveTab('recommendations')}
-              className={`flex-1 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${activeTab === 'recommendations'
-                ? 'bg-blue-600 text-white shadow-lg'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                }`}
-            >
-              <div className="flex items-center justify-center space-x-2">
-                <Lightbulb className="h-5 w-5" />
-                <span><TranslatedText text="Recommendations" /></span>
-              </div>
-            </button>
-          )}
-
-          {user?.role !== 'cashier' && (
-            <button
-              onClick={() => setActiveTab('gl-accounting')}
-              className={`flex-1 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${activeTab === 'gl-accounting'
-                ? 'bg-blue-600 text-white shadow-lg'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                }`}
-            >
-              <div className="flex items-center justify-center space-x-2">
-                <Building2 className="h-5 w-5" />
-                <span><TranslatedText text="GL Accounting" /></span>
-              </div>
-            </button>
-          )}
-          {user?.role !== 'cashier' && (
-            <button
-              onClick={() => setActiveTab('financial-reports')}
-              className={`flex-1 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${activeTab === 'financial-reports'
-                ? 'bg-blue-600 text-white shadow-lg'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                }`}
-            >
-              <div className="flex items-center justify-center space-x-2">
-                <FileText className="h-5 w-5" />
-                <span><TranslatedText text="Financial Reports" /></span>
-              </div>
-            </button>
-          )}
-        </div>
-      </div>
-
       {/* Currency Conversion Status */}
       <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-6">
         <div className="flex items-center justify-between">
@@ -383,305 +251,154 @@ const Expenses = () => {
         </div>
       </div>
 
-      {/* Tab Content */}
-      {activeTab === 'expenses' && (
-        <>
-          {/* Filters and Search */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder=<TranslatedText text="Search expenses..." />
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <select
-                  value={selectedFilter}
-                  onChange={(e) => setSelectedFilter(e.target.value)}
-                  className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="all"><TranslatedText text="All Expenses" /></option>
-                  <option value="recurring"><TranslatedText text="Recurring Only" /></option>
-                  <option value="one-time"><TranslatedText text="One-time Only" /></option>
-                </select>
-                <button className="inline-flex items-center px-4 py-3 border border-gray-300 rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                  <BarChart3 className="h-5 w-5 text-gray-400" />
-                </button>
-              </div>
+      {/* Filters and Search */}
+      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex-1">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder={tSync("Search expenses...")}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
             </div>
           </div>
-        </>
-      )}
-
-      {activeTab === 'insights' && user?.role !== 'cashier' && (
-        <ExpenseInsights
-          insights={insights}
-          loading={insightsLoading}
-          onPeriodChange={handleInsightsPeriodChange}
-          onRefresh={handleRefreshInsights}
-        />
-      )}
-
-      {activeTab === 'recommendations' && user?.role !== 'cashier' && (
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <div className="text-center py-12">
-            <div className="text-gray-400 text-6xl mb-4">🚀</div>
-            <h3 className="text-xl font-medium text-gray-900 mb-2"><TranslatedText text="Smart Recommendations" /></h3>
-            <p className="text-gray-500 mb-6">
-              <TranslatedText text="Get AI-powered insights to optimize your expenses" />
-            </p>
-            <button
-              onClick={() => setActiveTab('insights')}
-              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          <div className="flex gap-3">
+            <select
+              value={selectedFilter}
+              onChange={(e) => setSelectedFilter(e.target.value)}
+              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <Lightbulb className="h-5 w-5 mr-2" />
-              <TranslatedText text="View Analytics" />
+              <option value="all">{tSync('All Expenses')}</option>
+              <option value="recurring">{tSync('Recurring Only')}</option>
+              <option value="one-time">{tSync('One-time Only')}</option>
+            </select>
+            <button className="inline-flex items-center px-4 py-3 border border-gray-300 rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+              <BarChart3 className="h-5 w-5 text-gray-400" />
             </button>
           </div>
         </div>
-      )}
+      </div>
 
-      {activeTab === 'gl-accounting' && user?.role !== 'cashier' && (
-        <div className="space-y-6">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4"><TranslatedText text="General Ledger Accounting" /></h3>
-            <p className="text-gray-600 mb-6"><TranslatedText text="Manage your chart of accounts and expense allocations" /></p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                <div className="flex items-center space-x-2">
-                  <Building2 className="h-5 w-5 text-blue-600" />
-                  <span className="font-medium text-blue-900"><TranslatedText text="GL Accounts" /></span>
+      {/* Expenses Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredExpenses.map((expense) => (
+          <div key={expense.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            <div className="p-6">
+              {/* Expense Header */}
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center">
+                  <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-600 rounded-xl flex items-center justify-center">
+                    <FileText className="h-6 w-6 text-white" />
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      {expense.category}
+                    </h3>
+                    <div className="text-sm text-gray-500">
+                      {expense.description}
+                    </div>
+                  </div>
                 </div>
-                <p className="text-sm text-blue-700 mt-2"><TranslatedText text="Organize expenses by account codes" /></p>
+                <div className="flex items-center space-x-2">
+                  <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                    <Eye className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => handleEditExpense(expense)}
+                    className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                  >
+                    <Edit className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteExpense(expense)}
+                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
 
-              <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                <div className="flex items-center space-x-2">
-                  <Calculator className="h-5 w-5 text-green-600" />
-                  <span className="font-medium text-green-900"><TranslatedText text="Allocation" /></span>
+              {/* Expense Details */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-600"><TranslatedText text="Amount" />:</span>
+                  <div className="text-right">
+                    <div className="font-semibold text-red-600">
+                      {formatCurrency(
+                        convertToRwf(expense.amount, expense.currency || 'CFA') || expense.amount,
+                        'CFA'
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <p className="text-sm text-green-700 mt-2"><TranslatedText text="Distribute costs across departments" /></p>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-600"><TranslatedText text="Date" />:</span>
+                  <span className="text-gray-900">
+                    {new Date(expense.expense_date).toLocaleDateString()}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-600"><TranslatedText text="Shop" />:</span>
+                  <span className="text-gray-900">{expense.shop_name || 'All Shops'}</span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-600"><TranslatedText text="Currency" />:</span>
+                  <span className="text-gray-900">CFA</span>
+                </div>
               </div>
 
-              <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                <div className="flex items-center space-x-2">
-                  <BarChart3 className="h-5 w-5 text-purple-600" />
-                  <span className="font-medium text-purple-900"><TranslatedText text="Reports" /></span>
+              {/* Recurring Badge */}
+              {expense.is_recurring && (
+                <div className="mt-4">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                    <TrendingUp className="h-3 w-3 mr-1" />
+                    <TranslatedText text="Recurring" /> ({expense.recurring_frequency})
+                  </span>
                 </div>
-                <p className="text-sm text-purple-700 mt-2"><TranslatedText text="Generate financial statements" /></p>
-              </div>
-            </div>
+              )}
 
-            <div className="flex space-x-3">
-              <button
-                onClick={() => window.open('/gl-accounts', '_blank')}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
-              >
-                <TranslatedText text="Manage GL Accounts" />
-              </button>
-              <button
-                onClick={() => setActiveTab('expenses')}
-                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:ring-2 focus:ring-gray-500"
-              >
-                <TranslatedText text="View Expenses" />
-              </button>
+              {/* Actions */}
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <div className="flex items-center justify-between">
+                  <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+                    <TranslatedText text="View Receipt" />
+                  </button>
+                  <button
+                    onClick={() => handleEditExpense(expense)}
+                    className="text-sm text-green-600 hover:text-green-700 font-medium"
+                  >
+                    <TranslatedText text="Edit" />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+        ))}
+      </div>
 
-          {/* Accounting Dashboard Component */}
-          <AccountingDashboard />
+      {/* Empty State */}
+      {filteredExpenses.length === 0 && (
+        <div className="text-center py-12">
+          <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-gray-900 mb-2"><TranslatedText text="No expenses found" /></h3>
+          <p className="text-gray-500 mb-6">
+            {searchTerm || selectedFilter !== 'all'
+              ? <TranslatedText text="Try adjusting your search or filters" />
+              : <TranslatedText text="Get started by adding your first expense" />
+            }
+          </p>
+          <button
+            onClick={handleAddExpense}
+            className="inline-flex items-center px-4 py-2 bg-red-600 text-white font-medium rounded-xl hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          >
+            <Plus className="h-5 w-5 mr-2" />
+            <TranslatedText text="Add First Expense" />
+          </button>
         </div>
-      )}
-
-      {activeTab === 'financial-reports' && user?.role !== 'cashier' && (
-        <div className="space-y-6">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4"><TranslatedText text="Financial Reports" /></h3>
-            <p className="text-gray-600 mb-6"><TranslatedText text="Professional financial statements and analysis" /></p>
-
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                <div className="flex items-center space-x-2">
-                  <FileText className="h-5 w-5 text-blue-600" />
-                  <span className="font-medium text-blue-900"><TranslatedText text="Trial Balance" /></span>
-                </div>
-                <p className="text-sm text-blue-700 mt-2"><TranslatedText text="Verify accounting accuracy" /></p>
-              </div>
-
-              <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                <div className="flex items-center space-x-2">
-                  <TrendingUp className="h-5 w-5 text-green-600" />
-                  <span className="font-medium text-green-900"><TranslatedText text="Income Statement" /></span>
-                </div>
-                <p className="text-sm text-green-700 mt-2"><TranslatedText text="Profit and loss summary" /></p>
-              </div>
-
-              <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                <div className="flex items-center space-x-2">
-                  <Building2 className="h-5 w-5 text-purple-600" />
-                  <span className="font-medium text-purple-900"><TranslatedText text="Balance Sheet" /></span>
-                </div>
-                <p className="text-sm text-purple-700 mt-2"><TranslatedText text="Assets and liabilities" /></p>
-              </div>
-
-              <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
-                <div className="flex items-center space-x-2">
-                  <BarChart3 className="h-5 w-5 text-orange-600" />
-                  <span className="font-medium text-orange-900"><TranslatedText text="Cash Flow" /></span>
-                </div>
-                <p className="text-sm text-orange-700 mt-2"><TranslatedText text="Money in and out" /></p>
-              </div>
-            </div>
-
-            <div className="flex space-x-3">
-              <button
-                onClick={() => setActiveTab('expenses')}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
-              >
-                <TranslatedText text="View Expenses" />
-              </button>
-              <button
-                onClick={() => setActiveTab('gl-accounting')}
-                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:ring-2 focus:ring-gray-500"
-              >
-                <TranslatedText text="GL Accounting" />
-              </button>
-            </div>
-          </div>
-
-          {/* Professional Financial Reports Component */}
-          <ProfessionalFinancialReports />
-        </div>
-      )}
-
-      {/* Expenses Grid - Only show when expenses tab is active */}
-      {activeTab === 'expenses' && (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredExpenses.map((expense) => (
-              <div key={expense.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                <div className="p-6">
-                  {/* Expense Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center">
-                      <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-pink-600 rounded-xl flex items-center justify-center">
-                        <FileText className="h-6 w-6 text-white" />
-                      </div>
-                      <div className="ml-3">
-                        <h3 className="text-lg font-semibold text-gray-900">
-                          {expense.category}
-                        </h3>
-                        <div className="text-sm text-gray-500">
-                          {expense.description}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
-                        <Eye className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => handleEditExpense(expense)}
-                        className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteExpense(expense)}
-                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Expense Details */}
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600"><TranslatedText text="Amount" />:</span>
-                      <div className="text-right">
-                        <div className="font-semibold text-red-600">
-                          {formatCurrency(
-                            convertToRwf(expense.amount, expense.currency || 'CFA') || expense.amount,
-                            'CFA'
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600"><TranslatedText text="Date" />:</span>
-                      <span className="text-gray-900">
-                        {new Date(expense.expense_date).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600"><TranslatedText text="Shop" />:</span>
-                      <span className="text-gray-900">{expense.shop_name || 'All Shops'}</span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600"><TranslatedText text="Currency" />:</span>
-                      <span className="text-gray-900">CFA</span>
-                    </div>
-                  </div>
-
-                  {/* Recurring Badge */}
-                  {expense.is_recurring && (
-                    <div className="mt-4">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                        <TrendingUp className="h-3 w-3 mr-1" />
-                        <TranslatedText text="Recurring" /> ({expense.recurring_frequency})
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Actions */}
-                  <div className="mt-4 pt-4 border-t border-gray-100">
-                    <div className="flex items-center justify-between">
-                      <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
-                        <TranslatedText text="View Receipt" />
-                      </button>
-                      <button
-                        onClick={() => handleEditExpense(expense)}
-                        className="text-sm text-green-600 hover:text-green-700 font-medium"
-                      >
-                        <TranslatedText text="Edit" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Empty State */}
-          {filteredExpenses.length === 0 && (
-            <div className="text-center py-12">
-              <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2"><TranslatedText text="No expenses found" /></h3>
-              <p className="text-gray-500 mb-6">
-                {searchTerm || selectedFilter !== 'all'
-                  ? <TranslatedText text="Try adjusting your search or filters" />
-                  : <TranslatedText text="Get started by adding your first expense" />
-                }
-              </p>
-              <button
-                onClick={handleAddExpense}
-                className="inline-flex items-center px-4 py-2 bg-red-600 text-white font-medium rounded-xl hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-              >
-                <Plus className="h-5 w-5 mr-2" />
-                <TranslatedText text="Add First Expense" />
-              </button>
-            </div>
-          )}
-        </>
       )}
 
       {/* Expense Form Modal */}

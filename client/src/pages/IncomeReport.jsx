@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { 
-  DollarSign, 
-  TrendingUp, 
+import {
+  DollarSign,
+  TrendingUp,
   TrendingDown,
   Package,
   FileText,
@@ -16,8 +16,10 @@ import {
 import { ordersAPI, shopsAPI } from '../lib/api';
 import toast from 'react-hot-toast';
 import TranslatedText from '../components/TranslatedText';
+import { useTranslation } from '../hooks/useTranslation';
 
 const IncomeReport = () => {
+  const { tSync } = useTranslation();
   // Helper function to get first and last day of current month
   const getCurrentMonthRange = () => {
     const now = new Date();
@@ -148,10 +150,10 @@ const IncomeReport = () => {
       };
 
       console.log('Requesting PDF with params:', params);
-      
+
       // Make the API call
       const response = await ordersAPI.getIncomeReportPDF(params);
-      
+
       console.log('PDF response received:', {
         status: response.status,
         statusText: response.statusText,
@@ -160,12 +162,12 @@ const IncomeReport = () => {
         dataSize: response.data?.size || response.data?.byteLength || 'unknown',
         contentType: response.headers['content-type']
       });
-      
+
       // Check if response is valid
       if (!response.data) {
         throw new Error('No data received from server');
       }
-      
+
       // Create blob from response - handle different data types
       let blob;
       if (response.data instanceof Blob) {
@@ -173,27 +175,27 @@ const IncomeReport = () => {
       } else {
         blob = new Blob([response.data], { type: 'application/pdf' });
       }
-      
+
       console.log('Blob created:', { size: blob.size, type: blob.type });
-      
+
       // Check if blob is valid (not empty)
       if (blob.size === 0) {
         throw new Error('Received empty PDF file');
       }
-      
+
       // Create download link
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = `income-report-${startDate}-to-${endDate}.pdf`;
       a.style.display = 'none';
-      
+
       // Trigger download
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
-      
+
       toast.success('PDF report exported successfully');
     } catch (error) {
       console.error('PDF export error:', error);
@@ -203,7 +205,7 @@ const IncomeReport = () => {
         status: error.response?.status,
         data: error.response?.data
       });
-      
+
       if (error.response?.status === 401) {
         toast.error('Authentication required. Please login again.');
       } else if (error.response?.status === 500) {
@@ -228,10 +230,10 @@ const IncomeReport = () => {
       };
 
       const response = await ordersAPI.getIncomeReportExcel(params);
-      
+
       // Create blob from response
-      const blob = new Blob([response.data], { 
-        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
       });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -243,7 +245,7 @@ const IncomeReport = () => {
       toast.success('Excel report exported successfully');
     } catch (error) {
       console.error('Excel export error:', error);
-      
+
       // Check if it's a compatibility issue
       if (error.response?.status === 400 && error.response?.data?.error?.includes('compatibility')) {
         toast.error('Excel export is not available. Please use PDF export instead.');
@@ -293,9 +295,9 @@ const IncomeReport = () => {
           <div>
             <h1 className="text-2xl font-bold text-gray-900 flex items-center">
               <Receipt className="h-6 w-6 mr-2" />
-              Income Report
+              <TranslatedText text="Income Report" />
             </h1>
-            <p className="text-gray-600 mt-1">Orders, Revenue, Costs, and Expenses Analysis</p>
+            <p className="text-gray-600 mt-1"><TranslatedText text="Orders, Revenue, Costs, and Expenses Analysis" /></p>
           </div>
           <div className="flex gap-2">
             <button
@@ -303,7 +305,7 @@ const IncomeReport = () => {
               className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
             >
               <Download className="h-4 w-4 mr-2" />
-              Export CSV
+              <TranslatedText text="Export CSV" />
             </button>
             {/* PDF export button hidden per user request */}
             {/* Excel export temporarily disabled due to compatibility issues */}
@@ -313,7 +315,7 @@ const IncomeReport = () => {
               className="flex items-center px-4 py-2 bg-gray-400 text-white rounded-lg cursor-not-allowed opacity-50"
             >
               <FileText className="h-4 w-4 mr-2" />
-              Export Excel (Unavailable)
+              <TranslatedText text="Export Excel (Unavailable)" />
             </button>
           </div>
         </div>
@@ -326,13 +328,12 @@ const IncomeReport = () => {
               setStartDate(range.start);
               setEndDate(new Date().toISOString().split('T')[0]);
             }}
-            className={`px-3 py-1.5 text-sm rounded-lg transition ${
-              startDate === getCurrentMonthRange().start && endDate === new Date().toISOString().split('T')[0]
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
+            className={`px-3 py-1.5 text-sm rounded-lg transition ${startDate === getCurrentMonthRange().start && endDate === new Date().toISOString().split('T')[0]
+              ? 'bg-blue-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
           >
-            This Month (MTD)
+            <TranslatedText text="This Month (MTD)" />
           </button>
           <button
             onClick={() => {
@@ -340,13 +341,12 @@ const IncomeReport = () => {
               setStartDate(range.start);
               setEndDate(range.end);
             }}
-            className={`px-3 py-1.5 text-sm rounded-lg transition ${
-              startDate === getCurrentMonthRange().start && endDate === getCurrentMonthRange().end
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
+            className={`px-3 py-1.5 text-sm rounded-lg transition ${startDate === getCurrentMonthRange().start && endDate === getCurrentMonthRange().end
+              ? 'bg-blue-600 text-white'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
           >
-            Full Current Month
+            <TranslatedText text="Full Current Month" />
           </button>
           <button
             onClick={() => {
@@ -356,7 +356,7 @@ const IncomeReport = () => {
             }}
             className="px-3 py-1.5 text-sm rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
           >
-            Previous Month
+            <TranslatedText text="Previous Month" />
           </button>
           <button
             onClick={() => {
@@ -368,7 +368,7 @@ const IncomeReport = () => {
             }}
             className="px-3 py-1.5 text-sm rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
           >
-            Last 30 Days
+            <TranslatedText text="Last 30 Days" />
           </button>
           <button
             onClick={() => {
@@ -380,14 +380,14 @@ const IncomeReport = () => {
             }}
             className="px-3 py-1.5 text-sm rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
           >
-            Last 7 Days
+            <TranslatedText text="Last 7 Days" />
           </button>
         </div>
 
         {/* Filters */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1"><TranslatedText text="Start Date" /></label>
             <input
               type="date"
               value={startDate}
@@ -396,7 +396,7 @@ const IncomeReport = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1"><TranslatedText text="End Date" /></label>
             <input
               type="date"
               value={endDate}
@@ -405,13 +405,13 @@ const IncomeReport = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Shop</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1"><TranslatedText text="Shop" /></label>
             <select
               value={selectedShop}
               onChange={(e) => setSelectedShop(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
-              <option value="all">All Shops</option>
+              <option value="all">{tSync('All Shops')}</option>
               {shopsData?.shops?.map(shop => (
                 <option key={shop.id} value={shop.id}>{shop.name}</option>
               ))}
@@ -423,7 +423,7 @@ const IncomeReport = () => {
               className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center"
             >
               <Filter className="h-4 w-4 mr-2" />
-              Apply Filters
+              <TranslatedText text="Apply Filters" />
             </button>
           </div>
         </div>
@@ -434,11 +434,11 @@ const IncomeReport = () => {
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Revenue</p>
+              <p className="text-sm font-medium text-gray-600"><TranslatedText text="Total Revenue" /></p>
               <p className="text-2xl font-bold text-gray-900 mt-2">
                 {formatCurrency(summary.total_revenue)}
               </p>
-              <p className="text-xs text-gray-500 mt-1">{summary.total_orders} orders</p>
+              <p className="text-xs text-gray-500 mt-1">{summary.total_orders} {tSync('orders')}</p>
             </div>
             <div className="bg-green-100 p-3 rounded-full">
               <DollarSign className="h-6 w-6 text-green-600" />
@@ -449,12 +449,12 @@ const IncomeReport = () => {
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Cost of Goods</p>
+              <p className="text-sm font-medium text-gray-600"><TranslatedText text="Cost of Goods" /></p>
               <p className="text-2xl font-bold text-gray-900 mt-2">
                 {formatCurrency(summary.total_cogs)}
               </p>
               <p className="text-xs text-gray-500 mt-1">
-                {summary.total_revenue > 0 
+                {summary.total_revenue > 0
                   ? `${((summary.total_cogs / summary.total_revenue) * 100).toFixed(1)}% of revenue`
                   : 'N/A'}
               </p>
@@ -468,7 +468,7 @@ const IncomeReport = () => {
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Total Expenses</p>
+              <p className="text-sm font-medium text-gray-600"><TranslatedText text="Total Expenses" /></p>
               <p className="text-2xl font-bold text-gray-900 mt-2">
                 {formatCurrency(summary.total_expenses)}
               </p>
@@ -483,7 +483,7 @@ const IncomeReport = () => {
         <div className="bg-white rounded-lg shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600">Net Profit</p>
+              <p className="text-sm font-medium text-gray-600"><TranslatedText text="Net Profit" /></p>
               <p className="text-2xl font-bold mt-2" style={{
                 color: summary.net_profit >= 0 ? '#059669' : '#dc2626'
               }}>
@@ -505,23 +505,23 @@ const IncomeReport = () => {
         <h2 className="text-lg font-semibold text-gray-900 mb-4"><TranslatedText text="Financial Breakdown" /></h2>
         <div className="space-y-3">
           <div className="flex justify-between items-center py-2 border-b">
-            <span className="text-gray-700">Total Revenue (Income)</span>
+            <span className="text-gray-700"><TranslatedText text="Total Revenue (Income)" /></span>
             <span className="font-semibold text-gray-900">{formatCurrency(summary.total_revenue)}</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b">
-            <span className="text-gray-700">Cost of Goods Sold</span>
+            <span className="text-gray-700"><TranslatedText text="Cost of Goods Sold" /></span>
             <span className="font-semibold text-orange-600">-{formatCurrency(summary.total_cogs)}</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b-2 border-gray-300">
-            <span className="font-medium text-gray-900">Gross Profit</span>
+            <span className="font-medium text-gray-900"><TranslatedText text="Gross Profit" /></span>
             <span className="font-bold text-blue-600">{formatCurrency(summary.gross_profit)}</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b">
-            <span className="text-gray-700">Operating Expenses</span>
+            <span className="text-gray-700"><TranslatedText text="Operating Expenses" /></span>
             <span className="font-semibold text-red-600">-{formatCurrency(summary.total_expenses)}</span>
           </div>
           <div className="flex justify-between items-center py-2 bg-gray-50 rounded-lg px-4">
-            <span className="font-bold text-gray-900">Net Profit</span>
+            <span className="font-bold text-gray-900"><TranslatedText text="Net Profit" /></span>
             <span className="font-bold text-lg" style={{
               color: summary.net_profit >= 0 ? '#059669' : '#dc2626'
             }}>
@@ -543,12 +543,12 @@ const IncomeReport = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Names</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categories</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Shop</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Date" /></th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Product Names" /></th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Categories" /></th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Shop" /></th>
+                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Amount" /></th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Status" /></th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -589,11 +589,10 @@ const IncomeReport = () => {
                       {formatCurrency(order.total_amount)}
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap">
-                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                        order.status === 'completed' ? 'bg-green-100 text-green-800' :
+                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${order.status === 'completed' ? 'bg-green-100 text-green-800' :
                         order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-gray-100 text-gray-800'
-                      }`}>
+                          'bg-gray-100 text-gray-800'
+                        }`}>
                         {order.status}
                       </span>
                     </td>
@@ -623,11 +622,11 @@ const IncomeReport = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Shop</th>
-                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Date" /></th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Category" /></th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Description" /></th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Shop" /></th>
+                <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Amount" /></th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">

@@ -796,21 +796,11 @@ const Stocks = () => {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       {tSync('Product')}
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      {tSync('Location')}
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Quantity
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Min Level
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{tSync('Location')}</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{tSync('Quantity')}</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{tSync('Min Level')}</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{tSync('Status')}</th>
+                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{tSync('Actions')}</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -1142,7 +1132,7 @@ const Stocks = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Product {allProductsLoading && <span className="text-blue-600">(Loading...)</span>}
                     {productsError && <span className="text-red-600">(Error loading products)</span>}
-                    <span className="text-gray-500 text-sm">({filteredProducts.length} products found)</span>
+                    <span className="text-gray-500 text-sm">({filteredProducts.length} {tSync('products found')})</span>
                     {allProductsData && (
                       <div className="text-xs text-gray-400 mt-1">
                         Total in database: {allProducts.length} products
@@ -1172,7 +1162,7 @@ const Stocks = () => {
                         <div className="p-2 sticky top-0 bg-white border-b border-gray-200">
                           <input
                             type="text"
-                            placeholder="Search products..."
+                            placeholder={tSync('Search products...')}
                             value={productSearchTerm}
                             onChange={(e) => setProductSearchTerm(e.target.value)}
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
@@ -1182,7 +1172,7 @@ const Stocks = () => {
                         <div className="max-h-80 overflow-y-auto">
                           {filteredProducts.length === 0 ? (
                             <div className="p-4 text-center text-gray-500 text-sm">
-                              No products found
+                              {tSync('No products found')}
                             </div>
                           ) : (
                             filteredProducts.map(product => (
@@ -1452,7 +1442,7 @@ const Stocks = () => {
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Product {allProductsLoading && <span className="text-blue-600">(Loading...)</span>}
-                    <span className="text-gray-500 text-sm">({filteredTransferProducts.length} products found)</span>
+                    <span className="text-gray-500 text-sm">({filteredTransferProducts.length} {tSync('products found')})</span>
                     {allProductsData && (
                       <div className="text-xs text-gray-400 mt-1">
                         Total in database: {allProducts.length} products
@@ -1484,7 +1474,7 @@ const Stocks = () => {
                         <div className="p-2 sticky top-0 bg-white border-b border-gray-200">
                           <input
                             type="text"
-                            placeholder="Search products..."
+                            placeholder={tSync('Search products...')}
                             value={transferProductSearchTerm}
                             onChange={(e) => setTransferProductSearchTerm(e.target.value)}
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
@@ -1494,7 +1484,7 @@ const Stocks = () => {
                         <div className="max-h-80 overflow-y-auto">
                           {filteredTransferProducts.length === 0 ? (
                             <div className="p-4 text-center text-gray-500 text-sm">
-                              No products found
+                              {tSync('No products found')}
                             </div>
                           ) : (
                             filteredTransferProducts.map(product => (

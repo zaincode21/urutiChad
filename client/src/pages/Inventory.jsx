@@ -399,11 +399,7 @@ const Inventory = () => {
 
   const tabs = [
     { id: 'overview', name: <TranslatedText text="Overview" />, icon: BarChart3 },
-    { id: 'stock', name: 'Stock Levels', icon: Package },
-    { id: 'transfers', name: 'Transfers', icon: Truck },
-    { id: 'alerts', name: 'Alerts', icon: AlertTriangle },
-    { id: 'transactions', name: 'Transactions', icon: FileText },
-    { id: 'analytics', name: 'Analytics', icon: TrendingUp }
+    { id: 'stock', name: <TranslatedText text="Stock Levels" />, icon: Package }
   ];
 
   return (
@@ -413,7 +409,7 @@ const Inventory = () => {
         <div>
           <h1 className="text-3xl font-bold text-gray-900"><TranslatedText text="Inventory Management" /></h1>
           <p className="text-gray-600 mt-2">
-            Real-time stock tracking, transfers, and analytics
+            <TranslatedText text="Real-time stock tracking, transfers, and analytics" />
           </p>
         </div>
         <div className="flex items-center space-x-3">
@@ -465,7 +461,7 @@ const Inventory = () => {
                 <Package className="w-6 h-6 text-blue-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Products</p>
+                <p className="text-sm font-medium text-gray-600"><TranslatedText text="Total Products" /></p>
                 <p className="text-2xl font-bold text-gray-900">{statsData?.total_products || 0}</p>
               </div>
             </div>
@@ -625,7 +621,7 @@ const Inventory = () => {
                     onChange={(e) => handleFilterChange('location_type', e.target.value)}
                     className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   >
-                    <option value="">All Locations</option>
+                    <option value="">{tSync('All Locations')}</option>
                     <option value="shop">Shops</option>
                     <option value="warehouse">Warehouses</option>
                   </select>
@@ -634,7 +630,7 @@ const Inventory = () => {
                     onChange={(e) => handleFilterChange('category', e.target.value)}
                     className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   >
-                    <option value="">All Categories</option>
+                    <option value="">{tSync('All Categories')}</option>
                     {categories?.map((category) => (
                       <option key={category.id} value={category.id}>
                         {category.name}

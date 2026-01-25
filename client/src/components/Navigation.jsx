@@ -246,11 +246,7 @@ const Navigation = () => {
           href: '/loyalty',
           description: tSync('Customer loyalty programs')
         },
-        {
-          name: tSync('Layaway'),
-          href: '/layaway',
-          description: tSync('Layaway management')
-        }
+
       ]
     },
     {
@@ -317,44 +313,10 @@ const Navigation = () => {
           name: tSync('Shop Stocks'),
           href: '/stocks',
           description: tSync('Shop-specific inventory')
-        },
-        {
-          name: tSync('Transfers'),
-          href: '/inventory/transfers',
-          description: tSync('Inventory transfers')
-        },
-        {
-          name: tSync('Alerts'),
-          href: '/inventory/alerts',
-          description: tSync('Stock alerts and notifications')
-        },
-        {
-          name: tSync('Analytics'),
-          href: '/inventory/analytics',
-          description: tSync('Inventory analytics')
         }
       ]
     },
 
-    {
-      id: 'production',
-      name: tSync('Production'),
-      icon: Truck,
-      description: tSync('Production management'),
-      hasSubmenu: true,
-      submenu: [
-        {
-          name: tSync('Analytics'),
-          href: '/production/analytics',
-          description: tSync('Production analytics')
-        },
-        {
-          name: tSync('Perfumes'),
-          href: '/perfumes',
-          description: tSync('Perfume production')
-        }
-      ]
-    },
     {
       name: tSync('Notifications'),
       href: '/notifications',
@@ -372,12 +334,6 @@ const Navigation = () => {
       href: '/shops',
       icon: Store,
       description: tSync('Manage shop locations')
-    },
-    {
-      name: tSync('Analytics'),
-      href: '/analytics',
-      icon: BarChart3,
-      description: tSync('Business analytics')
     },
     {
       name: tSync('Income Report'),

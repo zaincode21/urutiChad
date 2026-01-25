@@ -255,7 +255,7 @@ const Shops = () => {
               <Store className="h-6 w-6 text-blue-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Shops</p>
+              <p className="text-sm font-medium text-gray-600">{tSync('Total Shops')}</p>
               <p className="text-2xl font-bold text-gray-900">{shops.length}</p>
             </div>
           </div>
@@ -267,7 +267,7 @@ const Shops = () => {
               <TrendingUp className="h-6 w-6 text-green-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Active Shops</p>
+              <p className="text-sm font-medium text-gray-600">{tSync('Active Shops')}</p>
               <p className="text-2xl font-bold text-gray-900">
                 {shops.filter(shop => shop.is_active).length}
               </p>
@@ -281,7 +281,7 @@ const Shops = () => {
               <Users className="h-6 w-6 text-purple-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Total Staff</p>
+              <p className="text-sm font-medium text-gray-600">{tSync('Total Staff')}</p>
               <p className="text-2xl font-bold text-gray-900">
                 {users.filter(user => user.shop_id).length}
               </p>
@@ -295,7 +295,7 @@ const Shops = () => {
               <MapPin className="h-6 w-6 text-orange-600" />
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Cities</p>
+              <p className="text-sm font-medium text-gray-600">{tSync('Cities')}</p>
               <p className="text-2xl font-bold text-gray-900">
                 {new Set(shops.map(shop => shop.city)).size}
               </p>
@@ -325,9 +325,9 @@ const Shops = () => {
               onChange={(e) => setSelectedFilter(e.target.value)}
               className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <option value="all">All Shops</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
+              <option value="all">{tSync('All Shops')}</option>
+              <option value="active">{tSync('Active')}</option>
+              <option value="inactive">{tSync('Inactive')}</option>
             </select>
           </div>
         </div>
@@ -403,8 +403,8 @@ const Shops = () => {
               <div className="mt-4 pt-4 border-t border-gray-100">
                 <div className="flex items-center justify-between">
                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${shop.is_active
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-red-100 text-red-800'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-red-100 text-red-800'
                     }`}>
                     {shop.is_active ? 'Active' : 'Inactive'}
                   </span>
@@ -463,7 +463,7 @@ const Shops = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Shop Name *
+                    {tSync('Shop Name *')}
                   </label>
                   <input
                     type="text"
@@ -472,14 +472,14 @@ const Shops = () => {
                     onChange={handleInputChange}
                     className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.name ? 'border-red-300' : 'border-gray-300'
                       }`}
-                    placeholder="Enter shop name"
+                    placeholder={tSync('Enter shop name')}
                   />
                   {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Manager
+                    {tSync('Manager')}
                   </label>
                   <select
                     name="manager_id"
@@ -487,7 +487,7 @@ const Shops = () => {
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
-                    <option value="">Select Manager</option>
+                    <option value="">{tSync('Select Manager')}</option>
                     {users.map(user => (
                       <option key={user.id} value={user.id}>
                         {user.first_name} {user.last_name} ({user.role})
@@ -498,7 +498,7 @@ const Shops = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Address *
+                    {tSync('Address *')}
                   </label>
                   <input
                     type="text"
@@ -507,14 +507,14 @@ const Shops = () => {
                     onChange={handleInputChange}
                     className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.address ? 'border-red-300' : 'border-gray-300'
                       }`}
-                    placeholder="Enter address"
+                    placeholder={tSync('Enter address')}
                   />
                   {errors.address && <p className="mt-1 text-sm text-red-600">{errors.address}</p>}
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    City *
+                    {tSync('City *')}
                   </label>
                   <input
                     type="text"
@@ -523,14 +523,14 @@ const Shops = () => {
                     onChange={handleInputChange}
                     className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.city ? 'border-red-300' : 'border-gray-300'
                       }`}
-                    placeholder="Enter city"
+                    placeholder={tSync('Enter city')}
                   />
                   {errors.city && <p className="mt-1 text-sm text-red-600">{errors.city}</p>}
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    State/Province
+                    {tSync('State/Province')}
                   </label>
                   <input
                     type="text"
@@ -538,13 +538,13 @@ const Shops = () => {
                     value={formData.state}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter state"
+                    placeholder={tSync('Enter state')}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Country
+                    {tSync('Country')}
                   </label>
                   <input
                     type="text"
@@ -552,13 +552,13 @@ const Shops = () => {
                     value={formData.country}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter country"
+                    placeholder={tSync('Enter country')}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Postal Code
+                    {tSync('Postal Code')}
                   </label>
                   <input
                     type="text"
@@ -566,13 +566,13 @@ const Shops = () => {
                     value={formData.postal_code}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter postal code"
+                    placeholder={tSync('Enter postal code')}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone
+                    {tSync('Phone')}
                   </label>
                   <input
                     type="tel"
@@ -580,13 +580,13 @@ const Shops = () => {
                     value={formData.phone}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Enter phone number"
+                    placeholder={tSync('Enter phone number')}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                    {tSync('Email')}
                   </label>
                   <input
                     type="email"
@@ -595,7 +595,7 @@ const Shops = () => {
                     onChange={handleInputChange}
                     className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent ${errors.email ? 'border-red-300' : 'border-gray-300'
                       }`}
-                    placeholder="Enter email"
+                    placeholder={tSync('Enter email')}
                   />
                   {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
                 </div>
@@ -611,7 +611,7 @@ const Shops = () => {
                   }}
                   className="px-6 py-3 border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  Cancel
+                  <TranslatedText text="Cancel" />
                 </button>
                 <button
                   type="submit"
@@ -657,21 +657,21 @@ const Shops = () => {
                   <h3 className="text-lg font-semibold text-gray-900 mb-4"><TranslatedText text="Basic Information" /></h3>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-500">Shop Name</label>
+                      <label className="block text-sm font-medium text-gray-500">{tSync('Shop Name')}</label>
                       <p className="text-lg text-gray-900">{selectedShop.name}</p>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-500">Address</label>
+                      <label className="block text-sm font-medium text-gray-500">{tSync('Address')}</label>
                       <p className="text-lg text-gray-900">{selectedShop.address}</p>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-500">Location</label>
+                      <label className="block text-sm font-medium text-gray-500">{tSync('Location')}</label>
                       <p className="text-lg text-gray-900">
                         {selectedShop.city}, {selectedShop.state} {selectedShop.postal_code}
                       </p>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-500">Country</label>
+                      <label className="block text-sm font-medium text-gray-500">{tSync('Country')}</label>
                       <p className="text-lg text-gray-900">{selectedShop.country || 'Not specified'}</p>
                     </div>
                   </div>
@@ -682,13 +682,13 @@ const Shops = () => {
                   <div className="space-y-4">
                     {selectedShop.phone && (
                       <div>
-                        <label className="block text-sm font-medium text-gray-500">Phone</label>
+                        <label className="block text-sm font-medium text-gray-500">{tSync('Phone')}</label>
                         <p className="text-lg text-gray-900">{selectedShop.phone}</p>
                       </div>
                     )}
                     {selectedShop.email && (
                       <div>
-                        <label className="block text-sm font-medium text-gray-500">Email</label>
+                        <label className="block text-sm font-medium text-gray-500">{tSync('Email')}</label>
                         <p className="text-lg text-gray-900">{selectedShop.email}</p>
                       </div>
                     )}
@@ -699,21 +699,21 @@ const Shops = () => {
                   <h3 className="text-lg font-semibold text-gray-900 mb-4"><TranslatedText text="Management" /></h3>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-500">Manager</label>
+                      <label className="block text-sm font-medium text-gray-500">{tSync('Manager')}</label>
                       <p className="text-lg text-gray-900">
                         {selectedShop.manager_first_name && selectedShop.manager_last_name
                           ? `${selectedShop.manager_first_name} ${selectedShop.manager_last_name}`
-                          : 'Not assigned'
+                          : tSync('Not assigned')
                         }
                       </p>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-500">Status</label>
+                      <label className="block text-sm font-medium text-gray-500">{tSync('Status')}</label>
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${selectedShop.is_active
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
                         }`}>
-                        {selectedShop.is_active ? 'Active' : 'Inactive'}
+                        {selectedShop.is_active ? tSync('Active') : tSync('Inactive')}
                       </span>
                     </div>
                   </div>
@@ -733,14 +733,14 @@ const Shops = () => {
                       className="w-full flex items-center justify-center px-4 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                       <Edit className="h-4 w-4 mr-2" />
-                      Edit Shop
+                      {tSync('Edit Shop')}
                     </button>
                     <button
                       onClick={() => handleDelete(selectedShop)}
                       className="w-full flex items-center justify-center px-4 py-3 bg-red-600 text-white font-medium rounded-xl hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                     >
                       <Trash2 className="h-4 w-4 mr-2" />
-                      Delete Shop
+                      {tSync('Delete Shop')}
                     </button>
                   </div>
                 </div>
@@ -749,18 +749,18 @@ const Shops = () => {
                   <h3 className="text-lg font-semibold text-gray-900 mb-4"><TranslatedText text="Shop Information" /></h3>
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-500">Shop ID</label>
+                      <label className="block text-sm font-medium text-gray-500">{tSync('Shop ID')}</label>
                       <p className="text-sm text-gray-900 font-mono">{selectedShop.id}</p>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-500">Created</label>
+                      <label className="block text-sm font-medium text-gray-500">{tSync('Created')}</label>
                       <p className="text-sm text-gray-900">
                         {new Date(selectedShop.created_at).toLocaleDateString()}
                       </p>
                     </div>
                     {selectedShop.updated_at && (
                       <div>
-                        <label className="block text-sm font-medium text-gray-500">Last Updated</label>
+                        <label className="block text-sm font-medium text-gray-500">{tSync('Last Updated')}</label>
                         <p className="text-sm text-gray-900">
                           {new Date(selectedShop.updated_at).toLocaleDateString()}
                         </p>

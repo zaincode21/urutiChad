@@ -110,6 +110,28 @@ router.post('/', managerAuth, [
             min_stock_level || 0, supplier_name, supplier_contact
         ]);
 
+        // Sync with Products table for POS availability
+        const sku = `MAT-${id.substring(0, 8)}`;
+        const productId = uuidv4();
+
+        await database.run(`
+            INSERT INTO products (
+                id, name, sku, description, price, cost_price, 
+                stock_quantity, current_stock, product_type, unit, 
+                is_active, created_at, updated_at
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'atelier_material', $9, true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+        `, [
+            productId,
+            name,
+            sku,
+            `Atelier Material: ${type}`,
+            selling_price || (cost_per_unit * 1.5),
+            cost_per_unit,
+            Math.floor(current_stock), // Products usually track integer stock, but we can be flexible if DB allows. Schema says INTEGER for stock_quantity.
+            Math.floor(current_stock),
+            unit
+        ]);
+
         res.status(201).json({
             message: 'Material added successfully',
             material: { id, ...req.body }
@@ -168,6 +190,50 @@ router.put('/:id', managerAuth, [
         WHERE id = $${values.length}
     `, values);
 
+        // Sync updates to Products table
+        const sku = `MAT-${id.substring(0, 8)}`;
+        // We need to construct product updates based on raw material updates
+        // Only update fields that changed and are relevant to products
+        const productUpdates = [];
+        const productValues = [];
+
+        if (updates.name) {
+            productValues.push(updates.name);
+            productUpdates.push(`name = $${productValues.length}`);
+        }
+
+        if (updates.selling_price || updates.cost_per_unit) {
+            // Recalculate price if either cost or price changes
+            const newPrice = updates.selling_price !== undefined ? parseFloat(updates.selling_price) :
+                (updates.cost_per_unit !== undefined ? parseFloat(updates.cost_per_unit) * 1.5 : undefined);
+
+            if (newPrice !== undefined) {
+                productValues.push(newPrice);
+                productUpdates.push(`price = $${productValues.length}`);
+            }
+
+            if (updates.cost_per_unit !== undefined) {
+                productValues.push(updates.cost_per_unit);
+                productUpdates.push(`cost_price = $${productValues.length}`);
+            }
+        }
+
+        if (updates.current_stock !== undefined) {
+            productValues.push(Math.floor(updates.current_stock));
+            productUpdates.push(`stock_quantity = $${productValues.length}`);
+            productValues.push(Math.floor(updates.current_stock)); // Re-use value isn't easy with parameterized queries without index, just push again
+            productUpdates.push(`current_stock = $${productValues.length}`);
+        }
+
+        if (productUpdates.length > 0) {
+            productValues.push(sku);
+            await database.run(`
+                UPDATE products 
+                SET ${productUpdates.join(', ')}, updated_at = CURRENT_TIMESTAMP 
+                WHERE sku = $${productValues.length}
+            `, productValues);
+        }
+
         res.json({ message: 'Material updated' });
     } catch (error) {
         console.error('Update raw material error:', error);
@@ -186,6 +252,11 @@ router.delete('/:id', managerAuth, async (req, res) => {
     try {
         const { id } = req.params;
         await database.run('UPDATE raw_materials SET is_active = false WHERE id = $1', [id]);
+
+        // Sync delete to Products table
+        const sku = `MAT-${id.substring(0, 8)}`;
+        await database.run('UPDATE products SET is_active = false WHERE sku = $1', [sku]);
+
         res.json({ message: 'Material deleted' });
     } catch (error) {
         console.error('Delete raw material error:', error);

@@ -19,8 +19,10 @@ import {
 import { api } from '../lib/api';
 import { customersAPI } from '../lib/api';
 import TranslatedText from '../components/TranslatedText';
+import { useTranslation } from '../hooks/useTranslation';
 
 const Loyalty = () => {
+  const { tSync } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all');
 
@@ -88,16 +90,16 @@ const Loyalty = () => {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-900"><TranslatedText text="Loyalty Program" /></h1>
-              <p className="text-gray-600 mt-2">Customer loyalty tiers and points management</p>
+              <p className="text-gray-600 mt-2">{tSync('Customer loyalty tiers and points management')}</p>
             </div>
             <div className="flex gap-3">
               <button className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-600 text-white font-medium rounded-xl hover:from-yellow-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                 <Gift className="h-5 w-5 mr-2" />
-                Manage Rewards
+                {tSync('Manage Rewards')}
               </button>
               <button className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-xl hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                 <Plus className="h-5 w-5 mr-2" />
-                Add Customer
+                {tSync('Add Customer')}
               </button>
             </div>
           </div>
@@ -111,7 +113,7 @@ const Loyalty = () => {
                 <Award className="h-6 w-6 text-yellow-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Members</p>
+                <p className="text-sm font-medium text-gray-600">{tSync('Total Members')}</p>
                 <p className="text-2xl font-bold text-gray-900">{customers.length}</p>
               </div>
             </div>
@@ -123,7 +125,7 @@ const Loyalty = () => {
                 <Crown className="h-6 w-6 text-yellow-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Gold Members</p>
+                <p className="text-sm font-medium text-gray-600">{tSync('Gold Members')}</p>
                 <p className="text-2xl font-bold text-gray-900">
                   {customers.filter(c => c.loyalty_tier === 'gold').length}
                 </p>
@@ -137,7 +139,7 @@ const Loyalty = () => {
                 <Star className="h-6 w-6 text-gray-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Silver Members</p>
+                <p className="text-sm font-medium text-gray-600">{tSync('Silver Members')}</p>
                 <p className="text-2xl font-bold text-gray-900">
                   {customers.filter(c => c.loyalty_tier === 'silver').length}
                 </p>
@@ -151,7 +153,7 @@ const Loyalty = () => {
                 <Award className="h-6 w-6 text-orange-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Points</p>
+                <p className="text-sm font-medium text-gray-600">{tSync('Total Points')}</p>
                 <p className="text-2xl font-bold text-gray-900">
                   {customers.reduce((sum, c) => sum + (c.loyalty_points || 0), 0).toLocaleString()}
                 </p>
@@ -168,7 +170,7 @@ const Loyalty = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
-                  placeholder="Search customers by name or email..."
+                  placeholder={tSync('Search customers by name or email...')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -181,10 +183,10 @@ const Loyalty = () => {
                 onChange={(e) => setSelectedFilter(e.target.value)}
                 className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="all">All Tiers</option>
-                <option value="gold">Gold</option>
-                <option value="silver">Silver</option>
-                <option value="bronze">Bronze</option>
+                <option value="all">{tSync('All Tiers')}</option>
+                <option value="gold">{tSync('Gold')}</option>
+                <option value="silver">{tSync('Silver')}</option>
+                <option value="bronze">{tSync('Bronze')}</option>
               </select>
               <button className="inline-flex items-center px-4 py-3 border border-gray-300 rounded-xl hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 <BarChart3 className="h-5 w-5 text-gray-400" />
@@ -226,25 +228,25 @@ const Loyalty = () => {
                 {/* Customer Details */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Loyalty Tier:</span>
+                    <span className="text-gray-600">{tSync('Loyalty Tier:')}</span>
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${customer.loyalty_tier === 'gold' ? 'bg-yellow-100 text-yellow-800' :
-                        customer.loyalty_tier === 'silver' ? 'bg-gray-100 text-gray-800' :
-                          'bg-orange-100 text-orange-800'
+                      customer.loyalty_tier === 'silver' ? 'bg-gray-100 text-gray-800' :
+                        'bg-orange-100 text-orange-800'
                       }`}>
                       {getTierIcon(customer.loyalty_tier)}
                       <span className="ml-1">{customer.loyalty_tier}</span>
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Points:</span>
+                    <span className="text-gray-600">{tSync('Points:')}</span>
                     <span className="font-semibold text-gray-900">{customer.loyalty_points || 0}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Total Spent:</span>
+                    <span className="text-gray-600">{tSync('Total Spent:')}</span>
                     <span className="font-semibold text-gray-900">${customer.total_spent || 0}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Phone:</span>
+                    <span className="text-gray-600">{tSync('Phone:')}</span>
                     <span className="text-gray-900">{customer.phone}</span>
                   </div>
                 </div>
@@ -253,10 +255,10 @@ const Loyalty = () => {
                 <div className="mt-4 pt-4 border-t border-gray-100">
                   <div className="flex items-center justify-between">
                     <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
-                      View History
+                      {tSync('View History')}
                     </button>
                     <button className="text-sm text-green-600 hover:text-green-700 font-medium">
-                      Add Points
+                      {tSync('Add Points')}
                     </button>
                   </div>
                 </div>
@@ -272,13 +274,13 @@ const Loyalty = () => {
             <h3 className="text-lg font-medium text-gray-900 mb-2"><TranslatedText text="No customers found" /></h3>
             <p className="text-gray-500 mb-6">
               {searchTerm || selectedFilter !== 'all'
-                ? 'Try adjusting your search or filter criteria.'
-                : 'Get started by adding your first loyalty member.'
+                ? tSync('Try adjusting your search or filter criteria.')
+                : tSync('Get started by adding your first loyalty member.')
               }
             </p>
             <button className="inline-flex items-center px-4 py-2 bg-yellow-600 text-white font-medium rounded-xl hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
               <Plus className="h-5 w-5 mr-2" />
-              Add First Member
+              {tSync('Add First Member')}
             </button>
           </div>
         )}

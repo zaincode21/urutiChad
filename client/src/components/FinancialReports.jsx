@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { 
-  Calendar, 
-  Download, 
-  TrendingUp, 
-  TrendingDown, 
-  DollarSign, 
+import {
+  Calendar,
+  Download,
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
   Building2,
   FileText,
   BarChart3,
@@ -18,8 +18,10 @@ import {
 import { financialReportsAPI } from '../lib/api';
 import ExpenseChart from './charts/ExpenseChart';
 import TranslatedText from './TranslatedText';
+import { useTranslation } from '../hooks/useTranslation';
 
 const FinancialReports = () => {
+  const { tSync } = useTranslation();
   const [selectedReport, setSelectedReport] = useState('trial-balance');
   const [dateRange, setDateRange] = useState({
     start_date: new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0],
@@ -93,7 +95,7 @@ const FinancialReports = () => {
   });
 
   const isLoading = trialBalanceLoading || incomeStatementLoading || balanceSheetLoading || cashFlowLoading || dailySalesLoading || dailyExpensesLoading;
-  
+
   // Check for API errors
   const hasErrors = trialBalanceError || incomeStatementError || balanceSheetError || cashFlowError || dailySalesError || dailyExpensesError;
 
@@ -205,13 +207,12 @@ const FinancialReports = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{account.category_name}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          account.account_type === 'asset' ? 'bg-blue-100 text-blue-800' :
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${account.account_type === 'asset' ? 'bg-blue-100 text-blue-800' :
                           account.account_type === 'liability' ? 'bg-red-100 text-red-800' :
-                          account.account_type === 'equity' ? 'bg-purple-100 text-purple-800' :
-                          account.account_type === 'revenue' ? 'bg-green-100 text-green-800' :
-                          'bg-yellow-100 text-yellow-800'
-                        }`}>
+                            account.account_type === 'equity' ? 'bg-purple-100 text-purple-800' :
+                              account.account_type === 'revenue' ? 'bg-green-100 text-green-800' :
+                                'bg-yellow-100 text-yellow-800'
+                          }`}>
                           {account.account_type}
                         </span>
                       </td>
@@ -221,9 +222,8 @@ const FinancialReports = () => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900">
                         {formatCurrency(account.total_credits || 0)}
                       </td>
-                      <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium text-right ${
-                        (account.balance || 0) > 0 ? 'text-green-600' : (account.balance || 0) < 0 ? 'text-red-600' : 'text-gray-500'
-                      }`}>
+                      <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium text-right ${(account.balance || 0) > 0 ? 'text-green-600' : (account.balance || 0) < 0 ? 'text-red-600' : 'text-gray-500'
+                        }`}>
                         {formatCurrency(Math.abs(account.balance || 0))}
                       </td>
                     </tr>
@@ -520,7 +520,7 @@ const FinancialReports = () => {
             <div className="bg-green-50 p-4 rounded-lg">
               <div className="text-sm text-green-600 font-medium">Period</div>
               <div className="text-lg font-semibold text-green-900">
-                {cashFlowData.period && cashFlowData.period.start_date && cashFlowData.period.end_date ? 
+                {cashFlowData.period && cashFlowData.period.start_date && cashFlowData.period.end_date ?
                   `${new Date(cashFlowData.period.start_date).toLocaleDateString()} - ${new Date(cashFlowData.period.end_date).toLocaleDateString()}` :
                   'Period not specified'
                 }
@@ -862,23 +862,18 @@ const FinancialReports = () => {
       <div className="bg-white rounded-lg p-6 shadow-sm border">
         <div className="flex flex-wrap gap-2">
           {[
-            { key: 'trial-balance', label: 'Trial Balance', icon: FileText },
-            { key: 'income-statement', label: 'Income Statement', icon: TrendingUp },
-            { key: 'balance-sheet', label: 'Balance Sheet', icon: Building2 },
-            { key: 'cash-flow', label: 'Cash Flow', icon: BarChart3 },
-            { key: 'daily-sales', label: 'Daily Sales', icon: ShoppingCart },
-            { key: 'daily-expenses', label: 'Daily Expenses', icon: Receipt }
+            { key: 'daily-sales', label: tSync('Daily Sales'), icon: ShoppingCart },
+            { key: 'daily-expenses', label: tSync('Daily Expenses'), icon: Receipt }
           ].map((report) => {
             const Icon = report.icon;
             return (
               <button
                 key={report.key}
                 onClick={() => setSelectedReport(report.key)}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-                  selectedReport === report.key
-                    ? 'bg-blue-600 text-white shadow-lg'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                }`}
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${selectedReport === report.key
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  }`}
               >
                 <Icon className="h-4 w-4" />
                 <span>{report.label}</span>
@@ -924,7 +919,7 @@ const FinancialReports = () => {
               </div>
             </>
           )}
-          
+
           {selectedReport === 'trial-balance' && (
             <div className="flex items-center">
               <input

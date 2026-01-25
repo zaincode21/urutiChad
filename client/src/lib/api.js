@@ -96,6 +96,7 @@ export const ordersAPI = {
   getAll: (params) => api.get('/orders', { params }),
   getById: (id) => api.get(`/orders/${id}`),
   create: (data) => api.post('/orders', data),
+  updatePayment: (id, data) => api.put(`/orders/${id}/payment`, data),
   updateStatus: (id, status) => api.put(`/orders/${id}/status`, { status }),
   getStats: (params) => api.get('/orders/stats/overview', { params }),
   getIncomeReport: (params) => api.get('/orders/income-report', { params }),

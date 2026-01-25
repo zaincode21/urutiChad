@@ -94,10 +94,10 @@ router.post('/', auth, [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const errorMessages = errors.array().map(err => `${err.param}: ${err.msg}`).join(', ');
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'Validation failed',
         message: errorMessages,
-        errors: errors.array() 
+        errors: errors.array()
       });
     }
 
@@ -115,12 +115,13 @@ router.post('/', auth, [
       anniversaryDate,
       anniversary_date,
       loyalty_points = 0,
-      loyalty_tier = 'bronze'
+      loyalty_tier = 'bronze',
+      measurements
     } = req.body;
 
     // Handle anniversary_date from either anniversaryDate or anniversary_date
     const finalAnniversaryDate = anniversary_date || anniversaryDate;
-    
+
     // Convert empty strings to null for optional fields
     const cleanBirthday = (birthday && birthday.trim() !== '') ? birthday : null;
     const cleanAnniversaryDate = (finalAnniversaryDate && finalAnniversaryDate.trim() !== '') ? finalAnniversaryDate : null;
@@ -155,7 +156,7 @@ router.post('/', auth, [
           duplicateFields.push('phone');
         }
 
-        return res.status(400).json({ 
+        return res.status(400).json({
           error: `Customer already exists with the same ${duplicateFields.join(' and ')}.`,
           duplicate: {
             id: existingCustomer.id,
@@ -173,8 +174,8 @@ router.post('/', auth, [
         id, first_name, last_name, email, phone, address, city, state, country, postal_code,
         birthday, anniversary_date, loyalty_points, loyalty_tier, total_spent
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
-    `, [customerId, firstName, lastName, cleanEmail, cleanPhone, address, city, state, country, postalCode, 
-        cleanBirthday, cleanAnniversaryDate, loyalty_points, loyalty_tier]);
+    `, [customerId, firstName, lastName, cleanEmail, cleanPhone, address, city, state, country, postalCode,
+      cleanBirthday, cleanAnniversaryDate, loyalty_points, loyalty_tier]);
 
     const newCustomer = await database.get('SELECT * FROM customers WHERE id = ?', [customerId]);
 
@@ -218,7 +219,8 @@ router.put('/:id', auth, [
       firstName: 'first_name',
       lastName: 'last_name',
       postalCode: 'postal_code',
-      anniversary_date: 'anniversary_date'
+      anniversary_date: 'anniversary_date',
+      measurements: 'measurements'
     };
 
     const updates = [];
@@ -313,11 +315,11 @@ router.get('/:id/orders', async (req, res) => {
 router.get('/special-days/upcoming', async (req, res) => {
   try {
     const { days = 30, type = 'both' } = req.query;
-    
+
     // Exclude walk-in customers and specific system customers from special days
     let whereClause = 'WHERE is_active = 1 AND email IS NOT NULL AND email != "" AND LOWER(first_name) != \'walk-in\' AND LOWER(first_name || \' \' || COALESCE(last_name, \'\')) != \'walk-in customer\' AND NOT (first_name = \'SDSerge\' AND last_name = \'Dukuziyaremye\')';
     let params = [];
-    
+
     if (type === 'birthday') {
       whereClause += ' AND birthday IS NOT NULL AND birthday != ""';
     } else if (type === 'anniversary') {
@@ -325,7 +327,7 @@ router.get('/special-days/upcoming', async (req, res) => {
     } else {
       whereClause += ' AND (birthday IS NOT NULL AND birthday != "" OR anniversary_date IS NOT NULL AND anniversary_date != "")';
     }
-    
+
     const customers = await database.all(`
       SELECT 
         id, 
@@ -352,7 +354,7 @@ router.get('/special-days/upcoming', async (req, res) => {
       ORDER BY next_special_day ASC
       LIMIT ?
     `, [parseInt(days)]);
-    
+
     res.json({
       success: true,
       message: `Upcoming special days for next ${days} days`,
@@ -375,7 +377,7 @@ router.get('/special-days/today', async (req, res) => {
     const today = new Date();
     const month = (today.getMonth() + 1).toString().padStart(2, '0');
     const day = today.getDate().toString().padStart(2, '0');
-    
+
     const birthdayCustomers = await database.all(`
       SELECT id, first_name, last_name, email, phone, birthday, loyalty_tier, total_spent
       FROM customers 
@@ -388,7 +390,7 @@ router.get('/special-days/today', async (req, res) => {
       AND strftime('%m', birthday) = ? 
       AND strftime('%d', birthday) = ?
     `, [month, day]);
-    
+
     const anniversaryCustomers = await database.all(`
       SELECT id, first_name, last_name, email, phone, anniversary_date, loyalty_tier, total_spent
       FROM customers 
@@ -401,7 +403,7 @@ router.get('/special-days/today', async (req, res) => {
       AND strftime('%m', anniversary_date) = ? 
       AND strftime('%d', anniversary_date) = ?
     `, [month, day]);
-    
+
     res.json({
       success: true,
       message: 'Special days for today',

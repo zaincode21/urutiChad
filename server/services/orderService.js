@@ -132,7 +132,7 @@ class OrderService {
         if (item.is_atelier_item) {
           if (item.is_service) {
             // Handle Service Item (Labor Cost)
-            unitPrice = item.price || item.unit_price;
+            unitPrice = (item.price || item.unit_price) || 0;
 
             // Check if Service Product exists or create it
             const serviceSku = 'SERVICE-TAILORING';
@@ -172,7 +172,7 @@ class OrderService {
             const material = await database.get('SELECT * FROM raw_materials WHERE id = $1', [item.product_id]);
             if (!material) throw new Error(`Material not found: ${item.product_id}`);
 
-            unitPrice = item.unit_price || (material.cost_per_unit * 1.5);
+            unitPrice = (item.unit_price || item.price || material.selling_price || (material.cost_per_unit * 1.5)) || 0;
 
             // Check if wrapper product exists
             const existingWrapper = await database.get(
@@ -231,6 +231,9 @@ class OrderService {
       for (const item of items) {
         console.log(`📦 Processing item: ${item.product_id}, is_atelier: ${item.is_atelier_item}, quantity: ${item.quantity}`);
         if (item.is_atelier_item) {
+          // Skip stock deduction for service items (Labor Cost)
+          if (item.is_service) continue;
+
           // ALWAYS deduct from Raw Materials for atelier orders
           // Fabric is cut/allocated immediately when order is placed
           console.log(`✂️ Deducting ${item.quantity} from raw material ${item.product_id}`);
@@ -463,6 +466,54 @@ class OrderService {
       // Rollback transaction on error
       await database.run('ROLLBACK');
       console.error('Complete fulfillment error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Update order payment status
+   */
+  async updatePaymentStatus(orderId, paymentData, updatedBy) {
+    try {
+      const { payment_status, amount_paid, remaining_amount } = paymentData;
+
+      // Start transaction
+      await database.run('BEGIN');
+
+      // Get order details
+      const order = await this.getOrder(orderId);
+      if (!order) {
+        throw new Error('Order not found');
+      }
+
+      // Update order payment details
+      await database.run(`
+        UPDATE orders 
+        SET payment_status = $1, 
+            amount_paid = $2,
+            remaining_amount = $3,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = $4
+      `, [payment_status, amount_paid, remaining_amount, orderId]);
+
+      // If fully paid, we might want to trigger other actions, but for now just update
+
+      // Commit transaction
+      await database.run('COMMIT');
+
+      return {
+        success: true,
+        order_id: orderId,
+        payment_status,
+        amount_paid,
+        remaining_amount,
+        updated_at: new Date().toISOString()
+      };
+
+    } catch (error) {
+      // Rollback transaction on error
+      await database.run('ROLLBACK');
+      console.error('Update payment status error:', error);
       throw error;
     }
   }

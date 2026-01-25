@@ -119,7 +119,8 @@ class PostgreSQLSchema {
         anniversary_date DATE,
         is_active BOOLEAN DEFAULT true,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        measurements TEXT
       )`,
 
       // Discounts table
@@ -474,6 +475,7 @@ class PostgreSQLSchema {
         reorder_point DECIMAL(10,2) DEFAULT 0,
         safety_stock DECIMAL(10,2) DEFAULT 0,
         cost_per_unit DECIMAL(10,2) NOT NULL,
+        selling_price DECIMAL(10,2) DEFAULT 0,
         supplier_id UUID,
         supplier_name VARCHAR(255),
         supplier_contact VARCHAR(255),
