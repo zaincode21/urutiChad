@@ -4,4 +4,3 @@ node_modules
 dist
 node_modules/
 dist/
-ecosystem.config.js
