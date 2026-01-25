@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TranslatedText from '../components/TranslatedText';
+import { useTranslation } from '../hooks/useTranslation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import {
@@ -50,6 +51,7 @@ import { shopsAPI, settingsAPI, usersAPI } from '../lib/api';
 
 
 const Settings = () => {
+  const { tSync } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('users');
@@ -328,141 +330,141 @@ const Settings = () => {
   // Settings navigation structure
   const settingsNavigation = {
     users: {
-      title: 'User Management',
-      description: 'Manage system users, roles, and permissions',
+      title: tSync('User Management'),
+      description: tSync('Manage system users, roles, and permissions'),
       icon: Users,
       color: 'green',
       sections: [
         {
           id: 'users',
-          title: 'System Users',
-          description: 'Manage user accounts and profiles',
+          title: tSync('System Users'),
+          description: tSync('Manage user accounts and profiles'),
           count: 0
         },
         {
           id: 'roles',
-          title: 'Roles & Permissions',
-          description: 'Configure access control and permissions',
+          title: tSync('Roles & Permissions'),
+          description: tSync('Configure access control and permissions'),
           count: 0
         }
       ]
     },
     security: {
-      title: 'Security Settings',
-      description: 'Configure authentication, authorization, and security policies',
+      title: tSync('Security Settings'),
+      description: tSync('Configure authentication, authorization, and security policies'),
       icon: Shield,
       color: 'red',
       sections: [
         {
           id: 'authentication',
-          title: 'Authentication',
-          description: 'Password policies and login settings',
+          title: tSync('Authentication'),
+          description: tSync('Password policies and login settings'),
           count: 0
         },
         {
           id: 'sessions',
-          title: 'Session Management',
-          description: 'Session timeouts and security policies',
+          title: tSync('Session Management'),
+          description: tSync('Session timeouts and security policies'),
           count: 0
         }
       ]
     },
     appearance: {
-      title: 'Appearance & Branding',
-      description: 'Customize the look and feel of your system',
+      title: tSync('Appearance & Branding'),
+      description: tSync('Customize the look and feel of your system'),
       icon: Palette,
       color: 'purple',
       sections: [
         {
           id: 'theme',
-          title: 'Theme & Colors',
-          description: 'Customize system colors and themes',
+          title: tSync('Theme & Colors'),
+          description: tSync('Customize system colors and themes'),
           count: 0
         },
         {
           id: 'branding',
-          title: 'Branding',
-          description: 'Logo, company name, and branding elements',
+          title: tSync('Branding'),
+          description: tSync('Logo, company name, and branding elements'),
           count: 0
         }
       ]
     },
     notifications: {
-      title: 'Notifications',
-      description: 'Configure email, SMS, and in-app notifications',
+      title: tSync('Notifications'),
+      description: tSync('Configure email, SMS, and in-app notifications'),
       icon: Bell,
       color: 'orange',
       sections: [
         {
           id: 'email',
-          title: 'Email Notifications',
-          description: 'Configure email notification settings',
+          title: tSync('Email Notifications'),
+          description: tSync('Configure email notification settings'),
           count: 0
         },
         {
           id: 'in-app',
-          title: 'In-App Notifications',
-          description: 'Manage in-app notification preferences',
+          title: tSync('In-App Notifications'),
+          description: tSync('Manage in-app notification preferences'),
           count: 0
         }
       ]
     },
     integrations: {
-      title: 'Integrations',
-      description: 'Connect with third-party services and APIs',
+      title: tSync('Integrations'),
+      description: tSync('Connect with third-party services and APIs'),
       icon: Globe,
       color: 'indigo',
       sections: [
         {
           id: 'payment',
-          title: 'Payment Gateways',
-          description: 'Configure payment processing integrations',
+          title: tSync('Payment Gateways'),
+          description: tSync('Configure payment processing integrations'),
           count: 0
         },
         {
           id: 'shipping',
-          title: 'Shipping Providers',
-          description: 'Set up shipping and delivery integrations',
+          title: tSync('Shipping Providers'),
+          description: tSync('Set up shipping and delivery integrations'),
           count: 0
         }
       ]
     },
     billing: {
-      title: 'Billing & Subscription',
-      description: 'Manage billing, invoices, and subscription plans',
+      title: tSync('Billing & Subscription'),
+      description: tSync('Manage billing, invoices, and subscription plans'),
       icon: CreditCard,
       color: 'emerald',
       sections: [
         {
           id: 'subscription',
-          title: 'Subscription Plan',
-          description: 'Current plan and billing information',
+          title: tSync('Subscription Plan'),
+          description: tSync('Current plan and billing information'),
           count: 0
         },
         {
           id: 'invoices',
-          title: 'Billing History',
-          description: 'View and manage invoices',
+          title: tSync('Billing History'),
+          description: tSync('View and manage invoices'),
           count: 0
         }
       ]
     },
     database: {
-      title: 'Database & System',
-      description: 'Database maintenance, backups, and system health',
+      title: tSync('Database & System'),
+      description: tSync('Database maintenance, backups, and system health'),
       icon: Database,
       color: 'slate',
       sections: [
         {
           id: 'backups',
-          title: 'Backups & Recovery',
-          description: 'Database backup and recovery settings',
+          title: tSync('Backups & Recovery'),
+          description: tSync('Database backup and recovery settings'),
           count: 0
         },
         {
           id: 'maintenance',
-          title: 'System Maintenance',
-          description: 'Database optimization and maintenance',
+          title: tSync('System Maintenance'),
+          description: tSync('Database optimization and maintenance'),
           count: 0
         }
       ]
@@ -523,16 +525,16 @@ const Settings = () => {
       </div>
       <h3 className="text-lg font-semibold text-gray-900 mb-2"><TranslatedText text="Coming Soon" /></h3>
       <p className="text-gray-500 mb-6 max-w-md mx-auto">
-        This feature is currently under development. We're working hard to bring you the best experience.
+        <TranslatedText text="This feature is currently under development. We're working hard to bring you the best experience." />
       </p>
       <div className="flex items-center justify-center space-x-4 text-sm text-gray-400">
         <div className="flex items-center">
           <Clock className="h-4 w-4 mr-1" />
-          In Development
+          <TranslatedText text="In Development" />
         </div>
         <div className="flex items-center">
           <Star className="h-4 w-4 mr-1" />
-          High Priority
+          <TranslatedText text="High Priority" />
         </div>
       </div>
     </div>
@@ -844,14 +846,14 @@ const Settings = () => {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-xl font-semibold text-gray-900"><TranslatedText text="System Users" /></h2>
-            <p className="text-gray-600 mt-1">Manage user accounts and access permissions</p>
+            <p className="text-gray-600 mt-1"><TranslatedText text="Manage user accounts and access permissions" /></p>
           </div>
           <button
             onClick={() => setShowAddUserModal(true)}
             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
           >
             <UserPlus className="h-4 w-4 mr-2" />
-            Add User
+            <TranslatedText text="Add User" />
           </button>
         </div>
 
@@ -862,7 +864,7 @@ const Settings = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search users..."
+                placeholder={tSync("Search users...")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -875,18 +877,18 @@ const Settings = () => {
               onChange={(e) => setFilterStatus(e.target.value)}
               className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
-              <option value="all">All Users</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
+              <option value="all"><TranslatedText text="All Users" /></option>
+              <option value="active"><TranslatedText text="Active" /></option>
+              <option value="inactive"><TranslatedText text="Inactive" /></option>
             </select>
             <select
               value={viewMode}
               onChange={(e) => setViewMode(e.target.value)}
               className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
-              <option value="grid">Grid</option>
-              <option value="list">List</option>
-              <option value="table">Table</option>
+              <option value="grid"><TranslatedText text="Grid" /></option>
+              <option value="list"><TranslatedText text="List" /></option>
+              <option value="table"><TranslatedText text="Table" /></option>
             </select>
           </div>
         </div>
@@ -895,19 +897,19 @@ const Settings = () => {
         {usersLoading ? (
           <div className="text-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="text-gray-500 mt-2">Loading users...</p>
+            <p className="text-gray-500 mt-2"><TranslatedText text="Loading users..." /></p>
           </div>
         ) : users.length === 0 ? (
           <div className="text-center py-16">
             <Users className="h-16 w-16 text-gray-300 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2"><TranslatedText text="No users found" /></h3>
-            <p className="text-gray-500 mb-6">Get started by adding your first user.</p>
+            <p className="text-gray-500 mb-6"><TranslatedText text="Get started by adding your first user." /></p>
             <button
               onClick={() => setShowAddUserModal(true)}
               className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
             >
               <UserPlus className="h-4 w-4 mr-2" />
-              Add First User
+              <TranslatedText text="Add First User" />
             </button>
           </div>
         ) : (
@@ -917,11 +919,11 @@ const Settings = () => {
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Shop</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="User" /></th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Role" /></th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Shop" /></th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Status" /></th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Actions" /></th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
@@ -961,12 +963,12 @@ const Settings = () => {
                             {user.is_active ? (
                               <>
                                 <CheckCircle className="h-3 w-3 mr-1" />
-                                Active
+                                <TranslatedText text="Active" />
                               </>
                             ) : (
                               <>
                                 <X className="h-3 w-3 mr-1" />
-                                Inactive
+                                <TranslatedText text="Inactive" />
                               </>
                             )}
                           </span>
@@ -1044,12 +1046,12 @@ const Settings = () => {
                         {user.is_active ? (
                           <>
                             <CheckCircle className="h-3 w-3 mr-1" />
-                            Active
+                            <TranslatedText text="Active" />
                           </>
                         ) : (
                           <>
                             <X className="h-3 w-3 mr-1" />
-                            Inactive
+                            <TranslatedText text="Inactive" />
                           </>
                         )}
                       </span>
@@ -1388,7 +1390,7 @@ const Settings = () => {
                     <div className="p-2 bg-blue-100 rounded-lg">
                       <Users className="h-5 w-5 text-blue-600" />
                     </div>
-                    <h4 className="text-lg font-semibold text-gray-900">Personal Information</h4>
+                    <h4 className="text-lg font-semibold text-gray-900"><TranslatedText text="Personal Information" /></h4>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1438,7 +1440,7 @@ const Settings = () => {
                     <div className="p-2 bg-green-100 rounded-lg">
                       <Key className="h-5 w-5 text-green-600" />
                     </div>
-                    <h4 className="text-lg font-semibold text-gray-900">Account Information</h4>
+                    <h4 className="text-lg font-semibold text-gray-900"><TranslatedText text="Account Information" /></h4>
                   </div>
 
                   <div className="space-y-6">
@@ -1619,12 +1621,12 @@ const Settings = () => {
                   {updateUserMutation.isPending ? (
                     <div className="flex items-center space-x-2">
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      <span>Updating...</span>
+                      <span><TranslatedText text="Updating..." /></span>
                     </div>
                   ) : (
                     <div className="flex items-center space-x-2">
                       <Save className="h-5 w-5" />
-                      <span>Update User Account</span>
+                      <span><TranslatedText text="Update User Account" /></span>
                     </div>
                   )}
                 </button>
@@ -1646,7 +1648,7 @@ const Settings = () => {
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-900"><TranslatedText text="Security Settings" /></h2>
-              <p className="text-gray-600 mt-1">Configure authentication, authorization, and security policies</p>
+              <p className="text-gray-600 mt-1"><TranslatedText text="Configure authentication, authorization, and security policies" /></p>
             </div>
           </div>
         </div>
@@ -1865,7 +1867,7 @@ const Settings = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Audit Logging" /></h3>
-                  <p className="text-sm text-gray-600">Track user activities and system changes</p>
+                  <p className="text-sm text-gray-600"><TranslatedText text="Track user activities and system changes" /></p>
                 </div>
               </div>
               <button
@@ -2287,7 +2289,7 @@ const Settings = () => {
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-900"><TranslatedText text="Notification Settings" /></h2>
-              <p className="text-gray-600 mt-1">Configure email, SMS, and in-app notifications</p>
+              <p className="text-gray-600 mt-1"><TranslatedText text="Configure email, SMS, and in-app notifications" /></p>
             </div>
           </div>
         </div>
@@ -2302,7 +2304,7 @@ const Settings = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Email Notifications" /></h3>
-                  <p className="text-sm text-gray-600">Manage email notification preferences</p>
+                  <p className="text-sm text-gray-600"><TranslatedText text="Manage email notification preferences" /></p>
                 </div>
               </div>
               <button
@@ -2334,7 +2336,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="emailOrderConfirmations" className="ml-2 text-sm text-gray-700">
-                      Order Confirmations
+                      <TranslatedText text="Order Confirmations" />
                     </label>
                   </div>
 
@@ -2350,7 +2352,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="emailOrderUpdates" className="ml-2 text-sm text-gray-700">
-                      Order Updates
+                      <TranslatedText text="Order Updates" />
                     </label>
                   </div>
 
@@ -2366,7 +2368,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="emailInventoryAlerts" className="ml-2 text-sm text-gray-700">
-                      Inventory Alerts
+                      <TranslatedText text="Inventory Alerts" />
                     </label>
                   </div>
 
@@ -2382,7 +2384,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="emailSystemNotifications" className="ml-2 text-sm text-gray-700">
-                      System Notifications
+                      <TranslatedText text="System Notifications" />
                     </label>
                   </div>
 
@@ -2398,7 +2400,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="emailMarketingEmails" className="ml-2 text-sm text-gray-700">
-                      Marketing Emails
+                      <TranslatedText text="Marketing Emails" />
                     </label>
                   </div>
 
@@ -2414,7 +2416,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="emailDailyDigest" className="ml-2 text-sm text-gray-700">
-                      Daily Digest
+                      <TranslatedText text="Daily Digest" />
                     </label>
                   </div>
 
@@ -2430,7 +2432,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="emailWeeklyReport" className="ml-2 text-sm text-gray-700">
-                      Weekly Report
+                      <TranslatedText text="Weekly Report" />
                     </label>
                   </div>
                 </div>
@@ -2447,7 +2449,7 @@ const Settings = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="SMS Notifications" /></h3>
-                  <p className="text-sm text-gray-600">Configure SMS notification preferences</p>
+                  <p className="text-sm text-gray-600"><TranslatedText text="Configure SMS notification preferences" /></p>
                 </div>
               </div>
               <button
@@ -2479,7 +2481,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="smsOrderConfirmations" className="ml-2 text-sm text-gray-700">
-                      Order Confirmations
+                      <TranslatedText text="Order Confirmations" />
                     </label>
                   </div>
 
@@ -2495,7 +2497,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="smsOrderUpdates" className="ml-2 text-sm text-gray-700">
-                      Order Updates
+                      <TranslatedText text="Order Updates" />
                     </label>
                   </div>
 
@@ -2511,7 +2513,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="smsUrgentAlerts" className="ml-2 text-sm text-gray-700">
-                      Urgent Alerts
+                      <TranslatedText text="Urgent Alerts" />
                     </label>
                   </div>
                 </div>
@@ -2528,7 +2530,7 @@ const Settings = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="In-App Notifications" /></h3>
-                  <p className="text-sm text-gray-600">Manage in-app notification preferences</p>
+                  <p className="text-sm text-gray-600"><TranslatedText text="Manage in-app notification preferences" /></p>
                 </div>
               </div>
               <button
@@ -2560,7 +2562,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="inAppOrderNotifications" className="ml-2 text-sm text-gray-700">
-                      Order Notifications
+                      <TranslatedText text="Order Notifications" />
                     </label>
                   </div>
 
@@ -2576,7 +2578,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="inAppInventoryAlerts" className="ml-2 text-sm text-gray-700">
-                      Inventory Alerts
+                      <TranslatedText text="Inventory Alerts" />
                     </label>
                   </div>
 
@@ -2592,7 +2594,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="inAppSystemUpdates" className="ml-2 text-sm text-gray-700">
-                      System Updates
+                      <TranslatedText text="System Updates" />
                     </label>
                   </div>
 
@@ -2608,7 +2610,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="inAppSuccessMessages" className="ml-2 text-sm text-gray-700">
-                      Success Messages
+                      <TranslatedText text="Success Messages" />
                     </label>
                   </div>
 
@@ -2624,7 +2626,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="inAppErrorMessages" className="ml-2 text-sm text-gray-700">
-                      Error Messages
+                      <TranslatedText text="Error Messages" />
                     </label>
                   </div>
 
@@ -2640,7 +2642,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="inAppTipsAndTricks" className="ml-2 text-sm text-gray-700">
-                      Tips & Tricks
+                      <TranslatedText text="Tips & Tricks" />
                     </label>
                   </div>
                 </div>
@@ -2657,7 +2659,7 @@ const Settings = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Push Notifications" /></h3>
-                  <p className="text-sm text-gray-600">Configure push notification preferences</p>
+                  <p className="text-sm text-gray-600"><TranslatedText text="Configure push notification preferences" /></p>
                 </div>
               </div>
               <button
@@ -2689,7 +2691,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="pushOrderUpdates" className="ml-2 text-sm text-gray-700">
-                      Order Updates
+                      <TranslatedText text="Order Updates" />
                     </label>
                   </div>
 
@@ -2705,7 +2707,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="pushInventoryAlerts" className="ml-2 text-sm text-gray-700">
-                      Inventory Alerts
+                      <TranslatedText text="Inventory Alerts" />
                     </label>
                   </div>
 
@@ -2721,7 +2723,7 @@ const Settings = () => {
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label htmlFor="pushPromotions" className="ml-2 text-sm text-gray-700">
-                      Promotions
+                      <TranslatedText text="Promotions" />
                     </label>
                   </div>
                 </div>
@@ -2841,7 +2843,7 @@ const Settings = () => {
           <div className="flex justify-end pt-6 border-t border-gray-200">
             <button className="px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-all duration-200">
               <Save className="h-4 w-4 inline mr-2" />
-              Save Notification Settings
+              <TranslatedText text="Save Notification Settings" />
             </button>
           </div>
         </div>
@@ -2859,7 +2861,7 @@ const Settings = () => {
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-900"><TranslatedText text="Billing & Subscription" /></h2>
-              <p className="text-gray-600 mt-1">Manage your subscription, payment methods, and billing history</p>
+              <p className="text-gray-600 mt-1"><TranslatedText text="Manage your subscription, payment methods, and billing history" /></p>
             </div>
           </div>
         </div>
@@ -2874,7 +2876,7 @@ const Settings = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Current Plan" /></h3>
-                  <p className="text-sm text-gray-600">Your active subscription details</p>
+                  <p className="text-sm text-gray-600"><TranslatedText text="Your active subscription details" /></p>
                 </div>
               </div>
               <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
@@ -2911,13 +2913,13 @@ const Settings = () => {
 
               <div className="flex space-x-3">
                 <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                  Upgrade Plan
+                  <TranslatedText text="Upgrade Plan" />
                 </button>
                 <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
-                  Change Plan
+                  <TranslatedText text="Change Plan" />
                 </button>
                 <button className="px-4 py-2 border border-red-300 text-red-700 rounded-lg hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
-                  Cancel Subscription
+                  <TranslatedText text="Cancel Subscription" />
                 </button>
               </div>
             </div>
@@ -2998,11 +3000,11 @@ const Settings = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Payment Method" /></h3>
-                  <p className="text-sm text-gray-600">Manage your payment information</p>
+                  <p className="text-sm text-gray-600"><TranslatedText text="Manage your payment information" /></p>
                 </div>
               </div>
               <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                Update Payment Method
+                <TranslatedText text="Update Payment Method" />
               </button>
             </div>
 
@@ -3044,11 +3046,11 @@ const Settings = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Billing History" /></h3>
-                  <p className="text-sm text-gray-600">View your past invoices and payments</p>
+                  <p className="text-sm text-gray-600"><TranslatedText text="View your past invoices and payments" /></p>
                 </div>
               </div>
               <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
-                Download All
+                <TranslatedText text="Download All" />
               </button>
             </div>
 
@@ -3057,19 +3059,19 @@ const Settings = () => {
                 <thead className="bg-gray-50">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Invoice
+                      <TranslatedText text="Invoice" />
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Date
+                      <TranslatedText text="Date" />
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Amount
+                      <TranslatedText text="Amount" />
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Status
+                      <TranslatedText text="Status" />
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
+                      <TranslatedText text="Actions" />
                     </th>
                   </tr>
                 </thead>
@@ -3143,7 +3145,7 @@ const Settings = () => {
 
             <div className="mt-4">
               <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                Save Tax Information
+                <TranslatedText text="Save Tax Information" />
               </button>
             </div>
           </div>
@@ -3152,7 +3154,7 @@ const Settings = () => {
           <div className="flex justify-end pt-6 border-t border-gray-200">
             <button className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200">
               <Save className="h-4 w-4 inline mr-2" />
-              Save Billing Settings
+              <TranslatedText text="Save Billing Settings" />
             </button>
           </div>
         </div>
@@ -3170,7 +3172,7 @@ const Settings = () => {
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-900"><TranslatedText text="Database & System" /></h2>
-              <p className="text-gray-600 mt-1">Monitor system performance, database health, and maintenance settings</p>
+              <p className="text-gray-600 mt-1"><TranslatedText text="Monitor system performance, database health, and maintenance settings" /></p>
             </div>
           </div>
         </div>
@@ -3188,7 +3190,7 @@ const Settings = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="bg-white rounded-lg border border-gray-200 p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700">Database Type</span>
+                  <span className="text-sm font-medium text-gray-700"><TranslatedText text="Database Type" /></span>
                 </div>
                 <div className="text-lg font-semibold text-gray-900">{systemSettings.database.type}</div>
                 <p className="text-xs text-gray-500">Version {systemSettings.database.version}</p>
@@ -3196,7 +3198,7 @@ const Settings = () => {
 
               <div className="bg-white rounded-lg border border-gray-200 p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700">Database Size</span>
+                  <span className="text-sm font-medium text-gray-700"><TranslatedText text="Database Size" /></span>
                 </div>
                 <div className="text-lg font-semibold text-gray-900">{systemSettings.database.size}</div>
                 <p className="text-xs text-gray-500">Total storage used</p>
@@ -3204,7 +3206,7 @@ const Settings = () => {
 
               <div className="bg-white rounded-lg border border-gray-200 p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700">Last Backup</span>
+                  <span className="text-sm font-medium text-gray-700"><TranslatedText text="Last Backup" /></span>
                 </div>
                 <div className="text-lg font-semibold text-gray-900">
                   {new Date(systemSettings.database.lastBackup).toLocaleDateString()}
@@ -3228,7 +3230,7 @@ const Settings = () => {
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
                 <label htmlFor="autoBackup" className="ml-2 text-sm text-gray-700">
-                  Auto Backup
+                  <TranslatedText text="Auto Backup" />
                 </label>
               </div>
 
@@ -3244,7 +3246,7 @@ const Settings = () => {
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
                 <label htmlFor="compression" className="ml-2 text-sm text-gray-700">
-                  Compression
+                  <TranslatedText text="Compression" />
                 </label>
               </div>
 
@@ -3260,7 +3262,7 @@ const Settings = () => {
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
                 <label htmlFor="encryption" className="ml-2 text-sm text-gray-700">
-                  Encryption
+                  <TranslatedText text="Encryption" />
                 </label>
               </div>
             </div>
@@ -3658,7 +3660,7 @@ const Settings = () => {
           <div className="flex justify-end pt-6 border-t border-gray-200">
             <button className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-200">
               <Save className="h-4 w-4 inline mr-2" />
-              Save System Settings
+              <TranslatedText text="Save System Settings" />
             </button>
           </div>
         </div>
@@ -3702,11 +3704,11 @@ const Settings = () => {
         <div className="flex items-center space-x-3">
           <button className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
             <HelpCircle className="h-4 w-4 mr-2" />
-            Help
+            <TranslatedText text="Help" />
           </button>
           <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
             <Save className="h-4 w-4 mr-2" />
-            Save All
+            <TranslatedText text="Save All" />
           </button>
         </div>
       </div>
