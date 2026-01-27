@@ -29,6 +29,7 @@ import {
   Percent,
   PanelLeftClose,
   PanelLeftOpen,
+  Car,
   Bell,
   Scissors
 } from 'lucide-react';
@@ -135,6 +136,12 @@ const Navigation = () => {
           icon: Scissors,
           description: tSync('Manage atelier orders'),
           href: '/orders/atelier'
+        },
+        {
+          name: tSync('Cars List'),
+          icon: Car,
+          description: tSync('Manage vehicles'),
+          href: '/cars'
         }
       ];
     }
@@ -181,18 +188,16 @@ const Navigation = () => {
           ]
         },
         {
-          id: 'production',
-          name: tSync('Production'),
-          icon: Truck,
-          description: tSync('Production management'),
-          hasSubmenu: true,
-          submenu: [
-            {
-              name: tSync('Perfumes'),
-              href: '/perfumes',
-              description: tSync('Perfume production')
-            }
-          ]
+          name: tSync('Perfumes'),
+          href: '/perfumes',
+          icon: FlaskConical,
+          description: tSync('Perfume production')
+        },
+        {
+          name: tSync('Cars List'),
+          href: '/cars',
+          icon: Car,
+          description: tSync('Manage vehicles')
         },
         {
           id: 'atelier',
@@ -299,6 +304,18 @@ const Navigation = () => {
           description: tSync('Manage discount programs')
         }
       ]
+    },
+    {
+      name: tSync('Perfumes'),
+      href: '/perfumes',
+      icon: FlaskConical,
+      description: tSync('Perfume production')
+    },
+    {
+      name: tSync('Cars List'),
+      href: '/cars',
+      icon: Car,
+      description: tSync('Manage vehicles')
     },
     {
       id: 'atelier',

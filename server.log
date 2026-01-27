@@ -1,0 +1,1197 @@
+nohup: ignoring input
+
+> uruti-chad@1.0.0 start
+> node server/index.js
+
+⏰ Initializing Cron Scheduler...
+📅 Scheduled birthday and anniversary emails: Daily at 14:07 UTC (2:07 PM UTC)
+🧹 Scheduled maintenance tasks: Weekly on Sunday at 2:00 AM UTC
+📬 Scheduled campaign processor: every minute
+✅ Cron Scheduler initialized successfully
+⚠️ Excel export disabled due to compatibility issues with jsreport-html-to-xlsx and current Puppeteer version
+🚀 Server running on port 5000
+📊 Environment: development
+🔗 Health check: http://localhost:5000/api/health
+📚 API Documentation: http://localhost:5000/api-docs
+✅ Connected to PostgreSQL database
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS users (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        username VARCHAR(255) UNIQUE NOT NULL,\n' +
+    '        email VARCHAR(255) UNIQUE NOT NULL,\n' +
+    '        password VARCHAR(255) NOT NULL,\n' +
+    "        role VARCHAR(50) DEFAULT 'cashier',\n" +
+    '        first_name VARCHAR(255),\n' +
+    '        last_name VARCHAR(255),\n' +
+    '        phone VARCHAR(50),\n' +
+    '        shop_id UUID,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n' +
+    '      )',
+  duration: 711,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS shops (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    '        address TEXT,\n' +
+    '        city VARCHAR(255),\n' +
+    '        state VARCHAR(255),\n' +
+    '        country VARCHAR(255),\n' +
+    '        postal_code VARCHAR(20),\n' +
+    '        phone VARCHAR(50),\n' +
+    '        email VARCHAR(255),\n' +
+    '        manager_id UUID,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (manager_id) REFERENCES users (id)\n' +
+    '      )',
+  duration: 5,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS categories (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    '        description TEXT,\n' +
+    '        parent_id UUID,\n' +
+    '        path TEXT,\n' +
+    '        level INTEGER DEFAULT 0,\n' +
+    "        type VARCHAR(50) DEFAULT 'general',\n" +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        deleted_at TIMESTAMP,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (parent_id) REFERENCES categories (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS brands (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    '        description TEXT,\n' +
+    '        logo_url TEXT,\n' +
+    '        website TEXT,\n' +
+    '        country VARCHAR(100),\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS products (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    '        description TEXT,\n' +
+    '        sku VARCHAR(255) UNIQUE,\n' +
+    '        barcode VARCHAR(255),\n' +
+    '        brand_id UUID,\n' +
+    '        category_id UUID,\n' +
+    "        product_type VARCHAR(50) DEFAULT 'general',\n" +
+    '        size VARCHAR(100),\n' +
+    '        color VARCHAR(100),\n' +
+    '        variant VARCHAR(100),\n' +
+    '        price DECIMAL(10,2) NOT NULL,\n' +
+    '        cost_price DECIMAL(10,2),\n' +
+    "        currency VARCHAR(3) DEFAULT 'RWF',\n" +
+    '        stock_quantity INTEGER DEFAULT 0,\n' +
+    '        current_stock INTEGER DEFAULT 0,\n' +
+    '        reserved_stock INTEGER DEFAULT 0,\n' +
+    '        available_stock INTEGER DEFAULT 0,\n' +
+    '        min_stock_level INTEGER DEFAULT 0,\n' +
+    '        max_stock_level INTEGER,\n' +
+    '        reorder_point INTEGER DEFAULT 20,\n' +
+    "        unit VARCHAR(50) DEFAULT 'piece',\n" +
+    '        weight DECIMAL(8,3),\n' +
+    '        dimensions TEXT,\n' +
+    '        image_url TEXT,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (brand_id) REFERENCES brands (id),\n' +
+    '        FOREIGN KEY (category_id) REFERENCES categories (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS customers (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        first_name VARCHAR(255) NOT NULL,\n' +
+    '        last_name VARCHAR(255) NOT NULL,\n' +
+    '        email VARCHAR(255) UNIQUE,\n' +
+    '        phone VARCHAR(50),\n' +
+    '        address TEXT,\n' +
+    '        city VARCHAR(255),\n' +
+    '        state VARCHAR(255),\n' +
+    '        country VARCHAR(255),\n' +
+    '        postal_code VARCHAR(20),\n' +
+    '        loyalty_points INTEGER DEFAULT 0,\n' +
+    "        loyalty_tier VARCHAR(50) DEFAULT 'bronze',\n" +
+    '        total_spent DECIMAL(12,2) DEFAULT 0,\n' +
+    '        birthday DATE,\n' +
+    '        anniversary_date DATE,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        measurements TEXT\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS discounts (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    '        description TEXT,\n' +
+    "        type VARCHAR(50) NOT NULL CHECK (type IN ('percentage', 'fixed_amount', 'bottle_return')),\n" +
+    '        value DECIMAL(10,2) NOT NULL,\n' +
+    '        min_purchase_amount DECIMAL(10,2),\n' +
+    '        max_discount_amount DECIMAL(10,2),\n' +
+    '        start_date DATE,\n' +
+    '        end_date DATE,\n' +
+    '        usage_limit INTEGER,\n' +
+    '        usage_per_customer INTEGER,\n' +
+    "        applicable_to VARCHAR(50) DEFAULT 'all',\n" +
+    '        customer_tiers JSONB,\n' +
+    '        bottle_return_count INTEGER,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        auto_apply BOOLEAN DEFAULT false,\n' +
+    "        discount_type VARCHAR(50) DEFAULT 'regular_discount',\n" +
+    '        allow_partial_payment BOOLEAN DEFAULT false,\n' +
+    '        created_by UUID REFERENCES users(id),\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS discount_applications (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        order_id UUID REFERENCES orders(id),\n' +
+    '        discount_id UUID REFERENCES discounts(id),\n' +
+    '        amount_applied DECIMAL(10,2) NOT NULL,\n' +
+    '        percentage_applied DECIMAL(5,2),\n' +
+    '        original_amount DECIMAL(10,2) NOT NULL,\n' +
+    '        final_amount DECIMAL(10,2) NOT NULL,\n' +
+    '        applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS customer_discount_usage (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        customer_id UUID REFERENCES customers(id),\n' +
+    '        discount_id UUID REFERENCES discounts(id),\n' +
+    '        usage_count INTEGER DEFAULT 0,\n' +
+    '        last_used_at TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        UNIQUE(customer_id, discount_id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS orders (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        customer_id UUID,\n' +
+    '        shop_id UUID,\n' +
+    '        order_number VARCHAR(255) UNIQUE NOT NULL,\n' +
+    "        order_type VARCHAR(50) DEFAULT 'regular',\n" +
+    "        status VARCHAR(50) DEFAULT 'completed',\n" +
+    '        subtotal DECIMAL(10,2) NOT NULL,\n' +
+    '        tax_amount DECIMAL(10,2) DEFAULT 0,\n' +
+    '        discount_amount DECIMAL(10,2) DEFAULT 0,\n' +
+    '        loyalty_discount DECIMAL(10,2) DEFAULT 0,\n' +
+    '        total_amount DECIMAL(10,2) NOT NULL,\n' +
+    '        amount_paid DECIMAL(10,2) DEFAULT 0,\n' +
+    '        remaining_amount DECIMAL(10,2) DEFAULT 0,\n' +
+    "        currency VARCHAR(3) DEFAULT 'RWF',\n" +
+    '        payment_method VARCHAR(50),\n' +
+    "        payment_status VARCHAR(50) DEFAULT 'pending',\n" +
+    '        notes TEXT,\n' +
+    '        created_by UUID,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (customer_id) REFERENCES customers (id),\n' +
+    '        FOREIGN KEY (shop_id) REFERENCES shops (id),\n' +
+    '        FOREIGN KEY (created_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS order_items (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        order_id UUID NOT NULL,\n' +
+    '        product_id UUID NOT NULL,\n' +
+    '        quantity INTEGER NOT NULL,\n' +
+    '        unit_price DECIMAL(10,2) NOT NULL,\n' +
+    '        total_price DECIMAL(10,2) NOT NULL,\n' +
+    "        currency VARCHAR(3) DEFAULT 'RWF',\n" +
+    '        discount_percent DECIMAL(5,2) DEFAULT 0,\n' +
+    '        is_atelier_item BOOLEAN DEFAULT false,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (order_id) REFERENCES orders (id),\n' +
+    '        FOREIGN KEY (product_id) REFERENCES products (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS gl_account_categories (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        code VARCHAR(50) UNIQUE NOT NULL,\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    '        description TEXT,\n' +
+    "        account_type VARCHAR(50) NOT NULL CHECK (account_type IN ('asset', 'liability', 'equity', 'revenue', 'expense')),\n" +
+    '        parent_id UUID,\n' +
+    '        level INTEGER DEFAULT 0,\n' +
+    '        sort_order INTEGER DEFAULT 0,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (parent_id) REFERENCES gl_account_categories (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS gl_accounts (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        account_code VARCHAR(50) UNIQUE NOT NULL,\n' +
+    '        account_name VARCHAR(255) NOT NULL,\n' +
+    '        description TEXT,\n' +
+    '        category_id UUID NOT NULL,\n' +
+    "        account_type VARCHAR(50) NOT NULL CHECK (account_type IN ('asset', 'liability', 'equity', 'revenue', 'expense')),\n" +
+    "        normal_balance VARCHAR(10) NOT NULL CHECK (normal_balance IN ('debit', 'credit')),\n" +
+    '        is_contra BOOLEAN DEFAULT false,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (category_id) REFERENCES gl_account_categories (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS settings (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        key VARCHAR(255) UNIQUE NOT NULL,\n' +
+    '        value TEXT,\n' +
+    '        description TEXT,\n' +
+    "        category VARCHAR(100) DEFAULT 'general',\n" +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS shop_inventory (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        shop_id UUID NOT NULL,\n' +
+    '        product_id UUID NOT NULL,\n' +
+    '        quantity INTEGER DEFAULT 0,\n' +
+    '        min_stock_level INTEGER DEFAULT 0,\n' +
+    '        max_stock_level INTEGER,\n' +
+    '        reorder_point INTEGER DEFAULT 0,\n' +
+    '        safety_stock INTEGER DEFAULT 0,\n' +
+    '        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        UNIQUE(shop_id, product_id),\n' +
+    '        FOREIGN KEY (shop_id) REFERENCES shops (id),\n' +
+    '        FOREIGN KEY (product_id) REFERENCES products (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS inventory_transactions (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        product_id UUID NOT NULL,\n' +
+    '        shop_id UUID,\n' +
+    '        warehouse_id UUID,\n' +
+    '        transaction_type VARCHAR(50) NOT NULL,\n' +
+    '        quantity INTEGER NOT NULL,\n' +
+    '        previous_stock INTEGER,\n' +
+    '        new_stock INTEGER,\n' +
+    '        unit_cost DECIMAL(10,2),\n' +
+    '        total_value DECIMAL(10,2),\n' +
+    '        batch_number VARCHAR(255),\n' +
+    '        expiry_date DATE,\n' +
+    '        reference_id UUID,\n' +
+    '        reference_type VARCHAR(50),\n' +
+    '        notes TEXT,\n' +
+    '        created_by UUID,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (product_id) REFERENCES products (id),\n' +
+    '        FOREIGN KEY (shop_id) REFERENCES shops (id),\n' +
+    '        FOREIGN KEY (created_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS warehouse_inventory (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        warehouse_id UUID NOT NULL,\n' +
+    '        product_id UUID NOT NULL,\n' +
+    '        quantity INTEGER DEFAULT 0,\n' +
+    '        min_stock_level INTEGER DEFAULT 0,\n' +
+    '        max_stock_level INTEGER,\n' +
+    '        reorder_point INTEGER DEFAULT 0,\n' +
+    '        safety_stock INTEGER DEFAULT 0,\n' +
+    '        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        UNIQUE(warehouse_id, product_id),\n' +
+    '        FOREIGN KEY (product_id) REFERENCES products (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS stock_transfers (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        transfer_number VARCHAR(50) UNIQUE NOT NULL,\n' +
+    "        from_type VARCHAR(20) NOT NULL CHECK (from_type IN ('shop', 'warehouse')),\n" +
+    '        from_id UUID NOT NULL,\n' +
+    "        to_type VARCHAR(20) NOT NULL CHECK (to_type IN ('shop', 'warehouse')),\n" +
+    '        to_id UUID NOT NULL,\n' +
+    '        product_id UUID NOT NULL,\n' +
+    '        quantity INTEGER NOT NULL CHECK (quantity > 0),\n' +
+    "        status VARCHAR(20) DEFAULT 'pending' CHECK (status IN ('pending', 'in_progress', 'completed', 'cancelled')),\n" +
+    '        notes TEXT,\n' +
+    '        created_by UUID,\n' +
+    '        completed_by UUID,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        completed_at TIMESTAMP,\n' +
+    '        FOREIGN KEY (product_id) REFERENCES products (id),\n' +
+    '        FOREIGN KEY (created_by) REFERENCES users (id),\n' +
+    '        FOREIGN KEY (completed_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS warehouses (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    '        code VARCHAR(50) UNIQUE NOT NULL,\n' +
+    '        address TEXT,\n' +
+    '        city VARCHAR(255),\n' +
+    '        state VARCHAR(255),\n' +
+    '        country VARCHAR(255),\n' +
+    '        postal_code VARCHAR(20),\n' +
+    '        contact_person VARCHAR(255),\n' +
+    '        phone VARCHAR(50),\n' +
+    '        email VARCHAR(255),\n' +
+    '        capacity_sqm DECIMAL(10,2),\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n' +
+    '      )',
+  duration: 2,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS expenses (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        shop_id UUID,\n' +
+    '        category VARCHAR(100) NOT NULL,\n' +
+    '        description TEXT NOT NULL,\n' +
+    '        amount DECIMAL(10,2) NOT NULL,\n' +
+    "        currency VARCHAR(3) DEFAULT 'RWF',\n" +
+    '        expense_date DATE NOT NULL,\n' +
+    '        payment_method VARCHAR(50),\n' +
+    '        vendor_name VARCHAR(255),\n' +
+    '        receipt_url TEXT,\n' +
+    '        created_by UUID,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (shop_id) REFERENCES shops (id),\n' +
+    '        FOREIGN KEY (created_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS expense_categories (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(100) UNIQUE NOT NULL,\n' +
+    '        description TEXT,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS currency_rates (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        from_currency VARCHAR(3) NOT NULL,\n' +
+    '        to_currency VARCHAR(3) NOT NULL,\n' +
+    '        rate DECIMAL(15,6) NOT NULL,\n' +
+    '        rate_date DATE NOT NULL,\n' +
+    '        source VARCHAR(100),\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        UNIQUE(from_currency, to_currency, rate_date)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS financial_transactions (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        transaction_date DATE NOT NULL,\n' +
+    '        description TEXT NOT NULL,\n' +
+    '        amount DECIMAL(15,2) NOT NULL,\n' +
+    '        transaction_type VARCHAR(50) NOT NULL,\n' +
+    '        gl_account_id UUID,\n' +
+    '        reference_type VARCHAR(50),\n' +
+    '        reference_id UUID,\n' +
+    '        created_by UUID,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (gl_account_id) REFERENCES gl_accounts (id),\n' +
+    '        FOREIGN KEY (created_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS exchange_rates (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        base_currency VARCHAR(3) NOT NULL,\n' +
+    '        target_currency VARCHAR(3) NOT NULL,\n' +
+    '        rate DECIMAL(15,6) NOT NULL,\n' +
+    '        last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        UNIQUE(base_currency, target_currency)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS gl_journal_entries (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        entry_number VARCHAR(50) UNIQUE NOT NULL,\n' +
+    '        entry_date DATE NOT NULL,\n' +
+    '        description TEXT,\n' +
+    '        reference_number VARCHAR(100),\n' +
+    "        status VARCHAR(20) DEFAULT 'draft',\n" +
+    '        total_debits DECIMAL(15,2) DEFAULT 0,\n' +
+    '        total_credits DECIMAL(15,2) DEFAULT 0,\n' +
+    '        created_by UUID,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (created_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS gl_journal_entry_lines (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        journal_entry_id UUID NOT NULL,\n' +
+    '        gl_account_id UUID NOT NULL,\n' +
+    '        description TEXT,\n' +
+    '        debit_amount DECIMAL(15,2) DEFAULT 0,\n' +
+    '        credit_amount DECIMAL(15,2) DEFAULT 0,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (journal_entry_id) REFERENCES gl_journal_entries (id) ON DELETE CASCADE,\n' +
+    '        FOREIGN KEY (gl_account_id) REFERENCES gl_accounts (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS price_change_log (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        product_id UUID NOT NULL,\n' +
+    '        old_price DECIMAL(10,2),\n' +
+    '        new_price DECIMAL(10,2) NOT NULL,\n' +
+    '        change_reason TEXT,\n' +
+    '        pricing_strategy VARCHAR(50),\n' +
+    '        calculated_by UUID,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (product_id) REFERENCES products (id),\n' +
+    '        FOREIGN KEY (calculated_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS raw_materials (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    '        type VARCHAR(50) NOT NULL,\n' +
+    '        unit VARCHAR(50) NOT NULL,\n' +
+    '        current_stock DECIMAL(10,2) DEFAULT 0,\n' +
+    '        min_stock_level DECIMAL(10,2) DEFAULT 0,\n' +
+    '        max_stock_level DECIMAL(10,2),\n' +
+    '        reorder_point DECIMAL(10,2) DEFAULT 0,\n' +
+    '        safety_stock DECIMAL(10,2) DEFAULT 0,\n' +
+    '        cost_per_unit DECIMAL(10,2) NOT NULL,\n' +
+    '        selling_price DECIMAL(10,2) DEFAULT 0,\n' +
+    '        supplier_id UUID,\n' +
+    '        supplier_name VARCHAR(255),\n' +
+    '        supplier_contact VARCHAR(255),\n' +
+    '        lead_time_days INTEGER DEFAULT 0,\n' +
+    '        shelf_life_days INTEGER,\n' +
+    '        storage_requirements TEXT,\n' +
+    '        quality_standards TEXT,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS bottling_recipes (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    '        description TEXT,\n' +
+    '        bottle_size_id UUID,\n' +
+    "        version VARCHAR(20) DEFAULT '1.0',\n" +
+    "        status VARCHAR(20) DEFAULT 'active',\n" +
+    '        category VARCHAR(100),\n' +
+    '        difficulty_level VARCHAR(20),\n' +
+    '        estimated_production_time INTEGER,\n' +
+    '        target_cost DECIMAL(10,2),\n' +
+    '        markup_percentage DECIMAL(5,2),\n' +
+    '        selling_price DECIMAL(10,2),\n' +
+    "        currency VARCHAR(3) DEFAULT 'RWF',\n" +
+    '        quality_standards TEXT,\n' +
+    '        shelf_life_days INTEGER,\n' +
+    '        batch_size_min INTEGER,\n' +
+    '        batch_size_max INTEGER,\n' +
+    '        production_notes TEXT,\n' +
+    '        yield_percentage DECIMAL(5,2),\n' +
+    '        waste_percentage DECIMAL(5,2),\n' +
+    '        recipe_image_url TEXT,\n' +
+    '        instruction_manual_url TEXT,\n' +
+    '        safety_instructions TEXT,\n' +
+    '        testing_requirements TEXT,\n' +
+    '        storage_requirements TEXT,\n' +
+    '        quality_checkpoints TEXT,\n' +
+    '        efficiency_rating DECIMAL(3,2),\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS recipe_materials (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        recipe_id UUID NOT NULL,\n' +
+    '        material_id UUID NOT NULL,\n' +
+    '        quantity_per_unit DECIMAL(10,4) NOT NULL,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (recipe_id) REFERENCES bottling_recipes (id) ON DELETE CASCADE,\n' +
+    '        FOREIGN KEY (material_id) REFERENCES raw_materials (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS bottling_batches (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        batch_number VARCHAR(100) UNIQUE NOT NULL,\n' +
+    '        recipe_id UUID NOT NULL,\n' +
+    '        bulk_perfume_id UUID,\n' +
+    '        quantity_planned INTEGER NOT NULL,\n' +
+    '        quantity_produced INTEGER DEFAULT 0,\n' +
+    '        quantity_defective INTEGER DEFAULT 0,\n' +
+    "        status VARCHAR(20) DEFAULT 'planned',\n" +
+    '        production_date DATE,\n' +
+    '        start_time TIMESTAMP,\n' +
+    '        end_time TIMESTAMP,\n' +
+    '        unit_cost DECIMAL(10,2),\n' +
+    '        total_cost DECIMAL(10,2),\n' +
+    '        profit_margin DECIMAL(5,2) DEFAULT 50.00,\n' +
+    '        selling_price DECIMAL(10,2),\n' +
+    '        operator_id UUID,\n' +
+    '        supervisor_id UUID,\n' +
+    '        notes TEXT,\n' +
+    '        quality_score DECIMAL(3,2),\n' +
+    '        efficiency_rating DECIMAL(3,2),\n' +
+    '        created_by UUID,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (recipe_id) REFERENCES bottling_recipes (id),\n' +
+    '        FOREIGN KEY (bulk_perfume_id) REFERENCES perfume_bulk (id),\n' +
+    '        FOREIGN KEY (operator_id) REFERENCES users (id),\n' +
+    '        FOREIGN KEY (supervisor_id) REFERENCES users (id),\n' +
+    '        FOREIGN KEY (created_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS cost_components (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        batch_id UUID NOT NULL,\n' +
+    '        component_type VARCHAR(50) NOT NULL,\n' +
+    '        component_name VARCHAR(255) NOT NULL,\n' +
+    '        quantity DECIMAL(10,4) NOT NULL,\n' +
+    '        unit_cost DECIMAL(10,4) NOT NULL,\n' +
+    '        total_cost DECIMAL(10,2) NOT NULL,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (batch_id) REFERENCES bottling_batches (id) ON DELETE CASCADE\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS stock_ledger (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        material_id UUID NOT NULL,\n' +
+    '        transaction_type VARCHAR(50) NOT NULL,\n' +
+    '        quantity DECIMAL(10,4) NOT NULL,\n' +
+    '        unit_cost DECIMAL(10,4),\n' +
+    '        total_value DECIMAL(10,2),\n' +
+    '        reference_type VARCHAR(50),\n' +
+    '        reference_id UUID,\n' +
+    '        notes TEXT,\n' +
+    '        created_by UUID,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (material_id) REFERENCES raw_materials (id),\n' +
+    '        FOREIGN KEY (created_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS bottle_sizes (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        size_ml INTEGER NOT NULL,\n' +
+    '        bottle_cost DECIMAL(10,2) NOT NULL,\n' +
+    '        label_cost DECIMAL(10,2) DEFAULT 0,\n' +
+    '        packaging_cost DECIMAL(10,2) DEFAULT 0,\n' +
+    '        labor_cost DECIMAL(10,2) DEFAULT 0,\n' +
+    '        quantity INTEGER DEFAULT 0,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS perfume_bulk (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    '        scent_description TEXT,\n' +
+    '        bulk_quantity_ml INTEGER NOT NULL,\n' +
+    '        cost_per_ml DECIMAL(10,4) NOT NULL,\n' +
+    '        supplier VARCHAR(255),\n' +
+    '        batch_number VARCHAR(255),\n' +
+    '        expiry_date DATE,\n' +
+    '        category_id UUID,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (category_id) REFERENCES categories (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS perfume_bottling (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        bulk_perfume_id UUID NOT NULL,\n' +
+    '        bottle_size_id UUID NOT NULL,\n' +
+    '        quantity_bottled INTEGER NOT NULL,\n' +
+    '        total_cost DECIMAL(15,2) NOT NULL,\n' +
+    '        selling_price_per_ml DECIMAL(10,4),\n' +
+    '        created_by UUID NOT NULL,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (bulk_perfume_id) REFERENCES perfume_bulk (id),\n' +
+    '        FOREIGN KEY (bottle_size_id) REFERENCES bottle_sizes (id),\n' +
+    '        FOREIGN KEY (created_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS suppliers (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    '        contact_person VARCHAR(255),\n' +
+    '        email VARCHAR(255),\n' +
+    '        phone VARCHAR(50),\n' +
+    '        address TEXT,\n' +
+    '        city VARCHAR(255),\n' +
+    '        state VARCHAR(255),\n' +
+    '        country VARCHAR(255),\n' +
+    '        postal_code VARCHAR(20),\n' +
+    '        tax_id VARCHAR(100),\n' +
+    '        payment_terms VARCHAR(100),\n' +
+    '        credit_limit DECIMAL(15,2),\n' +
+    '        supplier_category VARCHAR(100),\n' +
+    '        notes TEXT,\n' +
+    '        is_approved BOOLEAN DEFAULT false,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS supplier_materials (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        supplier_id UUID NOT NULL,\n' +
+    '        material_id UUID NOT NULL,\n' +
+    '        material_code VARCHAR(100),\n' +
+    '        supplier_part_number VARCHAR(100),\n' +
+    '        standard_cost DECIMAL(10,4) NOT NULL,\n' +
+    '        minimum_order_quantity DECIMAL(10,2) DEFAULT 1,\n' +
+    '        lead_time_days INTEGER DEFAULT 0,\n' +
+    '        is_preferred BOOLEAN DEFAULT false,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (supplier_id) REFERENCES suppliers (id),\n' +
+    '        FOREIGN KEY (material_id) REFERENCES raw_materials (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS purchase_requisitions (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        requisition_number VARCHAR(100) UNIQUE NOT NULL,\n' +
+    '        title VARCHAR(255) NOT NULL,\n' +
+    '        description TEXT,\n' +
+    '        requested_by UUID NOT NULL,\n' +
+    '        department VARCHAR(100),\n' +
+    "        priority VARCHAR(20) DEFAULT 'normal',\n" +
+    "        status VARCHAR(20) DEFAULT 'pending',\n" +
+    '        total_estimated_cost DECIMAL(15,2),\n' +
+    '        approved_by UUID,\n' +
+    '        approved_at TIMESTAMP,\n' +
+    '        notes TEXT,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (requested_by) REFERENCES users (id),\n' +
+    '        FOREIGN KEY (approved_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS purchase_requisition_items (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        requisition_id UUID NOT NULL,\n' +
+    '        material_id UUID NOT NULL,\n' +
+    '        quantity_required DECIMAL(10,4) NOT NULL,\n' +
+    '        unit_cost DECIMAL(10,4),\n' +
+    '        total_cost DECIMAL(15,2),\n' +
+    '        notes TEXT,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (requisition_id) REFERENCES purchase_requisitions (id) ON DELETE CASCADE,\n' +
+    '        FOREIGN KEY (material_id) REFERENCES raw_materials (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS purchase_orders (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        po_number VARCHAR(100) UNIQUE NOT NULL,\n' +
+    '        supplier_id UUID NOT NULL,\n' +
+    '        order_date DATE NOT NULL,\n' +
+    '        expected_delivery_date DATE,\n' +
+    "        status VARCHAR(20) DEFAULT 'pending',\n" +
+    '        total_amount DECIMAL(15,2) NOT NULL,\n' +
+    "        currency VARCHAR(3) DEFAULT 'RWF',\n" +
+    '        payment_terms VARCHAR(100),\n' +
+    '        shipping_address TEXT,\n' +
+    '        notes TEXT,\n' +
+    '        created_by UUID NOT NULL,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (supplier_id) REFERENCES suppliers (id),\n' +
+    '        FOREIGN KEY (created_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS purchase_order_items (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        purchase_order_id UUID NOT NULL,\n' +
+    '        material_id UUID NOT NULL,\n' +
+    '        quantity_ordered DECIMAL(10,4) NOT NULL,\n' +
+    '        quantity_received DECIMAL(10,4) DEFAULT 0,\n' +
+    '        unit_cost DECIMAL(10,4) NOT NULL,\n' +
+    '        total_cost DECIMAL(15,2) NOT NULL,\n' +
+    '        notes TEXT,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (purchase_order_id) REFERENCES purchase_orders (id) ON DELETE CASCADE,\n' +
+    '        FOREIGN KEY (material_id) REFERENCES raw_materials (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS goods_receipts (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        grn_number VARCHAR(100) UNIQUE NOT NULL,\n' +
+    '        purchase_order_id UUID,\n' +
+    '        supplier_id UUID NOT NULL,\n' +
+    '        receipt_date DATE NOT NULL,\n' +
+    '        received_by UUID NOT NULL,\n' +
+    "        status VARCHAR(20) DEFAULT 'received',\n" +
+    '        total_value DECIMAL(15,2),\n' +
+    '        notes TEXT,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (purchase_order_id) REFERENCES purchase_orders (id),\n' +
+    '        FOREIGN KEY (supplier_id) REFERENCES suppliers (id),\n' +
+    '        FOREIGN KEY (received_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS goods_receipt_items (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        goods_receipt_id UUID NOT NULL,\n' +
+    '        material_id UUID NOT NULL,\n' +
+    '        quantity_received DECIMAL(10,4) NOT NULL,\n' +
+    '        unit_cost DECIMAL(10,4),\n' +
+    '        total_cost DECIMAL(15,2),\n' +
+    '        batch_number VARCHAR(100),\n' +
+    '        expiry_date DATE,\n' +
+    "        quality_status VARCHAR(20) DEFAULT 'good',\n" +
+    '        notes TEXT,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (goods_receipt_id) REFERENCES goods_receipts (id) ON DELETE CASCADE,\n' +
+    '        FOREIGN KEY (material_id) REFERENCES raw_materials (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS supplier_performance (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        supplier_id UUID NOT NULL,\n' +
+    '        performance_date DATE NOT NULL,\n' +
+    '        delivery_rating DECIMAL(3,2),\n' +
+    '        quality_rating DECIMAL(3,2),\n' +
+    '        price_rating DECIMAL(3,2),\n' +
+    '        service_rating DECIMAL(3,2),\n' +
+    '        overall_rating DECIMAL(3,2),\n' +
+    '        notes TEXT,\n' +
+    '        evaluated_by UUID,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (supplier_id) REFERENCES suppliers (id),\n' +
+    '        FOREIGN KEY (evaluated_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS translations (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        language VARCHAR(10) NOT NULL,\n' +
+    '        namespace VARCHAR(50) NOT NULL,\n' +
+    '        key TEXT NOT NULL,\n' +
+    '        value TEXT NOT NULL,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        UNIQUE(language, namespace, key)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS loyalty_transactions (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        customer_id UUID NOT NULL,\n' +
+    '        transaction_type VARCHAR(50) NOT NULL,\n' +
+    '        points INTEGER NOT NULL,\n' +
+    '        description TEXT,\n' +
+    '        order_id UUID,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (customer_id) REFERENCES customers (id),\n' +
+    '        FOREIGN KEY (order_id) REFERENCES orders (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS bottle_returns (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        customer_id UUID NOT NULL,\n' +
+    '        quantity INTEGER NOT NULL,\n' +
+    '        bottle_size VARCHAR(100),\n' +
+    '        return_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        processed_by UUID,\n' +
+    '        discount_applied DECIMAL(10,2) DEFAULT 0,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (customer_id) REFERENCES customers (id),\n' +
+    '        FOREIGN KEY (processed_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS order_status_logs (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        order_id UUID NOT NULL,\n' +
+    '        status_from VARCHAR(50),\n' +
+    '        status_to VARCHAR(50) NOT NULL,\n' +
+    '        notes TEXT,\n' +
+    '        changed_by UUID,\n' +
+    '        changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (order_id) REFERENCES orders (id),\n' +
+    '        FOREIGN KEY (changed_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS notification_templates (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    "        type VARCHAR(20) NOT NULL CHECK(type IN ('sms', 'email', 'push')),\n" +
+    '        subject TEXT,\n' +
+    '        content TEXT NOT NULL,\n' +
+    '        variables TEXT,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS notification_campaigns (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    '        description TEXT,\n' +
+    '        template_id UUID,\n' +
+    "        campaign_type VARCHAR(50) NOT NULL CHECK(campaign_type IN ('promotion', 'loyalty', 'payment_reminder', 'custom')),\n" +
+    '        target_audience TEXT,\n' +
+    '        filters TEXT,\n' +
+    '        scheduled_at TIMESTAMP,\n' +
+    '        sent_at TIMESTAMP,\n' +
+    "        status VARCHAR(20) DEFAULT 'draft' CHECK(status IN ('draft', 'scheduled', 'sending', 'sent', 'cancelled')),\n" +
+    '        total_recipients INTEGER DEFAULT 0,\n' +
+    '        sent_count INTEGER DEFAULT 0,\n' +
+    '        opened_count INTEGER DEFAULT 0,\n' +
+    '        clicked_count INTEGER DEFAULT 0,\n' +
+    '        created_by UUID,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (template_id) REFERENCES notification_templates (id),\n' +
+    '        FOREIGN KEY (created_by) REFERENCES users (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS notifications (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        campaign_id UUID,\n' +
+    '        customer_id UUID,\n' +
+    "        type VARCHAR(20) NOT NULL CHECK(type IN ('sms', 'email', 'push')),\n" +
+    '        subject TEXT,\n' +
+    '        content TEXT NOT NULL,\n' +
+    '        recipient VARCHAR(255) NOT NULL,\n' +
+    "        status VARCHAR(20) DEFAULT 'pending' CHECK(status IN ('pending', 'sent', 'delivered', 'failed', 'opened', 'clicked')),\n" +
+    '        sent_at TIMESTAMP,\n' +
+    '        delivered_at TIMESTAMP,\n' +
+    '        opened_at TIMESTAMP,\n' +
+    '        clicked_at TIMESTAMP,\n' +
+    '        error_message TEXT,\n' +
+    '        metadata TEXT,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (campaign_id) REFERENCES notification_campaigns (id),\n' +
+    '        FOREIGN KEY (customer_id) REFERENCES customers (id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS notification_triggers (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        name VARCHAR(255) NOT NULL,\n' +
+    "        trigger_type VARCHAR(50) NOT NULL CHECK(trigger_type IN ('promotion', 'loyalty', 'payment_reminder', 'order_update', 'custom')),\n" +
+    '        conditions TEXT,\n' +
+    '        template_id UUID,\n' +
+    '        is_active BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (template_id) REFERENCES notification_templates (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS customer_notification_preferences (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        customer_id UUID NOT NULL,\n' +
+    '        sms_enabled BOOLEAN DEFAULT true,\n' +
+    '        email_enabled BOOLEAN DEFAULT true,\n' +
+    '        push_enabled BOOLEAN DEFAULT true,\n' +
+    '        marketing_sms BOOLEAN DEFAULT true,\n' +
+    '        marketing_email BOOLEAN DEFAULT true,\n' +
+    '        marketing_push BOOLEAN DEFAULT true,\n' +
+    '        loyalty_notifications BOOLEAN DEFAULT true,\n' +
+    '        payment_reminders BOOLEAN DEFAULT true,\n' +
+    '        order_updates BOOLEAN DEFAULT true,\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (customer_id) REFERENCES customers (id),\n' +
+    '        UNIQUE(customer_id)\n' +
+    '      )',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE TABLE IF NOT EXISTS notification_analytics (\n' +
+    '        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n' +
+    '        campaign_id UUID,\n' +
+    '        date DATE,\n' +
+    '        total_sent INTEGER DEFAULT 0,\n' +
+    '        total_delivered INTEGER DEFAULT 0,\n' +
+    '        total_opened INTEGER DEFAULT 0,\n' +
+    '        total_clicked INTEGER DEFAULT 0,\n' +
+    '        total_failed INTEGER DEFAULT 0,\n' +
+    '        delivery_rate DECIMAL(5,2),\n' +
+    '        open_rate DECIMAL(5,2),\n' +
+    '        click_rate DECIMAL(5,2),\n' +
+    '        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\n' +
+    '        FOREIGN KEY (campaign_id) REFERENCES notification_campaigns (id)\n' +
+    '      )',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_users_username ON users(username)',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_products_sku ON products(sku)',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_products_barcode ON products(barcode)',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_orders_customer_id ON orders(customer_id)',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_orders_shop_id ON orders(shop_id)',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_orders_created_at ON orders(created_at)',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_order_items_order_id ON order_items(order_id)',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_order_items_product_id ON order_items(product_id)',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_customers_email ON customers(email)',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_customers_phone ON customers(phone)',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_gl_accounts_code ON gl_accounts(account_code)',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_settings_key ON settings(key)',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_translations_language ON translations(language)',
+  duration: 1,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_translations_namespace ON translations(namespace)',
+  duration: 0,
+  rows: null
+}
+Executed query {
+  text: 'CREATE INDEX IF NOT EXISTS idx_translations_lang_ns ON translations(language, namespace)',
+  duration: 0,
+  rows: null
+}
+✅ All PostgreSQL tables created successfully
+Executed query {
+  text: 'SELECT COUNT(*) as count FROM gl_accounts',
+  duration: 2,
+  rows: 1
+}
+✅ GL accounts already initialized
+✅ Connected to PostgreSQL database
+Executed query {
+  text: '\n' +
+    '        SELECT id, name, scheduled_at FROM notification_campaigns \n' +
+    "        WHERE status = 'scheduled' AND scheduled_at IS NOT NULL \n" +
+    '      ',
+  duration: 43,
+  rows: 0
+}
+✅ Connected to PostgreSQL database
+Executed query {
+  text: '\n' +
+    '        SELECT id, name, scheduled_at FROM notification_campaigns \n' +
+    "        WHERE status = 'scheduled' AND scheduled_at IS NOT NULL \n" +
+    '      ',
+  duration: 39,
+  rows: 0
+}
+✅ Connected to PostgreSQL database
+Executed query {
+  text: '\n' +
+    '        SELECT id, name, scheduled_at FROM notification_campaigns \n' +
+    "        WHERE status = 'scheduled' AND scheduled_at IS NOT NULL \n" +
+    '      ',
+  duration: 159,
+  rows: 0
+}

@@ -39,6 +39,7 @@ import Brands from './pages/Brands';
 import Discounts from './pages/Discounts';
 import PricingManagement from './pages/PricingManagement';
 import TranslationDemo from './pages/TranslationDemo';
+import Cars from './pages/Cars';
 import './index.css';
 
 // Create a client for React Query
@@ -243,6 +244,17 @@ const AppContent = () => {
           <RoleBasedRoute allowedRoles={['admin', 'manager', 'inventory']}>
             <Layout>
               <Perfumes />
+            </Layout>
+          </RoleBasedRoute>
+        }
+      />
+
+      <Route
+        path="/cars"
+        element={
+          <RoleBasedRoute allowedRoles={['admin', 'manager', 'cashier']} fallbackPath="/dashboard">
+            <Layout>
+              <Cars />
             </Layout>
           </RoleBasedRoute>
         }
