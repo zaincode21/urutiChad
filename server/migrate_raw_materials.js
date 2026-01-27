@@ -11,8 +11,9 @@ const migrate = async () => {
             await database.run('ALTER TABLE raw_materials ADD COLUMN selling_price DECIMAL(10,2) DEFAULT 0');
             console.log('Added selling_price column to raw_materials');
         } catch (e) {
-            if (e.message.includes('duplicate column')) {
-                console.log('Column selling_price already exists');
+            // Check for Postgres error code 42701 (duplicate_column) or message content
+            if (e.code === '42701' || e.message.includes('already exists') || e.message.includes('duplicate column')) {
+                console.log('Column selling_price already exists - skipping');
             } else {
                 throw e;
             }
