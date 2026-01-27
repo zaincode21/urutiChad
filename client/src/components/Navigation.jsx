@@ -182,12 +182,7 @@ const Navigation = () => {
             }
           ]
         },
-        {
-          name: tSync('Perfumes'),
-          href: '/perfumes',
-          icon: FlaskConical,
-          description: tSync('Perfume production')
-        },
+
 
         {
           id: 'atelier',
@@ -295,12 +290,7 @@ const Navigation = () => {
         }
       ]
     },
-    {
-      name: tSync('Perfumes'),
-      href: '/perfumes',
-      icon: FlaskConical,
-      description: tSync('Perfume production')
-    },
+
 
     {
       id: 'atelier',
