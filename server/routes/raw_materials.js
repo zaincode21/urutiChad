@@ -8,12 +8,54 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Raw Materials
+ *   description: Raw material inventory management
+ */
+
+/**
+ * @swagger
  * /raw-materials:
  *   get:
  *     summary: Get all raw materials
  *     tags: [Raw Materials]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: Items per page
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *         description: Search term
+ *       - in: query
+ *         name: type
+ *         schema:
+ *           type: string
+ *         description: Material type filter
+ *     responses:
+ *       200:
+ *         description: List of raw materials
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 materials:
+ *                   type: array
+ *                 pagination:
+ *                   type: object
+ *       500:
+ *         description: Server error
  */
 router.get('/', auth, async (req, res) => {
     try {
@@ -79,6 +121,8 @@ router.get('/', auth, async (req, res) => {
  *   post:
  *     summary: Add new raw material
  *     tags: [Raw Materials]
+ *     security:
+ *       - bearerAuth: [] 
  */
 router.post('/', managerAuth, [
     body('name').trim().notEmpty().withMessage('Name is required'),
@@ -148,6 +192,8 @@ router.post('/', managerAuth, [
  *   put:
  *     summary: Update raw material
  *     tags: [Raw Materials]
+ *     security:
+ *       - bearerAuth: []
  */
 router.put('/:id', managerAuth, [
     body('name').optional().trim().notEmpty(),
@@ -247,6 +293,8 @@ router.put('/:id', managerAuth, [
  *   delete:
  *     summary: Soft delete raw material
  *     tags: [Raw Materials]
+ *     security:
+ *       - bearerAuth: []
  */
 router.delete('/:id', managerAuth, async (req, res) => {
     try {
