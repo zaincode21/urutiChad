@@ -39,7 +39,7 @@ import Brands from './pages/Brands';
 import Discounts from './pages/Discounts';
 import PricingManagement from './pages/PricingManagement';
 import TranslationDemo from './pages/TranslationDemo';
-import Cars from './pages/Cars';
+
 import './index.css';
 
 // Create a client for React Query
@@ -249,16 +249,7 @@ const AppContent = () => {
         }
       />
 
-      <Route
-        path="/cars"
-        element={
-          <RoleBasedRoute allowedRoles={['admin', 'manager', 'cashier']} fallbackPath="/dashboard">
-            <Layout>
-              <Cars />
-            </Layout>
-          </RoleBasedRoute>
-        }
-      />
+
 
       {/* SMART BOTTLING ROUTE - COMMENTED OUT */}
       {/* Uncomment the route below to enable Smart Bottling system */}
