@@ -1,0 +1,155 @@
+/* Additional mobile responsive styles for remaining pages */
+
+/* Global mobile overrides */
+@media (max-width: 640px) {
+  /* Page headers */
+  .page-header {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    align-items: stretch !important;
+  }
+  
+  /* Button groups */
+  .button-group {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+  }
+  
+  /* Form grids */
+  .form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  /* Card grids */
+  .card-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  /* Stats grids */
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  /* Filter sections */
+  .filter-section {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+  }
+  
+  /* Modal adjustments */
+  .modal-container {
+    margin: 0.5rem !important;
+    max-width: calc(100vw - 1rem) !important;
+  }
+  
+  /* Table containers */
+  .table-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  .table-container table {
+    min-width: 600px !important;
+  }
+  
+  /* Navigation tabs */
+  .nav-tabs {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  
+  .nav-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+  
+  /* Chart containers */
+  .chart-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  .chart-container > div {
+    min-width: 300px !important;
+  }
+  
+  /* Settings specific */
+  .settings-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  
+  .settings-sidebar {
+    order: 2 !important;
+  }
+  
+  .settings-content {
+    order: 1 !important;
+  }
+  
+  /* Analytics specific */
+  .analytics-metrics {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .analytics-charts {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Expenses specific */
+  .expenses-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* General utility classes */
+  .mobile-stack {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+  
+  .mobile-full-width {
+    width: 100% !important;
+  }
+  
+  .mobile-text-center {
+    text-align: center !important;
+  }
+  
+  .mobile-hidden {
+    display: none !important;
+  }
+  
+  .mobile-block {
+    display: block !important;
+  }
+}
+
+/* Tablet responsive adjustments */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .tablet-grid-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  .tablet-grid-3 {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  
+  .tablet-flex-row {
+    flex-direction: row !important;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1025px) {
+  .desktop-grid-4 {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  
+  .desktop-grid-5 {
+    grid-template-columns: repeat(5, 1fr) !important;
+  }
+}

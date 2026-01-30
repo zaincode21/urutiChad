@@ -207,7 +207,7 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
               <h1 className="text-3xl font-bold text-gray-900"><TranslatedText text="Analytics & Reports" /></h1>
               <p className="text-gray-600 mt-2">Advanced insights and business intelligence</p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <button 
                 onClick={handleExportReport}
                 disabled={isExportingReport}
@@ -238,7 +238,7 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
 
         {/* Filters */}
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 analytics-filters">
             <div className="flex-1">
               <label className="block text-sm font-medium text-gray-700 mb-2">Time Period</label>
               <select
@@ -276,7 +276,7 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
         </div>
 
         {/* Key Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center">
               <div className="p-3 bg-green-100 rounded-xl">
@@ -343,7 +343,7 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
         </div>
 
         {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-8">
           {/* Revenue Chart */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-6">

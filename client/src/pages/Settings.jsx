@@ -995,7 +995,7 @@ const Settings = () => {
                 </table>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 p-6">
                 {users.map((user) => (
                   <div key={user.id} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
                     <div className="flex items-center justify-between mb-4">
@@ -3713,9 +3713,9 @@ const Settings = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
         {/* Sidebar Navigation */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 order-2 lg:order-1">
           <div className="theme-card rounded-xl overflow-hidden transition-all duration-300">
             <div className="p-4 theme-border border-b">
               <h3 className="text-sm font-semibold theme-text-primary uppercase tracking-wide"><TranslatedText text="Settings Menu" /></h3>
@@ -3752,7 +3752,7 @@ const Settings = () => {
         </div>
 
         {/* Main Content */}
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3 order-1 lg:order-2">
           <div className="theme-card rounded-xl overflow-hidden transition-all duration-300">
             {renderTabContent()}
           </div>

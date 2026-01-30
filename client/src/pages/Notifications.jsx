@@ -197,7 +197,7 @@ const Notifications = () => {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center space-x-3">
           <div className="flex-shrink-0">
             <Bell className="h-8 w-8 text-primary-600" />
@@ -207,7 +207,7 @@ const Notifications = () => {
             <p className="text-gray-600 mt-2">{tSync('SMS, Email, and Push notification management')}</p>
           </div>
         </div>
-        <div className="flex items-center space-x-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-3 sm:space-y-0 sm:space-x-3">
           {/* <button 
             onClick={() => {
               setAddModalMode('template');
@@ -250,7 +250,16 @@ const Notifications = () => {
 
       {/* Tabs */}
       <div className="bg-white border-b border-gray-200">
-        <nav className="flex space-x-8">
+        <nav className="flex space-x-8 overflow-x-auto">
+          <style jsx>{`
+            nav::-webkit-scrollbar {
+              display: none;
+            }
+            nav {
+              -ms-overflow-style: none;
+              scrollbar-width: none;
+            }
+          `}</style>
           {tabs.map((tab) => {
             const Icon = tab.icon;
             return (
@@ -273,7 +282,7 @@ const Notifications = () => {
       {/* Search and Filters Bar */}
       <div className="bg-white border-b border-gray-200">
         <div className="py-4">
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 filter-section">
             <div className="flex-1">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -418,7 +427,7 @@ const OverviewTab = ({ analytics, isLoading, campaigns, formatScheduleTime }) =>
   return (
     <div className="space-y-6">
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
             <div className="flex-shrink-0">
@@ -477,7 +486,7 @@ const OverviewTab = ({ analytics, isLoading, campaigns, formatScheduleTime }) =>
       </div>
 
       {/* Charts and Tables */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Campaign Performance */}
         <div className="bg-white rounded-lg shadow">
           <div className="px-6 py-4 border-b border-gray-200">
@@ -599,7 +608,7 @@ const TemplatesTab = ({ templates, isLoading, searchTerm, viewMode, getTypeIcon,
   return (
     <div className="space-y-6">
       {viewMode === 'grid' ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredTemplates.map((template) => {
             const TypeIcon = getTypeIcon(template.type);
             return (
