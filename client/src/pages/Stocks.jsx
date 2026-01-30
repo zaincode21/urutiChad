@@ -603,35 +603,38 @@ const Stocks = () => {
   }, [searchTerm, selectedLocation, selectedML, selectedCategory]);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4 sm:space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900"><TranslatedText text="Stock Management" /></h1>
-          <p className="text-gray-600 mt-2">{tSync('Manage inventory across all locations')}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900"><TranslatedText text="Stock Management" /></h1>
+          <p className="text-sm sm:text-base text-gray-600 mt-1 sm:mt-2">{tSync('Manage inventory across all locations')}</p>
         </div>
         {(user?.role === 'admin') && (
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-2 sm:gap-3">
             <button
               onClick={() => setShowTransferModal(true)}
-              className="inline-flex items-center px-4 py-2 bg-purple-600 text-white font-medium rounded-xl hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200"
+              className="inline-flex items-center px-3 sm:px-4 py-2.5 sm:py-2 bg-purple-600 text-white font-medium rounded-xl hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200 min-h-[44px] touch-target text-sm"
             >
-              <ArrowUpDown className="h-5 w-5 mr-2" />
-              {tSync('Transfer Stock')}
+              <ArrowUpDown className="h-5 w-5 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">{tSync('Transfer Stock')}</span>
+              <span className="sm:hidden">Transfer</span>
             </button>
             <button
               onClick={() => setShowBulkAssignModal(true)}
-              className="inline-flex items-center px-4 py-2 bg-green-600 text-white font-medium rounded-xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200"
+              className="inline-flex items-center px-3 sm:px-4 py-2.5 sm:py-2 bg-green-600 text-white font-medium rounded-xl hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200 min-h-[44px] touch-target text-sm"
             >
-              <Package className="h-5 w-5 mr-2" />
-              {tSync('Assign All Products')}
+              <Package className="h-5 w-5 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">{tSync('Assign All Products')}</span>
+              <span className="sm:hidden">Assign All</span>
             </button>
             <button
               onClick={() => setShowAssignModal(true)}
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
+              className="inline-flex items-center px-3 sm:px-4 py-2.5 sm:py-2 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 min-h-[44px] touch-target text-sm"
             >
-              <Plus className="h-5 w-5 mr-2" />
-              {tSync('Assign Stock')}
+              <Plus className="h-5 w-5 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">{tSync('Assign Stock')}</span>
+              <span className="sm:hidden">Assign</span>
             </button>
           </div>
         )}
@@ -639,53 +642,53 @@ const Stocks = () => {
 
       {/* Stats Cards - Hidden for managers */}
       {user?.role !== 'manager' && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <div className="flex items-center">
               <div className="p-3 bg-blue-100 rounded-xl">
                 <Package className="h-6 w-6 text-blue-600" />
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">{tSync('Total Products')}</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.total_products || 0}</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-900">{stats.total_products || 0}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <div className="flex items-center">
               <div className="p-3 bg-green-100 rounded-xl">
                 <TrendingUp className="h-6 w-6 text-green-600" />
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">{tSync('Total Stock Value')}</p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className="text-xl sm:text-2xl font-bold text-gray-900">
                   {Math.floor(stats.total_stock_value || 0).toLocaleString()} CFA
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <div className="flex items-center">
               <div className="p-3 bg-orange-100 rounded-xl">
                 <AlertTriangle className="h-6 w-6 text-orange-600" />
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">{tSync('Low Stock Items')}</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.low_stock_count || 0}</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-900">{stats.low_stock_count || 0}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
             <div className="flex items-center">
               <div className="p-3 bg-red-100 rounded-xl">
                 <XCircle className="h-6 w-6 text-red-600" />
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">{tSync('Out of Stock')}</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.out_of_stock_count || 0}</p>
+                <p className="text-xl sm:text-2xl font-bold text-gray-900">{stats.out_of_stock_count || 0}</p>
               </div>
             </div>
           </div>
@@ -693,8 +696,8 @@ const Stocks = () => {
       )}
 
       {/* Filters */}
-      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-        <div className="flex flex-col sm:flex-row gap-4">
+      <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+        <div className="flex flex-col lg:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -707,11 +710,11 @@ const Stocks = () => {
               />
             </div>
           </div>
-          <div className="flex gap-3 flex-wrap">
+          <div className="flex flex-wrap gap-2 sm:gap-3">
             <select
               value={selectedLocation}
               onChange={(e) => setSelectedLocation(e.target.value)}
-              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-[200px]"
+              className="px-3 sm:px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-[160px] sm:min-w-[200px]"
             >
               <option value="all">{tSync('All Shops')}</option>
               <optgroup label={tSync('Shops')}>
@@ -731,7 +734,7 @@ const Stocks = () => {
             <select
               value={selectedML}
               onChange={(e) => setSelectedML(e.target.value)}
-              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-3 sm:px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-[100px]"
             >
               <option value="all">{tSync('All Sizes')}</option>
               <option value="30">30 ML</option>
@@ -742,7 +745,7 @@ const Stocks = () => {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-[180px]"
+              className="px-3 sm:px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-[140px] sm:min-w-[180px]"
             >
               <option value="all">{tSync('All Categories')}</option>
               {categories.map(category => (
@@ -755,7 +758,7 @@ const Stocks = () => {
 
       {/* Stock Table */}
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
+        <div className="px-4 sm:px-6 py-4 border-b border-gray-200">
           <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Stock Levels" /></h3>
         </div>
 
@@ -765,10 +768,10 @@ const Stocks = () => {
             <p className="mt-2 text-gray-600">{tSync('Loading stock data...')}</p>
           </div>
         ) : filteredStock.length === 0 ? (
-          <div className="p-12 text-center">
+          <div className="p-8 sm:p-12 text-center">
             <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2"><TranslatedText text="No stock data found" /></h3>
-            <p className="text-gray-500 mb-6">
+            <p className="text-sm sm:text-base text-gray-500 mb-6 max-w-md mx-auto">
               {searchTerm || selectedML !== 'all'
                 ? tSync('Try adjusting your search or filter criteria.')
                 : tSync('No stock assigned to this location.')}
@@ -780,7 +783,7 @@ const Stocks = () => {
             </p>
             <button
               onClick={() => setShowAssignModal(true)}
-              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="inline-flex items-center px-4 py-2.5 sm:py-2 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 min-h-[44px] touch-target"
             >
               <Plus className="h-5 w-5 mr-2" />
               {tSync('Assign Stock')}

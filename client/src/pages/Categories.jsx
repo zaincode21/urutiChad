@@ -253,12 +253,12 @@ const Categories = () => {
           ? 'bg-blue-50 border-blue-200'
           : 'bg-white border-gray-200 hover:border-gray-300'
           } transition-colors`}>
-          <div className="flex items-center space-x-3 flex-1">
-            <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3 flex-1 min-w-0">
+            <div className="flex items-center space-x-2 flex-shrink-0">
               {category.children && category.children.length > 0 && (
                 <button
                   onClick={() => toggleCategoryExpansion(category.id)}
-                  className="p-1 hover:bg-gray-100 rounded"
+                  className="p-1 hover:bg-gray-100 rounded min-h-[36px] min-w-[36px] flex items-center justify-center touch-target"
                 >
                   {expandedCategories.has(category.id) ? (
                     <ChevronDown className="h-4 w-4" />
@@ -277,27 +277,29 @@ const Categories = () => {
               </div>
             </div>
 
-            <div className="flex-1">
-              <div className="flex items-center space-x-2">
-                <h3 className="font-medium text-gray-900">{category.name}</h3>
-                {category.type !== 'general' && (
-                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                    {category.type}
-                  </span>
-                )}
-                {category.parent_name && (
-                  <span className="text-xs text-gray-500">
-                    → {category.parent_name}
-                  </span>
-                )}
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                <h3 className="font-medium text-gray-900 truncate">{category.name}</h3>
+                <div className="flex items-center gap-2">
+                  {category.type !== 'general' && (
+                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded flex-shrink-0">
+                      {category.type}
+                    </span>
+                  )}
+                  {category.parent_name && (
+                    <span className="text-xs text-gray-500 truncate hidden sm:inline">
+                      → {category.parent_name}
+                    </span>
+                  )}
+                </div>
               </div>
               {category.description && (
-                <p className="text-sm text-gray-600 mt-1">{category.description}</p>
+                <p className="text-sm text-gray-600 mt-1 line-clamp-2">{category.description}</p>
               )}
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 flex-shrink-0">
             <input
               type="checkbox"
               checked={selectedItems.has(category.id)}
@@ -308,7 +310,7 @@ const Categories = () => {
             <div className="flex items-center space-x-1">
               <button
                 onClick={() => setEditingCategory(category)}
-                className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded"
+                className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded min-h-[36px] min-w-[36px] flex items-center justify-center touch-target"
                 title="Edit category"
               >
                 <Edit className="h-4 w-4" />
@@ -321,7 +323,7 @@ const Categories = () => {
                   parent_id: category.id,
                   type: 'general'
                 })}
-                className="p-2 text-gray-500 hover:text-green-600 hover:bg-green-50 rounded"
+                className="p-2 text-gray-500 hover:text-green-600 hover:bg-green-50 rounded min-h-[36px] min-w-[36px] flex items-center justify-center touch-target"
                 title="Add subcategory"
               >
                 <Plus className="h-4 w-4" />
@@ -329,7 +331,7 @@ const Categories = () => {
 
               <button
                 onClick={() => handleDeleteCategory(category)}
-                className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded"
+                className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded min-h-[36px] min-w-[36px] flex items-center justify-center touch-target"
                 title="Delete category"
               >
                 <Trash2 className="h-4 w-4" />
@@ -374,87 +376,90 @@ const Categories = () => {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4 sm:space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
             <TranslatedText text="Categories" />
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-sm sm:text-base text-gray-600 mt-1 sm:mt-2">
             <TranslatedText text="Organize your products with hierarchical categories" />
           </p>
         </div>
         <button
           onClick={() => setShowNewCategoryForm(true)}
-          className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+          className="inline-flex items-center px-3 sm:px-4 py-2.5 sm:py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors min-h-[44px] touch-target"
         >
           <Plus className="h-4 w-4 mr-2" />
-          <TranslatedText text="Add Category" />
+          <span className="hidden sm:inline"><TranslatedText text="Add Category" /></span>
+          <span className="sm:hidden"><TranslatedText text="Add" /></span>
         </button>
       </div>
 
       {/* Toolbar */}
       <div className="bg-white rounded-lg border border-gray-200 p-4">
-        <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           {/* Search and Filters */}
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="relative">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 flex-1">
+            <div className="relative flex-1 min-w-[200px]">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
                 type="text"
                 placeholder={tSync('search.placeholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="pl-10 pr-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full"
               />
             </div>
 
-            <select
-              value={filterLevel}
-              onChange={(e) => setFilterLevel(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="all">{tSync("All Levels")}</option>
-              <option value="0">{tSync("Root Categories")}</option>
-              <option value="1">{tSync("Level 1")}</option>
-              <option value="2">{tSync("Level 2")}</option>
-            </select>
+            <div className="flex flex-wrap gap-2 sm:gap-3">
+              <select
+                value={filterLevel}
+                onChange={(e) => setFilterLevel(e.target.value)}
+                className="px-3 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-w-[120px]"
+              >
+                <option value="all">{tSync("All Levels")}</option>
+                <option value="0">{tSync("Root Categories")}</option>
+                <option value="1">{tSync("Level 1")}</option>
+                <option value="2">{tSync("Level 2")}</option>
+              </select>
 
-            <select
-              value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="all">{tSync("All Types")}</option>
-              <option value="general">{tSync("General")}</option>
-              <option value="perfume">{tSync("Perfume")}</option>
-              <option value="clothing">{tSync("Clothing")}</option>
-              <option value="accessories">{tSync("Accessories")}</option>
-              <option value="bulk_perfume">{tSync("Bulk Perfume")}</option>
-            </select>
+              <select
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+                className="px-3 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-w-[120px]"
+              >
+                <option value="all">{tSync("All Types")}</option>
+                <option value="general">{tSync("General")}</option>
+                <option value="perfume">{tSync("Perfume")}</option>
+                <option value="clothing">{tSync("Clothing")}</option>
+                <option value="accessories">{tSync("Accessories")}</option>
+                <option value="bulk_perfume">{tSync("Bulk Perfume")}</option>
+              </select>
+            </div>
           </div>
 
           {/* View and Sort Controls */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <div className="flex items-center bg-gray-100 rounded-lg p-1">
               <button
                 onClick={() => setViewMode('tree')}
-                className={`p-2 rounded ${viewMode === 'tree' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'}`}
+                className={`p-2 rounded min-h-[36px] min-w-[36px] flex items-center justify-center ${viewMode === 'tree' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'}`}
                 title="Tree View"
               >
                 <FolderTree className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-2 rounded ${viewMode === 'grid' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'}`}
+                className={`p-2 rounded min-h-[36px] min-w-[36px] flex items-center justify-center ${viewMode === 'grid' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'}`}
                 title="Grid View"
               >
                 <Grid3X3 className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-2 rounded ${viewMode === 'list' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'}`}
+                className={`p-2 rounded min-h-[36px] min-w-[36px] flex items-center justify-center ${viewMode === 'list' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'}`}
                 title="List View"
               >
                 <List className="h-4 w-4" />
@@ -464,7 +469,7 @@ const Categories = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-w-[120px]"
             >
               <option value="name">{tSync("Sort by Name")}</option>
               <option value="level">{tSync("Sort by Level")}</option>
@@ -474,7 +479,7 @@ const Categories = () => {
 
             <button
               onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-              className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+              className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 min-h-[36px] min-w-[36px] flex items-center justify-center"
               title={`Sort ${sortOrder === 'asc' ? 'Descending' : 'Ascending'}`}
             >
               {sortOrder === 'asc' ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />}
@@ -486,20 +491,20 @@ const Categories = () => {
       {/* Bulk Actions */}
       {showBulkActions && (
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <span className="text-sm font-medium text-blue-900">
                 {selectedItems.size} categories selected
               </span>
               <button
                 onClick={selectAll}
-                className="text-sm text-blue-600 hover:text-blue-800"
+                className="text-sm text-blue-600 hover:text-blue-800 min-h-[36px] px-2 py-1 rounded touch-target"
               >
                 {tSync('Select All')}
               </button>
               <button
                 onClick={clearSelection}
-                className="text-sm text-blue-600 hover:text-blue-800"
+                className="text-sm text-blue-600 hover:text-blue-800 min-h-[36px] px-2 py-1 rounded touch-target"
               >
                 {tSync('Clear Selection')}
               </button>
@@ -507,7 +512,7 @@ const Categories = () => {
             <div className="flex items-center space-x-2">
               <button
                 onClick={handleBulkDelete}
-                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="inline-flex items-center px-3 py-2.5 sm:py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 min-h-[44px] touch-target"
               >
                 <Trash2 className="h-4 w-4 mr-2" />
                 {tSync('Delete Selected')}
@@ -525,10 +530,10 @@ const Categories = () => {
               {hierarchicalCategories.length > 0 ? (
                 renderCategoryTree(hierarchicalCategories)
               ) : (
-                <div className="text-center py-12">
-                  <FolderOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2"><TranslatedText text="No categories found" /></h3>
-                  <p className="text-gray-600 mb-4">
+                <div className="text-center py-8 sm:py-12 px-4">
+                  <FolderOpen className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg sm:text-xl font-medium text-gray-900 mb-2"><TranslatedText text="No categories found" /></h3>
+                  <p className="text-sm sm:text-base text-gray-600 mb-4 max-w-md mx-auto">
                     {searchTerm || filterLevel !== 'all' || filterType !== 'all'
                       ? tSync('Try adjusting your search or filters')
                       : tSync('Get started by creating your first category')
@@ -537,7 +542,7 @@ const Categories = () => {
                   {!searchTerm && filterLevel === 'all' && filterType === 'all' && (
                     <button
                       onClick={() => setShowNewCategoryForm(true)}
-                      className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700"
+                      className="inline-flex items-center px-4 py-2.5 sm:py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 min-h-[44px] touch-target"
                     >
                       <Plus className="h-4 w-4 mr-2" />
                       {tSync('Create Category')}
@@ -584,19 +589,19 @@ const CategoryModal = ({
 }) => {
   const { tSync } = useTranslation();
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+      <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-2 sm:mx-4 max-h-[98vh] sm:max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-900">{title}</h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-400 hover:text-gray-600 p-1 rounded min-h-[36px] min-w-[36px] flex items-center justify-center touch-target"
           >
             <X className="h-6 w-6" />
           </button>
         </div>
 
-        <form onSubmit={onSubmit} className="p-6 space-y-4">
+        <form onSubmit={onSubmit} className="p-4 sm:p-6 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               {tSync('form.name')} *
@@ -663,14 +668,14 @@ const CategoryModal = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              className="px-4 py-2.5 sm:py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 min-h-[44px] touch-target"
             >
               <TranslatedText text="Cancel" />
             </button>
             <button
               type="submit"
               disabled={isLoading}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2.5 sm:py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px] touch-target"
             >
               {isLoading ? (
                 <div className="flex items-center">

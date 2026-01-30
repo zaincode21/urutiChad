@@ -122,29 +122,30 @@ const Brands = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
             <TranslatedText text="Brands" />
           </h1>
-          <p className="text-gray-600">
+          <p className="text-sm sm:text-base text-gray-600 mt-1 sm:mt-2">
             <TranslatedText text="Manage product brands and manufacturers" />
           </p>
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center gap-2"
+          className="bg-blue-600 text-white px-3 sm:px-4 py-2.5 sm:py-2 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2 min-h-[44px] touch-target text-sm sm:text-base"
         >
           <Plus className="w-4 h-4" />
-          <TranslatedText text="Add Brand" />
+          <span className="hidden sm:inline"><TranslatedText text="Add Brand" /></span>
+          <span className="sm:hidden"><TranslatedText text="Add" /></span>
         </button>
       </div>
 
       {/* Filters */}
-      <div className="bg-white p-4 rounded-lg shadow-sm border">
-        <div className="flex gap-4 items-center">
+      <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-center">
           <div className="flex-1">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -153,14 +154,14 @@ const Brands = () => {
                 placeholder={tSync('search.placeholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
           <select
             value={filterActive}
             onChange={(e) => setFilterActive(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-3 sm:px-4 py-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-[140px]"
           >
             <option value="all">{tSync("All Brands")}</option>
             <option value="active">{tSync("Active Only")}</option>
@@ -170,10 +171,10 @@ const Brands = () => {
       </div>
 
       {/* Brands Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
         {brands.map((brand) => (
           <div key={brand.id} className="bg-white rounded-lg shadow-sm border hover:shadow-md transition-shadow">
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               {/* Brand Logo */}
               <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-lg">
                 {brand.logo_url ? (
@@ -211,14 +212,14 @@ const Brands = () => {
               <div className="flex gap-2">
                 <button
                   onClick={() => handleEditBrand(brand)}
-                  className="flex-1 bg-blue-50 text-blue-600 px-3 py-2 rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1 text-sm"
+                  className="flex-1 bg-blue-50 text-blue-600 px-3 py-2.5 sm:py-2 rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1 text-sm min-h-[44px] sm:min-h-[36px] touch-target"
                 >
                   <Edit2 className="w-4 h-4" />
-                  Edit
+                  <span className="hidden sm:inline">Edit</span>
                 </button>
                 <button
                   onClick={() => toggleBrandStatus(brand)}
-                  className={`px-3 py-2 rounded-lg flex items-center justify-center ${brand.is_active
+                  className={`px-3 py-2.5 sm:py-2 rounded-lg flex items-center justify-center min-h-[44px] sm:min-h-[36px] touch-target ${brand.is_active
                     ? 'bg-yellow-50 text-yellow-600 hover:bg-yellow-100'
                     : 'bg-green-50 text-green-600 hover:bg-green-100'
                     }`}
@@ -231,7 +232,7 @@ const Brands = () => {
                 </button>
                 <button
                   onClick={() => handleDeleteBrand(brand)}
-                  className="bg-red-50 text-red-600 px-3 py-2 rounded-lg hover:bg-red-100 flex items-center justify-center"
+                  className="bg-red-50 text-red-600 px-3 py-2.5 sm:py-2 rounded-lg hover:bg-red-100 flex items-center justify-center min-h-[44px] sm:min-h-[36px] touch-target"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -243,10 +244,10 @@ const Brands = () => {
 
       {/* Empty State */}
       {brands.length === 0 && (
-        <div className="text-center py-12">
-          <Building2 className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2"><TranslatedText text="No brands found" /></h3>
-          <p className="text-gray-600 mb-4">
+        <div className="text-center py-8 sm:py-12 px-4">
+          <Building2 className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-4" />
+          <h3 className="text-lg sm:text-xl font-medium text-gray-900 mb-2"><TranslatedText text="No brands found" /></h3>
+          <p className="text-sm sm:text-base text-gray-600 mb-4 max-w-md mx-auto">
             {searchTerm || filterActive !== 'all'
               ? 'Try adjusting your search or filters'
               : 'Get started by creating your first brand'
@@ -255,7 +256,7 @@ const Brands = () => {
           {(!searchTerm && filterActive === 'all') && (
             <button
               onClick={() => setShowAddModal(true)}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+              className="bg-blue-600 text-white px-4 py-2.5 sm:py-2 rounded-lg hover:bg-blue-700 min-h-[44px] touch-target"
             >
               Add Brand
             </button>
@@ -316,9 +317,9 @@ const BrandModal = ({ brand, onClose, onSubmit, isLoading, t }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
-        <h2 className="text-xl font-semibold mb-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+      <div className="bg-white rounded-lg p-4 sm:p-6 w-full max-w-md mx-2 sm:mx-4 max-h-[98vh] sm:max-h-[90vh] overflow-y-auto">
+        <h2 className="text-lg sm:text-xl font-semibold mb-4">
           {brand ? <TranslatedText text="Edit Brand" /> : <TranslatedText text="Add New Brand" />}
         </h2>
 
@@ -333,7 +334,7 @@ const BrandModal = ({ brand, onClose, onSubmit, isLoading, t }) => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder={tSync('form.namePlaceholder')}
             />
           </div>
@@ -347,7 +348,7 @@ const BrandModal = ({ brand, onClose, onSubmit, isLoading, t }) => {
               value={formData.description}
               onChange={handleChange}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder={tSync('form.descriptionPlaceholder')}
             />
           </div>
@@ -361,7 +362,7 @@ const BrandModal = ({ brand, onClose, onSubmit, isLoading, t }) => {
               name="logo_url"
               value={formData.logo_url}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="https://example.com/logo.png"
             />
           </div>
@@ -375,7 +376,7 @@ const BrandModal = ({ brand, onClose, onSubmit, isLoading, t }) => {
               name="website"
               value={formData.website}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="https://brand.com"
             />
           </div>
@@ -389,7 +390,7 @@ const BrandModal = ({ brand, onClose, onSubmit, isLoading, t }) => {
               name="country"
               value={formData.country}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2.5 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder={tSync("Enter country")}
             />
           </div>
@@ -407,18 +408,18 @@ const BrandModal = ({ brand, onClose, onSubmit, isLoading, t }) => {
             </label>
           </div>
 
-          <div className="flex gap-3 pt-4">
+          <div className="flex flex-col sm:flex-row gap-3 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+              className="flex-1 px-4 py-2.5 sm:py-2 border border-gray-300 rounded-lg hover:bg-gray-50 min-h-[44px] touch-target"
             >
               <TranslatedText text="Cancel" />
             </button>
             <button
               type="submit"
               disabled={isLoading}
-              className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              className="flex-1 bg-blue-600 text-white px-4 py-2.5 sm:py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50 min-h-[44px] touch-target"
             >
               {isLoading ? <TranslatedText text="Saving..." /> : (brand ? <TranslatedText text="Update" /> : <TranslatedText text="Create" />)}
             </button>
