@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
-import PricingDashboard from '../components/PricingDashboard';
-import PricingAnalysis from '../components/PricingAnalysis';
-import PricingOptimization from '../components/PricingOptimization';
 import { api } from '../lib/api';
 import { useAuth } from '../contexts/AuthContext';
 import { productsAPI } from '../lib/api';
@@ -167,10 +164,11 @@ const PricingManagement = () => {
                     Overview of current pricing (CFA), strategies, and market positioning
                   </p>
                 </div>
-                <PricingDashboard 
-                  onProductSelect={handleProductSelection}
-                  onProductAnalysis={handleProductAnalysis}
-                />
+                <div className="bg-gray-50 rounded-lg p-8 text-center">
+                  <div className="text-4xl mb-4">📊</div>
+                  <h4 className="text-lg font-medium text-gray-900 mb-2">Pricing Dashboard</h4>
+                  <p className="text-gray-600">Pricing dashboard functionality will be implemented here.</p>
+                </div>
               </div>
             )}
 
@@ -189,9 +187,14 @@ const PricingManagement = () => {
                     </p>
                   )}
                 </div>
-                {selectedProductId && (
-                  <PricingAnalysis productId={selectedProductId} />
-                )}
+                <div className="bg-gray-50 rounded-lg p-8 text-center">
+                  <div className="text-4xl mb-4">🔍</div>
+                  <h4 className="text-lg font-medium text-gray-900 mb-2">Pricing Analysis</h4>
+                  <p className="text-gray-600">Pricing analysis functionality will be implemented here.</p>
+                  {selectedProductId && (
+                    <p className="text-sm text-blue-600 mt-2">Selected Product ID: {selectedProductId}</p>
+                  )}
+                </div>
               </div>
             )}
 
@@ -210,10 +213,14 @@ const PricingManagement = () => {
                     </p>
                   )}
                 </div>
-                <PricingOptimization 
-                  productIds={selectedProducts}
-                  onOptimizationComplete={handleOptimizationComplete}
-                />
+                <div className="bg-gray-50 rounded-lg p-8 text-center">
+                  <div className="text-4xl mb-4">⚡</div>
+                  <h4 className="text-lg font-medium text-gray-900 mb-2">Pricing Optimization</h4>
+                  <p className="text-gray-600">Pricing optimization functionality will be implemented here.</p>
+                  {selectedProducts.length > 0 && (
+                    <p className="text-sm text-blue-600 mt-2">{selectedProducts.length} products selected</p>
+                  )}
+                </div>
               </div>
             )}
           </div>

@@ -160,21 +160,21 @@ const AtelierOrders = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center">
-            <ShoppingCart className="h-8 w-8 mr-3 text-blue-600" />
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center">
+            <ShoppingCart className="h-6 w-6 sm:h-8 sm:w-8 mr-2 sm:mr-3 text-blue-600" />
             <TranslatedText text="Atelier Orders" />
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">
             <TranslatedText text="Manage custom clothing orders and tailoring requests" />
           </p>
         </div>
         <button
           onClick={handleCreateNewOrder}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200"
+          className="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 min-h-[44px]"
         >
           <Plus className="h-4 w-4 mr-2" />
           <TranslatedText text="New Atelier Order" />
@@ -182,8 +182,8 @@ const AtelierOrders = () => {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="bg-white rounded-lg shadow p-4 sm:p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Search */}
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
@@ -192,7 +192,7 @@ const AtelierOrders = () => {
               placeholder="Search orders..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[44px]"
             />
           </div>
 
@@ -202,7 +202,7 @@ const AtelierOrders = () => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none min-h-[44px]"
             >
               <option value="all">
                 {tSync("All Statuses")}
@@ -223,7 +223,7 @@ const AtelierOrders = () => {
           </div>
 
           {/* Results Count */}
-          <div className="flex items-center text-sm text-gray-600">
+          <div className="flex items-center text-sm text-gray-600 sm:col-span-2 lg:col-span-1">
             <Package className="h-4 w-4 mr-2" />
             <span>
               {orders.length} <TranslatedText text="orders found" />
@@ -235,147 +235,252 @@ const AtelierOrders = () => {
       {/* Orders List */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
         {orders.length === 0 ? (
-          <div className="text-center py-12">
-            <ShoppingCart className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <div className="text-center py-8 sm:py-12 px-4">
+            <ShoppingCart className="h-8 w-8 sm:h-12 sm:w-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">
               <TranslatedText text="No atelier orders found" />
             </h3>
-            <p className="text-gray-600 mb-4">
+            <p className="text-sm sm:text-base text-gray-600 mb-4">
               <TranslatedText text="Get started by creating your first atelier order" />
             </p>
             <button
               onClick={handleCreateNewOrder}
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 min-h-[44px]"
             >
               <Plus className="h-4 w-4 mr-2" />
               <TranslatedText text="Create First Order" />
             </button>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <TranslatedText text="Order" />
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <TranslatedText text="Customer" />
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <TranslatedText text="Target Completion" />
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <TranslatedText text="1st Fitting" />
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <TranslatedText text="Cost Material" />
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <TranslatedText text="Labor Cost" />
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <TranslatedText text="Status" />
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <TranslatedText text="Actions" />
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {orders.map((order) => {
-                  // Parse dates from notes
-                  // Format expected: ... | Target: YYYY-MM-DD | Fitting: YYYY-MM-DD
-                  const targetMatch = order.notes?.match(/Target:\s*(\d{4}-\d{2}-\d{2})/);
-                  const fittingMatch = order.notes?.match(/Fitting:\s*(\d{4}-\d{2}-\d{2})/);
+          <>
+            {/* Desktop Table - Hidden on mobile */}
+            <div className="hidden lg:block overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <TranslatedText text="Order" />
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <TranslatedText text="Customer" />
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <TranslatedText text="Target Completion" />
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <TranslatedText text="1st Fitting" />
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <TranslatedText text="Cost Material" />
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <TranslatedText text="Labor Cost" />
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <TranslatedText text="Status" />
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <TranslatedText text="Actions" />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {orders.map((order) => {
+                    const targetMatch = order.notes?.match(/Target:\s*(\d{4}-\d{2}-\d{2})/);
+                    const fittingMatch = order.notes?.match(/Fitting:\s*(\d{4}-\d{2}-\d{2})/);
+                    const targetDate = targetMatch ? targetMatch[1] : null;
+                    const fittingDate = fittingMatch ? fittingMatch[1] : null;
 
-                  const targetDate = targetMatch ? targetMatch[1] : null;
-                  const fittingDate = fittingMatch ? fittingMatch[1] : null;
-
-                  return (
-                    <tr key={order.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 h-10 w-10">
-                            <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                              <ShoppingCart className="h-5 w-5 text-blue-600" />
+                    return (
+                      <tr key={order.id} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="flex-shrink-0 h-10 w-10">
+                              <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                                <ShoppingCart className="h-5 w-5 text-blue-600" />
+                              </div>
+                            </div>
+                            <div className="ml-4">
+                              <div className="text-sm font-medium text-gray-900">
+                                #{order.order_number}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                <TranslatedText text="Atelier Order" />
+                              </div>
                             </div>
                           </div>
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">
-                              #{order.order_number}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <User className="h-4 w-4 text-gray-400 mr-2" />
+                            <div>
+                              <div className="text-sm font-medium text-gray-900">
+                                {order.first_name} {order.last_name}
+                              </div>
+                              <div className="text-sm text-gray-500">
+                                {order.customer_email}
+                              </div>
                             </div>
-                            <div className="text-sm text-gray-500">
-                              <TranslatedText text="Atelier Order" />
-                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {targetDate ? new Date(targetDate).toLocaleDateString() : '-'}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {fittingDate ? new Date(fittingDate).toLocaleDateString() : '-'}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">
+                            {formatCurrency(order.total_amount - (order.labor_cost || 0))}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-500">
+                            {formatCurrency(order.labor_cost)}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
+                            {getStatusIcon(order.status)}
+                            <span className="ml-1 capitalize">{order.status}</span>
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <div className="flex items-center space-x-2">
+                            <button
+                              onClick={() => handleViewOrder(order)}
+                              className="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50 min-h-[32px] min-w-[32px] flex items-center justify-center"
+                              title="View Order"
+                            >
+                              <Eye className="h-4 w-4" />
+                            </button>
+                            <button
+                              onClick={() => handleEditOrder(order)}
+                              className="text-gray-600 hover:text-gray-900 p-1 rounded hover:bg-gray-50 min-h-[32px] min-w-[32px] flex items-center justify-center"
+                              title="Edit Order"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Card View - Shown on mobile and tablet */}
+            <div className="lg:hidden p-4 space-y-4">
+              {orders.map((order) => {
+                const targetMatch = order.notes?.match(/Target:\s*(\d{4}-\d{2}-\d{2})/);
+                const fittingMatch = order.notes?.match(/Fitting:\s*(\d{4}-\d{2}-\d{2})/);
+                const targetDate = targetMatch ? targetMatch[1] : null;
+                const fittingDate = fittingMatch ? fittingMatch[1] : null;
+
+                return (
+                  <div key={order.id} className="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+                    {/* Header */}
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center flex-1">
+                        <div className="flex-shrink-0 h-10 w-10">
+                          <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                            <ShoppingCart className="h-5 w-5 text-blue-600" />
                           </div>
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <User className="h-4 w-4 text-gray-400 mr-2" />
-                          <div>
-                            <div className="text-sm font-medium text-gray-900">
-                              {order.first_name} {order.last_name}
-                            </div>
-                            <div className="text-sm text-gray-500">
-                              {order.customer_email}
-                            </div>
+                        <div className="ml-3 flex-1 min-w-0">
+                          <div className="text-sm font-medium text-gray-900 truncate">
+                            #{order.order_number}
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            <TranslatedText text="Atelier Order" />
                           </div>
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                      </div>
+                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
+                        {getStatusIcon(order.status)}
+                        <span className="ml-1 capitalize">{order.status}</span>
+                      </span>
+                    </div>
+
+                    {/* Customer Info */}
+                    <div className="mb-3">
+                      <div className="flex items-center text-sm text-gray-900">
+                        <User className="h-4 w-4 text-gray-400 mr-2 flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="font-medium truncate">
+                            {order.first_name} {order.last_name}
+                          </div>
+                          <div className="text-xs text-gray-500 truncate">
+                            {order.customer_email}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Dates and Costs Grid */}
+                    <div className="grid grid-cols-2 gap-3 mb-3 text-sm">
+                      <div>
+                        <div className="text-xs text-gray-500 mb-1">
+                          <TranslatedText text="Target Completion" />
+                        </div>
+                        <div className="font-medium text-gray-900">
                           {targetDate ? new Date(targetDate).toLocaleDateString() : '-'}
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-500 mb-1">
+                          <TranslatedText text="1st Fitting" />
+                        </div>
+                        <div className="font-medium text-gray-900">
                           {fittingDate ? new Date(fittingDate).toLocaleDateString() : '-'}
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-500 mb-1">
+                          <TranslatedText text="Material Cost" />
+                        </div>
+                        <div className="font-medium text-gray-900">
                           {formatCurrency(order.total_amount - (order.labor_cost || 0))}
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-500">
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-500 mb-1">
+                          <TranslatedText text="Labor Cost" />
+                        </div>
+                        <div className="font-medium text-gray-900">
                           {formatCurrency(order.labor_cost)}
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
-                          {getStatusIcon(order.status)}
-                          <span className="ml-1 capitalize">{order.status}</span>
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <div className="flex items-center space-x-2">
-                          <button
-                            onClick={() => handleViewOrder(order)}
-                            className="text-blue-600 hover:text-blue-900 p-1 rounded hover:bg-blue-50"
-                            title="View Order"
-                          >
-                            <Eye className="h-4 w-4" />
-                          </button>
-                          <button
-                            onClick={() => handleEditOrder(order)}
-                            className="text-gray-600 hover:text-gray-900 p-1 rounded hover:bg-gray-50"
-                            title="Edit Order"
-                          >
-                            <Edit className="h-4 w-4" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )
-        }
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex items-center justify-end gap-2 pt-3 border-t border-gray-100">
+                      <button
+                        onClick={() => handleViewOrder(order)}
+                        className="flex items-center justify-center px-3 py-2 text-sm text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors min-h-[36px]"
+                      >
+                        <Eye className="h-4 w-4 mr-1" />
+                        <span className="hidden sm:inline">View</span>
+                      </button>
+                      <button
+                        onClick={() => handleEditOrder(order)}
+                        className="flex items-center justify-center px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors min-h-[36px]"
+                      >
+                        <Edit className="h-4 w-4 mr-1" />
+                        <span className="hidden sm:inline">Edit</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
       </div >
 
       {/* Order Detail Modal */}

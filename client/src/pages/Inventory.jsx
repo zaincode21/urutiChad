@@ -38,6 +38,7 @@ import { api } from '../lib/api';
 import toast from 'react-hot-toast';
 import { shopsAPI, productsAPI, categoriesAPI, inventoryAPI } from '../lib/api';
 import { useTranslation } from '../hooks/useTranslation';
+import { MobileBottomSheet, MobileModal, MobileCard, MobileButton, MobileInput } from '../components/MobileUtils';
 
 const Inventory = () => {
   const { tSync } = useTranslation();
@@ -403,197 +404,203 @@ const Inventory = () => {
   ];
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+    <div className="mobile-container">
+      {/* Header - Mobile Optimized */}
+      <div className="mobile-header">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900"><TranslatedText text="Inventory Management" /></h1>
-          <p className="text-gray-600 mt-2">
+          <h1 className="text-xl sm:text-3xl font-bold text-gray-900"><TranslatedText text="Inventory Management" /></h1>
+          <p className="text-sm text-gray-600 mt-1">
             <TranslatedText text="Real-time stock tracking, transfers, and analytics" />
           </p>
         </div>
-        <div className="flex items-center space-x-3">
-          <button
+        <div className="mobile-actions">
+          <MobileButton
             onClick={() => queryClient.invalidateQueries(['inventory'])}
-            className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+            variant="outline"
+            size="small"
           >
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Refresh
-          </button>
+            <RefreshCw className="w-4 h-4 mr-1" />
+            <span className="hidden sm:inline">Refresh</span>
+            <span className="sm:hidden">Sync</span>
+          </MobileButton>
         </div>
       </div>
 
-      {/* Stats Cards */}
+      {/* Stats Cards - Mobile Optimized */}
       {statsLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="mobile-stats-grid">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <MobileCard key={i} className="p-4">
               <div className="animate-pulse">
                 <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
                 <div className="h-8 bg-gray-200 rounded w-1/2"></div>
               </div>
-            </div>
+            </MobileCard>
           ))}
         </div>
       ) : statsError ? (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-6">
+        <MobileCard className="p-4 bg-red-50 border-red-200">
           <div className="flex items-center">
-            <AlertTriangle className="w-6 h-6 text-red-600 mr-3" />
+            <AlertTriangle className="w-6 h-6 text-red-600 mr-3 flex-shrink-0" />
             <div>
               <h3 className="text-lg font-medium text-red-900"><TranslatedText text="Error Loading Stats" /></h3>
               <p className="text-sm text-red-700 mt-1">
                 {statsError.message || 'Failed to load inventory statistics'}
               </p>
-              <button
+              <MobileButton
                 onClick={() => queryClient.invalidateQueries(['inventory', 'stats'])}
-                className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
+                variant="outline"
+                size="small"
+                className="mt-2 text-red-600 border-red-300 hover:bg-red-50"
               >
                 Retry
-              </button>
+              </MobileButton>
             </div>
           </div>
-        </div>
+        </MobileCard>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="mobile-stats-grid">
+          <MobileCard className="p-4">
             <div className="flex items-center">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <Package className="w-6 h-6 text-blue-600" />
+              <div className="p-2 bg-blue-100 rounded-lg mr-3">
+                <Package className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600"><TranslatedText text="Total Products" /></p>
-                <p className="text-2xl font-bold text-gray-900">{statsData?.total_products || 0}</p>
+              <div>
+                <p className="text-xs sm:text-sm font-medium text-gray-600"><TranslatedText text="Total Products" /></p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{statsData?.total_products || 0}</p>
               </div>
             </div>
-          </div>
+          </MobileCard>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <MobileCard className="p-4">
             <div className="flex items-center">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <ShoppingCart className="w-6 h-6 text-green-600" />
+              <div className="p-2 bg-green-100 rounded-lg mr-3">
+                <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600"><TranslatedText text="Total Stock" /></p>
-                <p className="text-2xl font-bold text-gray-900">{statsData?.total_stock_quantity || 0}</p>
+              <div>
+                <p className="text-xs sm:text-sm font-medium text-gray-600"><TranslatedText text="Total Stock" /></p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{statsData?.total_stock_quantity || 0}</p>
               </div>
             </div>
-          </div>
+          </MobileCard>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <MobileCard className="p-4">
             <div className="flex items-center">
-              <div className="p-2 bg-red-100 rounded-lg">
-                <AlertTriangle className="w-6 h-6 text-red-600" />
+              <div className="p-2 bg-red-100 rounded-lg mr-3">
+                <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600"><TranslatedText text="Low Stock" /></p>
-                <p className="text-2xl font-bold text-gray-900">{statsData?.low_stock_count || 0}</p>
+              <div>
+                <p className="text-xs sm:text-sm font-medium text-gray-600"><TranslatedText text="Low Stock" /></p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{statsData?.low_stock_count || 0}</p>
               </div>
             </div>
-          </div>
+          </MobileCard>
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <MobileCard className="p-4">
             <div className="flex items-center">
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <DollarSign className="w-6 h-6 text-purple-600" />
+              <div className="p-2 bg-purple-100 rounded-lg mr-3">
+                <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600"><TranslatedText text="Stock Value" /></p>
-                <p className="text-2xl font-bold text-gray-900">
+              <div>
+                <p className="text-xs sm:text-sm font-medium text-gray-600"><TranslatedText text="Stock Value" /></p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">
                   {formatCurrency(statsData?.total_stock_value || 0)}
                 </p>
               </div>
             </div>
-          </div>
+          </MobileCard>
         </div>
       )}
 
-      {/* Tabs */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+      {/* Tabs - Mobile Optimized */}
+      <MobileCard className="overflow-hidden">
         <div className="border-b border-gray-200">
-          <nav className="flex space-x-8 px-6" aria-label="Tabs">
+          <nav className="mobile-tabs" aria-label="Tabs">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center py-4 px-1 border-b-2 font-medium text-sm ${activeTab === tab.id
-                    ? 'border-primary-500 text-primary-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                    }`}
+                  className={`mobile-tab ${activeTab === tab.id ? 'active' : ''}`}
                 >
-                  <Icon className="w-4 h-4 mr-2" />
-                  {tab.name}
+                  <Icon className="w-4 h-4 mr-1 sm:mr-2" />
+                  <span className="hidden sm:inline">{tab.name}</span>
+                  <span className="sm:hidden text-xs">{tab.id}</span>
                 </button>
               );
             })}
           </nav>
         </div>
 
-        <div className="p-6">
-          {/* Overview Tab */}
+        <div className="p-4">
+          {/* Overview Tab - Mobile Optimized */}
           {activeTab === 'overview' && (
             <div className="space-y-6">
-              {/* Quick Actions */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <button className="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
-                  <Truck className="w-6 h-6 text-blue-600 mr-3" />
-                  <div className="text-left">
-                    <p className="font-medium text-blue-900"><TranslatedText text="Create Transfer" /></p>
-                    <p className="text-sm text-blue-700"><TranslatedText text="Move stock between locations" /></p>
+              {/* Quick Actions - Mobile Grid */}
+              <div className="mobile-quick-actions">
+                <MobileButton className="mobile-action-btn bg-blue-50 text-blue-700 border-blue-200">
+                  <Truck className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 mb-2" />
+                  <div className="text-center">
+                    <p className="font-medium text-blue-900 text-sm"><TranslatedText text="Create Transfer" /></p>
+                    <p className="text-xs text-blue-700 mt-1"><TranslatedText text="Move stock between locations" /></p>
                   </div>
-                </button>
-                <button className="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
-                  <Package className="w-6 h-6 text-green-600 mr-3" />
-                  <div className="text-left">
-                    <p className="font-medium text-green-900"><TranslatedText text="Stock Count" /></p>
-                    <p className="text-sm text-green-700"><TranslatedText text="Perform physical inventory count" /></p>
+                </MobileButton>
+                <MobileButton className="mobile-action-btn bg-green-50 text-green-700 border-green-200">
+                  <Package className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 mb-2" />
+                  <div className="text-center">
+                    <p className="font-medium text-green-900 text-sm"><TranslatedText text="Stock Count" /></p>
+                    <p className="text-xs text-green-700 mt-1"><TranslatedText text="Perform physical inventory count" /></p>
                   </div>
-                </button>
-                <button className="flex items-center p-4 bg-orange-50 rounded-lg hover:bg-orange-100 transition-colors">
-                  <AlertTriangle className="w-6 h-6 text-orange-600 mr-3" />
-                  <div className="text-left">
-                    <p className="font-medium text-orange-900"><TranslatedText text="View Alerts" /></p>
-                    <p className="text-sm text-orange-700"><TranslatedText text="Check low stock alerts" /></p>
+                </MobileButton>
+                <MobileButton className="mobile-action-btn bg-orange-50 text-orange-700 border-orange-200">
+                  <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600 mb-2" />
+                  <div className="text-center">
+                    <p className="font-medium text-orange-900 text-sm"><TranslatedText text="View Alerts" /></p>
+                    <p className="text-xs text-orange-700 mt-1"><TranslatedText text="Check low stock alerts" /></p>
                   </div>
-                </button>
+                </MobileButton>
               </div>
 
-              {/* Recent Activity */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Recent Activity - Mobile Optimized */}
+              <div className="space-y-4">
                 {/* Recent Transactions */}
-                <div className="bg-gray-50 rounded-lg p-4">
+                <MobileCard className="p-4 bg-gray-50">
                   <h3 className="text-lg font-medium text-gray-900 mb-4"><TranslatedText text="Recent Transactions" /></h3>
-                  {transactionsData?.transactions?.slice(0, 5).map((transaction) => (
-                    <div key={transaction.id} className="flex items-center justify-between py-2">
-                      <div>
-                        <p className="font-medium text-gray-900">{transaction.product_name}</p>
-                        <p className="text-sm text-gray-500">{transaction.transaction_type}</p>
+                  <div className="space-y-3">
+                    {transactionsData?.transactions?.slice(0, 5).map((transaction) => (
+                      <div key={transaction.id} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-b-0">
+                        <div className="flex-1">
+                          <p className="font-medium text-gray-900 text-sm">{transaction.product_name}</p>
+                          <p className="text-xs text-gray-500">{transaction.transaction_type}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-medium text-gray-900 text-sm">{transaction.quantity}</p>
+                          <p className="text-xs text-gray-500">{formatDate(transaction.created_at)}</p>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <p className="font-medium text-gray-900">{transaction.quantity}</p>
-                        <p className="text-sm text-gray-500">{formatDate(transaction.created_at)}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                </MobileCard>
 
                 {/* Recent Alerts */}
-                <div className="bg-gray-50 rounded-lg p-4">
+                <MobileCard className="p-4 bg-gray-50">
                   <h3 className="text-lg font-medium text-gray-900 mb-4"><TranslatedText text="Recent Alerts" /></h3>
-                  {alertsData?.alerts?.slice(0, 5).map((alert) => (
-                    <div key={alert.id} className="flex items-center justify-between py-2">
-                      <div>
-                        <p className="font-medium text-gray-900">{alert.product_name}</p>
-                        <p className="text-sm text-gray-500">{alert.alert_type}</p>
+                  <div className="space-y-3">
+                    {alertsData?.alerts?.slice(0, 5).map((alert) => (
+                      <div key={alert.id} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-b-0">
+                        <div className="flex-1">
+                          <p className="font-medium text-gray-900 text-sm">{alert.product_name}</p>
+                          <p className="text-xs text-gray-500">{alert.alert_type}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-medium text-gray-900 text-sm">{alert.current_stock}</p>
+                          <p className="text-xs text-gray-500">{formatDate(alert.created_at)}</p>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <p className="font-medium text-gray-900">{alert.current_stock}</p>
-                        <p className="text-sm text-gray-500">{formatDate(alert.created_at)}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                </MobileCard>
               </div>
             </div>
           )}
@@ -1167,7 +1174,7 @@ const Inventory = () => {
 
 
         </div>
-      </div>
+      </MobileCard>
 
       {/* Reassign Inventory Modal */}
       {showReassignModal && reassigningItem && (

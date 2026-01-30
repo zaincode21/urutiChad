@@ -415,39 +415,39 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
     const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-200">
             <div className="bg-[#f6f6f8] dark:bg-[#111421] rounded-2xl w-full max-w-6xl h-[95vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-300 font-sans">
                 {/* Close on backdrop click */}
                 <div className="absolute inset-0 -z-10" onClick={onClose}></div>
                 {/* Header */}
-                <header className="flex items-center justify-between border-b border-[#e7e9f3] dark:border-[#2d324a] px-8 py-5 bg-white/80 dark:bg-[#111421]/80 backdrop-blur-lg shrink-0 sticky top-0 z-10">
-                    <div className="flex items-center gap-4">
+                <header className="flex items-center justify-between border-b border-[#e7e9f3] dark:border-[#2d324a] px-4 sm:px-8 py-4 sm:py-5 bg-white/80 dark:bg-[#111421]/80 backdrop-blur-lg shrink-0 sticky top-0 z-10">
+                    <div className="flex items-center gap-2 sm:gap-4">
                         {currentStep > 1 && currentStep < 5 ? (
-                            <button onClick={prevStep} className="p-2.5 hover:bg-[#e7e9f3] dark:hover:bg-[#1e2336] rounded-full text-[#4e5a97] transition-all hover:scale-110 active:scale-95" title="Go back">
+                            <button onClick={prevStep} className="p-2 sm:p-2.5 hover:bg-[#e7e9f3] dark:hover:bg-[#1e2336] rounded-full text-[#4e5a97] transition-all hover:scale-110 active:scale-95 min-h-[44px] min-w-[44px] flex items-center justify-center" title="Go back">
                                 <MaterialIcon name="arrow_back" />
                             </button>
                         ) : (
-                            <button onClick={onClose} className="p-2.5 hover:bg-[#e7e9f3] dark:hover:bg-[#1e2336] rounded-full text-[#4e5a97] transition-all hover:scale-110 active:scale-95" title="Close">
+                            <button onClick={onClose} className="p-2 sm:p-2.5 hover:bg-[#e7e9f3] dark:hover:bg-[#1e2336] rounded-full text-[#4e5a97] transition-all hover:scale-110 active:scale-95 min-h-[44px] min-w-[44px] flex items-center justify-center" title="Close">
                                 <MaterialIcon name="close" />
                             </button>
                         )}
                         <div>
-                            <h2 className="text-[#0e101b] dark:text-white text-xl font-bold">New Custom Order</h2>
+                            <h2 className="text-[#0e101b] dark:text-white text-lg sm:text-xl font-bold">New Custom Order</h2>
                             <p className="text-xs text-[#4e5a97] dark:text-[#8a95c9] mt-0.5">Step {currentStep} of 4</p>
                         </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                        <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-green-50 dark:bg-green-900/20 rounded-full">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-green-50 dark:bg-green-900/20 rounded-full">
                             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                             <span className="text-xs font-medium text-green-700 dark:text-green-400"><TranslatedText text="Auto-saved" /></span>
                         </div>
-                        <button onClick={onClose} className="px-4 py-2 text-sm font-semibold text-[#4e5a97] hover:bg-[#e7e9f3] dark:hover:bg-[#1e2336] rounded-lg transition-all hover:scale-105 active:scale-95"><TranslatedText text="Save & Exit" /></button>
+                        <button onClick={onClose} className="px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-[#4e5a97] hover:bg-[#e7e9f3] dark:hover:bg-[#1e2336] rounded-lg transition-all hover:scale-105 active:scale-95 min-h-[44px]"><TranslatedText text="Save & Exit" /></button>
                     </div>
                 </header>
 
                 {/* Stepper */}
-                <div className="px-8 py-6 shrink-0 bg-gradient-to-b from-white/50 to-transparent dark:from-[#111421]/50">
-                    <div className="mb-8 max-w-5xl mx-auto w-full">
+                <div className="px-4 sm:px-8 py-4 sm:py-6 shrink-0 bg-gradient-to-b from-white/50 to-transparent dark:from-[#111421]/50">
+                    <div className="mb-6 sm:mb-8 max-w-5xl mx-auto w-full">
                         <div className="flex items-center justify-between relative">
                             {/* Progress bar background */}
                             <div className="absolute top-1/2 left-0 w-full h-1 bg-[#e7e9f3] dark:bg-[#2d324a] -z-10 -translate-y-1/2 rounded-full"></div>
@@ -459,20 +459,19 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                             {steps.slice(0, 4).map((step) => {
                                 const isActive = currentStep === step.number;
                                 const isCompleted = currentStep > step.number;
-                                // Styles based on active/completed state matching the requested design
                                 const circleClass = isActive || isCompleted
-                                    ? "bg-blue-700 border-blue-700 text-white" // Primary color roughly #1430b8 = blue-700/800
+                                    ? "bg-blue-700 border-blue-700 text-white" 
                                     : "bg-white dark:bg-[#111421] border-slate-200 dark:border-slate-700 text-slate-400";
                                 const textClass = isActive || isCompleted
                                     ? "text-blue-700"
                                     : "text-slate-400 dark:text-slate-500";
 
                                 return (
-                                    <div key={step.number} className="flex flex-col items-center gap-2 bg-[#f6f6f8] dark:bg-[#111421] px-4 transition-all duration-300">
-                                        <div className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-sm font-bold transition-all duration-300 ${circleClass} ${isActive ? 'scale-110 shadow-lg shadow-blue-700/30' : ''}`}>
+                                    <div key={step.number} className="flex flex-col items-center gap-1 sm:gap-2 bg-[#f6f6f8] dark:bg-[#111421] px-2 sm:px-4 transition-all duration-300">
+                                        <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 flex items-center justify-center text-xs sm:text-sm font-bold transition-all duration-300 ${circleClass} ${isActive ? 'scale-110 shadow-lg shadow-blue-700/30' : ''}`}>
                                             {isCompleted ? <MaterialIcon name="check" className="text-sm" /> : step.number}
                                         </div>
-                                        <span className={`text-xs font-bold transition-all duration-300 ${textClass} ${isActive ? 'scale-105' : ''}`}>
+                                        <span className={`text-xs font-bold transition-all duration-300 text-center ${textClass} ${isActive ? 'scale-105' : ''}`}>
                                             <TranslatedText text={step.label} />
                                         </span>
                                     </div>
@@ -483,14 +482,14 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 overflow-y-auto px-8 pb-8 max-w-5xl mx-auto w-full scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
+                <div className="flex-1 overflow-y-auto px-4 sm:px-8 pb-4 sm:pb-8 max-w-5xl mx-auto w-full scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
 
                     {/* Step 1: Client Details */}
                     {currentStep === 1 && (
-                        <div className="grid grid-cols-12 gap-8 animate-in slide-in-from-right-4 fade-in duration-300">
-                            <div className="col-span-12 lg:col-span-7 flex flex-col gap-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-8 animate-in slide-in-from-right-4 fade-in duration-300">
+                            <div className="lg:col-span-7 flex flex-col gap-4 sm:gap-6">
                                 {/* Select Client Panel */}
-                                <div className="bg-white dark:bg-[#1a1e2e] p-6 rounded-xl border border-[#e7e9f3] dark:border-[#2d324a] shadow-sm">
+                                <div className="bg-white dark:bg-[#1a1e2e] p-4 sm:p-6 rounded-xl border border-[#e7e9f3] dark:border-[#2d324a] shadow-sm">
                                     <h3 className="text-base font-bold text-[#0e101b] dark:text-white mb-4"><TranslatedText text="Select Client" /></h3>
                                     <div className="relative">
                                         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#4e5a97]">
@@ -499,7 +498,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                         <input
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="w-full pl-10 pr-4 py-3 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-gray-50 dark:bg-[#111421] text-sm focus:ring-2 focus:ring-blue-700/50 focus:border-blue-700 transition-all outline-none"
+                                            className="w-full pl-10 pr-4 py-3 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-gray-50 dark:bg-[#111421] text-sm focus:ring-2 focus:ring-blue-700/50 focus:border-blue-700 transition-all outline-none min-h-[44px]"
                                             placeholder={tSync('Search by name, email or phone...')}
                                             type="text"
                                         />
@@ -514,17 +513,17 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                                     <button
                                                         key={client.id}
                                                         onClick={() => handleClientSelect(client)}
-                                                        className={`flex items-center gap-3 p-3 hover:bg-gray-50 dark:hover:bg-[#2d324a] transition-colors border-b border-[#e7e9f3] dark:border-[#2d324a] last:border-0 text-left ${selectedClient?.id === client.id ? 'bg-blue-50/50' : ''}`}
+                                                        className={`flex items-center gap-3 p-3 hover:bg-gray-50 dark:hover:bg-[#2d324a] transition-colors border-b border-[#e7e9f3] dark:border-[#2d324a] last:border-0 text-left min-h-[60px] ${selectedClient?.id === client.id ? 'bg-blue-50/50' : ''}`}
                                                     >
-                                                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 text-xs font-bold uppercase">
+                                                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 text-xs font-bold uppercase flex-shrink-0">
                                                             {client.first_name?.[0]}{client.last_name?.[0]}
                                                         </div>
-                                                        <div className="flex-1">
-                                                            <p className="text-sm font-semibold text-[#0e101b] dark:text-white">{client.first_name} {client.last_name}</p>
-                                                            <p className="text-[11px] text-[#4e5a97] dark:text-[#8a95c9]">{client.email} • {client.phone}</p>
+                                                        <div className="flex-1 min-w-0">
+                                                            <p className="text-sm font-semibold text-[#0e101b] dark:text-white truncate">{client.first_name} {client.last_name}</p>
+                                                            <p className="text-[11px] text-[#4e5a97] dark:text-[#8a95c9] truncate">{client.email} • {client.phone}</p>
                                                         </div>
                                                         {selectedClient?.id === client.id && (
-                                                            <span className="text-blue-700">
+                                                            <span className="text-blue-700 flex-shrink-0">
                                                                 <MaterialIcon name="check_circle" />
                                                             </span>
                                                         )}
@@ -538,18 +537,18 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                 </div>
 
                                 {/* Quick Add New Client Panel */}
-                                <div className="bg-white dark:bg-[#1a1e2e] p-6 rounded-xl border border-[#e7e9f3] dark:border-[#2d324a] shadow-sm">
+                                <div className="bg-white dark:bg-[#1a1e2e] p-4 sm:p-6 rounded-xl border border-[#e7e9f3] dark:border-[#2d324a] shadow-sm">
                                     <div className="flex items-center justify-between mb-4">
                                         <h3 className="text-base font-bold text-[#0e101b] dark:text-white"><TranslatedText text="Quick Add New Client" /></h3>
                                         <span className="text-[10px] font-medium text-blue-700 bg-blue-700/10 px-2 py-0.5 rounded-full"><TranslatedText text="NEW ACCOUNT" /></span>
                                     </div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="col-span-2">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div className="sm:col-span-2">
                                             <label className="block text-xs font-bold text-[#4e5a97] dark:text-[#8a95c9] mb-1.5 uppercase tracking-tighter"><TranslatedText text="FULL NAME" /></label>
                                             <input
                                                 value={quickClient.fullName}
                                                 onChange={(e) => handleQuickClientChange('fullName', e.target.value)}
-                                                className="w-full px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none"
+                                                className="w-full px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none min-h-[44px]"
                                                 placeholder={tSync('Enter full name')}
                                                 type="text"
                                             />
@@ -559,7 +558,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                             <input
                                                 value={quickClient.phone}
                                                 onChange={(e) => handleQuickClientChange('phone', e.target.value)}
-                                                className="w-full px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none"
+                                                className="w-full px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none min-h-[44px]"
                                                 placeholder={tSync('Enter phone number')}
                                                 type="tel"
                                             />
@@ -569,7 +568,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                             <input
                                                 value={quickClient.email}
                                                 onChange={(e) => handleQuickClientChange('email', e.target.value)}
-                                                className="w-full px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none"
+                                                className="w-full px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none min-h-[44px]"
                                                 placeholder={tSync('Enter email address')}
                                                 type="email"
                                             />
@@ -578,9 +577,9 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                 </div>
                             </div>
 
-                            <div className="col-span-12 lg:col-span-5 flex flex-col gap-6">
+                            <div className="lg:col-span-5 flex flex-col gap-4 sm:gap-6">
                                 {/* Order Parameters Panel */}
-                                <div className="bg-white dark:bg-[#1a1e2e] p-6 rounded-xl border border-[#e7e9f3] dark:border-[#2d324a] shadow-sm">
+                                <div className="bg-white dark:bg-[#1a1e2e] p-4 sm:p-6 rounded-xl border border-[#e7e9f3] dark:border-[#2d324a] shadow-sm">
                                     <h3 className="text-base font-bold text-[#0e101b] dark:text-white mb-6"><TranslatedText text="Order Parameters" /></h3>
                                     <div className="flex flex-col gap-5">
                                         <div>
@@ -592,7 +591,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                                 <input
                                                     value={targetDate}
                                                     onChange={(e) => setTargetDate(e.target.value)}
-                                                    className="w-full pl-10 px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none"
+                                                    className="w-full pl-10 px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none min-h-[44px]"
                                                     type="date"
                                                 />
                                             </div>
@@ -606,21 +605,21 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                                 <input
                                                     value={firstFittingDate}
                                                     onChange={(e) => setFirstFittingDate(e.target.value)}
-                                                    className="w-full pl-10 px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none"
+                                                    className="w-full pl-10 px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none min-h-[44px]"
                                                     type="date"
                                                 />
                                             </div>
                                         </div>
                                         <div>
                                             <label className="block text-xs font-bold text-[#4e5a97] dark:text-[#8a95c9] mb-2 uppercase tracking-tighter"><TranslatedText text="ORDER PRIORITY" /></label>
-                                            <div className="grid grid-cols-2 gap-3">
-                                                <label onClick={() => setOrderPriority("Standard")} className={`relative flex items-center justify-center p-3 rounded-lg border-2 cursor-pointer ${orderPriority === 'Standard' ? 'border-blue-700 bg-blue-700/5' : 'border-[#e7e9f3] dark:border-[#2d324a]'}`}>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                <label onClick={() => setOrderPriority("Standard")} className={`relative flex items-center justify-center p-3 rounded-lg border-2 cursor-pointer min-h-[60px] ${orderPriority === 'Standard' ? 'border-blue-700 bg-blue-700/5' : 'border-[#e7e9f3] dark:border-[#2d324a]'}`}>
                                                     <div className="flex flex-col items-center">
                                                         <span className={`text-sm font-bold ${orderPriority === 'Standard' ? 'text-blue-700' : 'text-gray-500'}`}><TranslatedText text="Standard" /></span>
                                                         <span className="text-[10px] text-gray-400">4-6 Weeks</span>
                                                     </div>
                                                 </label>
-                                                <label onClick={() => setOrderPriority("Urgent")} className={`relative flex items-center justify-center p-3 rounded-lg border-2 cursor-pointer hover:border-red-200 ${orderPriority === 'Urgent' ? 'border-red-500 bg-red-50' : 'border-[#e7e9f3] dark:border-[#2d324a]'}`}>
+                                                <label onClick={() => setOrderPriority("Urgent")} className={`relative flex items-center justify-center p-3 rounded-lg border-2 cursor-pointer hover:border-red-200 min-h-[60px] ${orderPriority === 'Urgent' ? 'border-red-500 bg-red-50' : 'border-[#e7e9f3] dark:border-[#2d324a]'}`}>
                                                     <div className="flex flex-col items-center">
                                                         <span className={`text-sm font-bold ${orderPriority === 'Urgent' ? 'text-red-600' : 'text-gray-500'}`}><TranslatedText text="Urgent" /></span>
                                                         <span className="text-[10px] text-red-400">10-14 Days</span>
@@ -633,7 +632,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                             <select
                                                 value={assignedReceptionist}
                                                 onChange={(e) => setAssignedReceptionist(e.target.value)}
-                                                className="w-full px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none"
+                                                className="w-full px-3 py-2 rounded-lg border border-[#e7e9f3] dark:border-[#2d324a] bg-transparent text-sm focus:ring-2 focus:ring-blue-700 outline-none min-h-[44px]"
                                             >
                                                 <option>Elena Gilbert (Current)</option>
                                                 <option>Marcus Sterling</option>
@@ -644,9 +643,9 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                 </div>
 
                                 {/* Info Panel */}
-                                <div className="bg-gray-50 dark:bg-[#111421] p-5 rounded-xl border border-dashed border-[#e7e9f3] dark:border-[#2d324a]">
+                                <div className="bg-gray-50 dark:bg-[#111421] p-4 sm:p-5 rounded-xl border border-dashed border-[#e7e9f3] dark:border-[#2d324a]">
                                     <div className="flex items-start gap-3">
-                                        <span className="text-blue-700 mt-0.5">
+                                        <span className="text-blue-700 mt-0.5 flex-shrink-0">
                                             <MaterialIcon name="info" />
                                         </span>
                                         <div>
@@ -1227,19 +1226,20 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                 </div>
 
                 {/* Footer */}
-                <div className="p-6 border-t border-[#e7e9f3] dark:border-[#2d324a] bg-[#f6f6f8] dark:bg-[#111421] flex justify-end">
-                    {/* Only show Next button in footer for consistency with design, back button can be added if needed but user design showed right aligned Next button */}
+                <div className="p-4 sm:p-6 border-t border-[#e7e9f3] dark:border-[#2d324a] bg-[#f6f6f8] dark:bg-[#111421] flex flex-col sm:flex-row justify-between items-center gap-3">
+                    {/* Back button - Left aligned on desktop, full width on mobile */}
                     {currentStep > 1 && currentStep < 5 && (
-                        <button onClick={prevStep} className="mr-auto px-6 py-3 rounded-lg text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#1e2336] transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+                        <button onClick={prevStep} className="w-full sm:w-auto order-2 sm:order-1 px-6 py-3 rounded-lg text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#1e2336] transition-all hover:scale-105 active:scale-95 flex items-center justify-center gap-2 min-h-[48px]">
                             <MaterialIcon name="arrow_back" className="text-lg" />
                             {tSync('actions.back')}
                         </button>
                     )}
 
+                    {/* Next/Submit button - Right aligned on desktop, full width on mobile */}
                     <button
                         onClick={currentStep === 4 ? handleSubmitOrder : (currentStep === 5 ? onClose : nextStep)}
                         disabled={isSubmitting}
-                        className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3.5 rounded-lg text-sm font-bold shadow-lg shadow-blue-700/30 hover:shadow-xl hover:shadow-blue-700/40 hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                        className="w-full sm:w-auto order-1 sm:order-2 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg text-sm font-bold shadow-lg shadow-blue-700/30 hover:shadow-xl hover:shadow-blue-700/40 hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 min-h-[48px]"
                     >
                         {isSubmitting ? (
                             <TranslatedText text="Processing..." />
@@ -1250,8 +1250,8 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                 {currentStep < 4 && (
                                     <span className="flex items-center gap-1">
                                         <TranslatedText text="Next" />
-                                        <span>:</span>
-                                        <TranslatedText text={steps[currentStep]?.label || ''} />
+                                        <span className="hidden sm:inline">:</span>
+                                        <span className="hidden sm:inline"><TranslatedText text={steps[currentStep]?.label || ''} /></span>
                                     </span>
                                 )}
                                 {currentStep !== 5 && <MaterialIcon name="arrow_forward" />}

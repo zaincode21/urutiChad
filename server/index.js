@@ -31,7 +31,6 @@ const perfumeRoutes = require('./routes/perfume');
 // Features: Recipe management, raw materials inventory, forecasting, analytics
 // Uncomment if you need: Production-scale operations, detailed cost tracking, material forecasting
 // const smartBottlingRoutes = require('./routes/smartBottling');
-const procurementRoutes = require('./routes/procurement');
 const notificationRoutes = require('./routes/notifications');
 const integrationRoutes = require('./routes/integrations');
 const loyaltyRoutes = require('./routes/loyalty');
@@ -45,7 +44,6 @@ const discountRoutes = require('./routes/discounts');
 const invoiceRoutes = require('./routes/invoices');
 const salesAnalyticsRoutes = require('./routes/salesAnalytics');
 const usersRoutes = require('./routes/users');
-const pricingRoutes = require('./routes/pricing');
 const settingsRoutes = require('./routes/settings');
 const rawMaterialsRoutes = require('./routes/raw_materials');
 const translationsRoutes = require('./routes/translations');
@@ -156,7 +154,6 @@ app.use('/api/perfume', perfumeRoutes);
 // SMART BOTTLING ROUTES - COMMENTED OUT
 // Uncomment the line below to enable Smart Bottling system
 // app.use('/api/smart-bottling', smartBottlingRoutes);
-app.use('/api/procurement', procurementRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/integrations', integrationRoutes);
 app.use('/api/loyalty', loyaltyRoutes);
@@ -170,7 +167,6 @@ app.use('/api/discounts', discountRoutes);
 app.use('/api/invoices', invoiceRoutes);
 app.use('/api/sales-analytics', salesAnalyticsRoutes);
 app.use('/api/users', usersRoutes);
-app.use('/api/pricing', pricingRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/raw-materials', rawMaterialsRoutes);
 

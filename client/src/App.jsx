@@ -41,6 +41,7 @@ import PricingManagement from './pages/PricingManagement';
 import TranslationDemo from './pages/TranslationDemo';
 
 import './index.css';
+import './styles/mobile.css';
 
 // Create a client for React Query
 const queryClient = new QueryClient({
@@ -80,12 +81,14 @@ const Layout = ({ children }) => {
   const { isDesktopSidebarOpen } = useSidebar();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 safe-area-inset-top safe-area-inset-bottom">
       <Navigation />
       <div className={`transition-all duration-300 ease-in-out ${isDesktopSidebarOpen ? 'lg:pl-64' : 'lg:pl-0'}`}>
         <TopNavigation />
-        <main className="flex-1 px-2 sm:px-4 lg:px-6 xl:px-8 pb-4 sm:pb-6">
-          {children}
+        <main className="flex-1 px-2 sm:px-4 lg:px-6 xl:px-8 pb-4 sm:pb-6 safe-area-inset-left safe-area-inset-right">
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
         </main>
       </div>
     </div>

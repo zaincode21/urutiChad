@@ -35,7 +35,7 @@ import CurrencyInput from '../components/CurrencyInput';
 import BarcodeGenerator from '../components/BarcodeGenerator';
 import BarcodeDisplay from '../components/BarcodeDisplay';
 import BarcodeScanner from '../components/BarcodeScanner';
-import ProductIntelligence from '../components/ProductIntelligence';
+
 import { productsAPI, categoriesAPI, brandsAPI, shopsAPI, inventoryAPI } from '../lib/api';
 import TranslatedText from '../components/TranslatedText';
 import { useTranslation } from '../hooks/useTranslation';
@@ -694,29 +694,30 @@ const Products = () => {
             );
           })()}
         </div>
-        <div className="flex items-center space-x-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           {(() => {
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             const isAdmin = user?.role === 'admin';
             const canGenerateBarcodes = user?.role === 'admin' || user?.role === 'manager';
             return (
               <>
-                {/* Assign All to Shop and Unassign All from Shop buttons hidden */}
                 {canGenerateBarcodes && (
                   <button
                     onClick={handleGenerateAllBarcodes}
                     disabled={isGeneratingAllBarcodes}
-                    className="inline-flex items-center px-4 py-2 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="mobile-btn inline-flex items-center px-3 sm:px-4 py-2 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
                   >
                     {isGeneratingAllBarcodes ? (
                       <>
                         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                        Generating...
+                        <span className="hidden sm:inline">Generating...</span>
+                        <span className="sm:hidden">Gen...</span>
                       </>
                     ) : (
                       <>
-                        <RefreshCw className="h-4 w-4 mr-2" />
-                        <TranslatedText text="Generate Barcodes" />
+                        <RefreshCw className="h-4 w-4 mr-1 sm:mr-2" />
+                        <span className="hidden sm:inline"><TranslatedText text="Generate Barcodes" /></span>
+                        <span className="sm:hidden">Barcodes</span>
                       </>
                     )}
                   </button>
@@ -726,24 +727,26 @@ const Products = () => {
           })()}
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="mobile-btn inline-flex items-center px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            <Filter className="h-4 w-4 mr-2" />
-            <TranslatedText text="Filters" />
+            <Filter className="h-4 w-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline"><TranslatedText text="Filters" /></span>
+            <span className="sm:hidden">Filter</span>
           </button>
           <button
             onClick={() => setShowNewProductForm(true)}
-            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+            className="mobile-btn inline-flex items-center px-3 sm:px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
           >
-            <Plus className="h-4 w-4 mr-2" />
-            <TranslatedText text="Add Product" />
+            <Plus className="h-4 w-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline"><TranslatedText text="Add Product" /></span>
+            <span className="sm:hidden">Add</span>
           </button>
         </div>
       </div>
 
-      {/* Advanced Filters */}
+      {/* Advanced Filters - Mobile optimized */}
       {showFilters && (
-        <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
+        <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-gray-900">
               <TranslatedText text="Advanced Filters" />
@@ -755,7 +758,7 @@ const Products = () => {
               <TranslatedText text="Clear All" />
             </button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 <TranslatedText text="Category" />
@@ -1425,13 +1428,28 @@ const Products = () => {
 
       {/* Product Intelligence Modal */}
       {showIntelligence && selectedProductForIntelligence && (
-        <ProductIntelligence
-          productId={selectedProductForIntelligence.id}
-          onClose={() => {
-            setShowIntelligence(false);
-            setSelectedProductForIntelligence(null);
-          }}
-        />
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">Product Intelligence</h3>
+              <button
+                onClick={() => {
+                  setShowIntelligence(false);
+                  setSelectedProductForIntelligence(null);
+                }}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            <div className="text-center py-8">
+              <div className="text-4xl mb-4">🧠</div>
+              <h4 className="text-lg font-medium text-gray-900 mb-2">AI Intelligence</h4>
+              <p className="text-gray-600">Product intelligence feature will be implemented soon.</p>
+              <p className="text-sm text-blue-600 mt-2">Product: {selectedProductForIntelligence.name}</p>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Bulk Unassign from Shop Modal */}
@@ -1934,7 +1952,9 @@ const ProductCard = ({
               </button>
             )}
             <button
-              onClick={() => onShowIntelligence(product)}
+              onClick={() => {
+                toast.info('Product Intelligence feature will be implemented soon');
+              }}
               className="p-2 bg-purple-50 text-purple-600 hover:bg-purple-100 rounded-lg transition-all duration-200 shadow-sm"
               title="AI Intelligence"
             >

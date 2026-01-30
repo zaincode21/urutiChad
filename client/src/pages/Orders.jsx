@@ -69,26 +69,26 @@ export default function Orders() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center">
-            <ShoppingCart className="h-8 w-8 mr-3 text-primary-600" />
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 flex items-center">
+            <ShoppingCart className="h-6 w-6 sm:h-8 sm:w-8 mr-2 sm:mr-3 text-primary-600" />
             {tSync('Orders')}
           </h1>
-          <p className="text-gray-600 mt-2">{tSync('Manage payments and invoices')}</p>
+          <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">{tSync('Manage payments and invoices')}</p>
 
           {/* Helpful tip */}
           <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
             <div className="flex items-start">
               <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                <svg className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                 </svg>
               </div>
-              <div className="ml-3">
-                <p className="text-sm text-green-700">
+              <div className="ml-2 sm:ml-3">
+                <p className="text-xs sm:text-sm text-green-700">
                   <strong>{tSync('Pro Tips:')}</strong> {tSync('You can filter orders using the search bar')}
                 </p>
               </div>
@@ -97,7 +97,7 @@ export default function Orders() {
         </div>
         <button
           onClick={handleCreateNewOrder}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200 hover:shadow-lg"
+          className="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-all duration-200 hover:shadow-lg min-h-[44px]"
         >
           <Plus className="w-4 h-4 mr-2" />
           {tSync('New Order')}
@@ -105,63 +105,63 @@ export default function Orders() {
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white rounded-lg shadow p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="bg-white rounded-lg shadow p-4 sm:p-6">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <ShoppingCart className="h-8 w-8 text-primary-600" />
+              <ShoppingCart className="h-6 w-6 sm:h-8 sm:w-8 text-primary-600" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">{tSync('Total Orders')}</p>
-              <p className="text-2xl font-semibold text-gray-900">
+            <div className="ml-3 sm:ml-4 min-w-0 flex-1">
+              <p className="text-xs sm:text-sm font-medium text-gray-500 truncate">{tSync('Total Orders')}</p>
+              <p className="text-lg sm:text-2xl font-semibold text-gray-900">
                 {formatNumber(quickStats.totalOrders)}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow p-4 sm:p-6">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <div className="h-8 w-8 bg-green-100 rounded-lg flex items-center justify-center">
-                <span className="text-green-600 font-bold">$</span>
+              <div className="h-6 w-6 sm:h-8 sm:w-8 bg-green-100 rounded-lg flex items-center justify-center">
+                <span className="text-green-600 font-bold text-sm sm:text-base">$</span>
               </div>
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">{tSync('Total Revenue')}</p>
-              <p className="text-2xl font-semibold text-gray-900">
+            <div className="ml-3 sm:ml-4 min-w-0 flex-1">
+              <p className="text-xs sm:text-sm font-medium text-gray-500 truncate">{tSync('Total Revenue')}</p>
+              <p className="text-lg sm:text-2xl font-semibold text-gray-900 truncate">
                 {formatCurrency(quickStats.totalRevenue)}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow p-4 sm:p-6">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <div className="h-8 w-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                <span className="text-blue-600 font-bold">↗</span>
+              <div className="h-6 w-6 sm:h-8 sm:w-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                <span className="text-blue-600 font-bold text-sm sm:text-base">↗</span>
               </div>
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">{tSync('Avg Order Value')}</p>
-              <p className="text-2xl font-semibold text-gray-900">
+            <div className="ml-3 sm:ml-4 min-w-0 flex-1">
+              <p className="text-xs sm:text-sm font-medium text-gray-500 truncate">{tSync('Avg Order Value')}</p>
+              <p className="text-lg sm:text-2xl font-semibold text-gray-900 truncate">
                 {formatCurrency(quickStats.avgOrderValue)}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow p-6">
+        <div className="bg-white rounded-lg shadow p-4 sm:p-6">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <div className="h-8 w-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-                <span className="text-yellow-600 font-bold">👥</span>
+              <div className="h-6 w-6 sm:h-8 sm:w-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                <span className="text-yellow-600 font-bold text-sm sm:text-base">👥</span>
               </div>
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-500">{tSync('Active Customers')}</p>
-              <p className="text-2xl font-semibold text-gray-900">
+            <div className="ml-3 sm:ml-4 min-w-0 flex-1">
+              <p className="text-xs sm:text-sm font-medium text-gray-500 truncate">{tSync('Active Customers')}</p>
+              <p className="text-lg sm:text-2xl font-semibold text-gray-900">
                 {formatNumber(quickStats.totalCustomers)}
               </p>
             </div>

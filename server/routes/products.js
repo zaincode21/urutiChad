@@ -3,7 +3,6 @@ const { v4: uuidv4 } = require('uuid');
 const { body, validationResult } = require('express-validator');
 const database = require('../database/database');
 const { auth, adminAuth } = require('../middleware/auth');
-const aiCoordinator = require('../services/ai/aiCoordinator');
 
 const router = express.Router();
 
@@ -1267,125 +1266,6 @@ router.delete('/:id', auth, async (req, res) => {
   } catch (error) {
     console.error('Delete product error:', error);
     res.status(500).json({ error: 'Server error' });
-  }
-});
-
-/**
- * @swagger
- * /api/products/{id}/intelligence:
- *   get:
- *     summary: Get AI intelligence insights for a product
- *     tags: [Products]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Product ID
- *     responses:
- *       200:
- *         description: AI intelligence insights
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                 insights:
- *                   type: object
- *                   properties:
- *                     skuAnalysis:
- *                       type: object
- *                     duplicateAnalysis:
- *                       type: object
- *                     demandForecast:
- *                       type: object
- *                     imageAnalysis:
- *                       type: object
- *                     overallScore:
- *                       type: number
- *                     recommendations:
- *                       type: array
- *                       items:
- *                         type: string
- *       404:
- *         description: Product not found
- *       500:
- *         description: Server error
- */
-router.get('/:id/intelligence', auth, async (req, res) => {
-  try {
-    const { id } = req.params;
-    console.log('Intelligence endpoint: Processing request for product ID:', id);
-
-    // Get product with all related data
-    console.log('Intelligence endpoint: Fetching product data');
-    const product = await database.get(`
-      SELECT 
-        p.*,
-        b.name as brand_name
-      FROM products p
-      LEFT JOIN brands b ON p.brand_id = b.id
-      WHERE p.id = ? AND p.is_active = true
-    `, [id]);
-
-    if (!product) {
-      console.log('Intelligence endpoint: Product not found');
-      return res.status(404).json({ error: 'Product not found' });
-    }
-
-    console.log('Intelligence endpoint: Product found:', product.name);
-
-    // Get categories
-    console.log('Intelligence endpoint: Fetching categories');
-    const categories = await database.all(`
-      SELECT 
-        pc.id,
-        pc.category_id,
-        pc.is_primary,
-        c.name as category_name,
-        c.level as category_level,
-        c.path as category_path
-      FROM product_categories pc
-      JOIN categories c ON pc.category_id = c.id
-      WHERE pc.product_id = ? AND (c.deleted_at IS NULL OR c.deleted_at = '')
-      ORDER BY pc.is_primary DESC, c.level, c.name
-    `, [id]);
-
-    console.log('Intelligence endpoint: Found', categories.length, 'categories');
-
-    // Get product images
-    console.log('Intelligence endpoint: Fetching images');
-    const images = await database.all(`
-      SELECT * FROM product_images 
-      WHERE product_id = ?
-      ORDER BY is_primary DESC, created_at ASC
-    `, [id]);
-
-    console.log('Intelligence endpoint: Found', images.length, 'images');
-
-    // Generate comprehensive AI insights
-    console.log('Intelligence endpoint: Calling AI coordinator');
-    const insights = await aiCoordinator.generateProductIntelligence({
-      ...product,
-      categories,
-      images
-    });
-
-    console.log('Intelligence endpoint: AI insights generated successfully');
-
-    res.json({
-      success: true,
-      insights
-    });
-  } catch (error) {
-    console.error('Get product intelligence error:', error);
-    console.error('Error stack:', error.stack);
-    res.status(500).json({ error: 'Server error', details: error.message });
   }
 });
 
