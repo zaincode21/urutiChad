@@ -1,110 +1,111 @@
 import jsreport from 'jsreport-browser-client-dist';
+import { translationService } from '../lib/i18n/translation-service';
 
 // Initialize jsreport client
 const jsreportClient = jsreport('http://localhost:5488'); // Adjust URL as needed
 
 export const generateSewingInfoPDF = async (orderData) => {
-  try {
-    const template = {
-      content: getSewingInfoTemplate(),
-      engine: 'handlebars',
-      recipe: 'chrome-pdf',
-      chrome: {
-        format: 'A4',
-        margin: {
-          top: '1cm',
-          right: '1cm',
-          bottom: '1cm',
-          left: '1cm'
-        }
-      }
-    };
+    try {
+        const template = {
+            content: getSewingInfoTemplate(),
+            engine: 'handlebars',
+            recipe: 'chrome-pdf',
+            chrome: {
+                format: 'A4',
+                margin: {
+                    top: '1cm',
+                    right: '1cm',
+                    bottom: '1cm',
+                    left: '1cm'
+                }
+            }
+        };
 
-    const data = formatOrderDataForTemplate(orderData);
+        const data = formatOrderDataForTemplate(orderData);
 
-    const response = await jsreportClient.render({
-      template,
-      data
-    });
+        const response = await jsreportClient.render({
+            template,
+            data
+        });
 
-    // Create blob and download
-    const blob = new Blob([response.content], { type: 'application/pdf' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `sewing-info-${orderData.order_number}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+        // Create blob and download
+        const blob = new Blob([response.content], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `sewing-info-${orderData.order_number}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
 
-  } catch (error) {
-    console.error('Error generating PDF:', error);
-    throw error;
-  }
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        throw error;
+    }
 };
 
 const formatOrderDataForTemplate = (orderData) => {
-  // Parse measurements
-  let measurements = orderData.measurements;
-  if (!measurements && orderData.notes) {
-    measurements = {};
-    const measurementRegex = /(chest|waist|hip|shoulder|arm|inseam):\s*(\d+)/gi;
-    let match;
-    while ((match = measurementRegex.exec(orderData.notes)) !== null) {
-      const field = match[1].toLowerCase();
-      const value = match[2];
-      if (field === 'shoulder') {
-        measurements.shoulder_width = value;
-      } else if (field === 'arm') {
-        measurements.arm_length = value;
-      } else {
-        measurements[field] = value;
-      }
+    // Parse measurements
+    let measurements = orderData.measurements;
+    if (!measurements && orderData.notes) {
+        measurements = {};
+        const measurementRegex = /(chest|waist|hip|shoulder|arm|inseam):\s*(\d+)/gi;
+        let match;
+        while ((match = measurementRegex.exec(orderData.notes)) !== null) {
+            const field = match[1].toLowerCase();
+            const value = match[2];
+            if (field === 'shoulder') {
+                measurements.shoulder_width = value;
+            } else if (field === 'arm') {
+                measurements.arm_length = value;
+            } else {
+                measurements[field] = value;
+            }
+        }
     }
-  }
 
-  // Default measurements if none found
-  if (!measurements || Object.keys(measurements).length === 0) {
-    measurements = {
-      chest: '95',
-      waist: '80',
-      hip: '90',
-      shoulder_width: '45',
-      arm_length: '60',
-      inseam: '75'
+    // Default measurements if none found
+    if (!measurements || Object.keys(measurements).length === 0) {
+        measurements = {
+            chest: '95',
+            waist: '80',
+            hip: '90',
+            shoulder_width: '45',
+            arm_length: '60',
+            inseam: '75'
+        };
+    }
+
+    return {
+        orderNumber: orderData.order_number,
+        customerName: `${orderData.first_name} ${orderData.last_name}`,
+        customerEmail: orderData.customer_email,
+        customerPhone: orderData.customer_phone || 'N/A',
+        orderDate: new Date(orderData.created_at).toLocaleDateString(),
+        targetDate: orderData.target_date ? new Date(orderData.target_date).toLocaleDateString() : 'TBD',
+        status: orderData.status,
+        measurements: Object.entries(measurements).map(([key, value]) => ({
+            name: translationService.translateSync(key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())),
+            value: `${value} cm`
+        })),
+        items: orderData.items?.map(item => ({
+            name: item.product_name,
+            quantity: parseFloat(item.quantity).toFixed(2),
+            unitPrice: formatCurrency(item.unit_price || item.price || 0),
+            totalPrice: formatCurrency(item.total_price || (item.unit_price * item.quantity) || (item.price * item.quantity) || 0)
+        })) || [],
+        notes: orderData.notes || 'No special instructions provided',
+        totalAmount: formatCurrency(orderData.total_amount || 0)
     };
-  }
-
-  return {
-    orderNumber: orderData.order_number,
-    customerName: `${orderData.first_name} ${orderData.last_name}`,
-    customerEmail: orderData.customer_email,
-    customerPhone: orderData.customer_phone || 'N/A',
-    orderDate: new Date(orderData.created_at).toLocaleDateString(),
-    targetDate: orderData.target_date ? new Date(orderData.target_date).toLocaleDateString() : 'TBD',
-    status: orderData.status,
-    measurements: Object.entries(measurements).map(([key, value]) => ({
-      name: key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()),
-      value: `${value} cm`
-    })),
-    items: orderData.items?.map(item => ({
-      name: item.product_name,
-      quantity: parseFloat(item.quantity).toFixed(2),
-      unitPrice: formatCurrency(item.unit_price || item.price || 0),
-      totalPrice: formatCurrency(item.total_price || (item.unit_price * item.quantity) || (item.price * item.quantity) || 0)
-    })) || [],
-    notes: orderData.notes || 'No special instructions provided',
-    totalAmount: formatCurrency(orderData.total_amount || 0)
-  };
 };
 
 const formatCurrency = (amount) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'CFA',
-    minimumFractionDigits: 0,
-  }).format(amount || 0);
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'CFA',
+        minimumFractionDigits: 0,
+    }).format(amount || 0);
 };
 
 const getSewingInfoTemplate = () => `

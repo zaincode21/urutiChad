@@ -618,7 +618,7 @@ const AtelierOrders = () => {
                     {(() => {
                       // Try to get measurements from order data
                       let measurements = selectedOrderForSewing.measurements;
-                      
+
                       // If no measurements object, try to parse from notes
                       if (!measurements && selectedOrderForSewing.notes) {
                         measurements = {};
@@ -636,7 +636,7 @@ const AtelierOrders = () => {
                           }
                         }
                       }
-                      
+
                       // If still no measurements, show sample data for demonstration
                       if (!measurements || Object.keys(measurements).length === 0) {
                         measurements = {
@@ -648,11 +648,11 @@ const AtelierOrders = () => {
                           inseam: '75'
                         };
                       }
-                      
+
                       return Object.entries(measurements).map(([key, value]) => (
                         <div key={key} className="bg-gray-50 p-3 rounded-lg">
                           <label className="block text-sm font-medium text-gray-700 capitalize">
-                            {key.replace('_', ' ')}
+                            <TranslatedText text={key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())} />
                           </label>
                           <p className="text-lg font-semibold text-gray-900">{value} cm</p>
                         </div>
@@ -681,7 +681,7 @@ const AtelierOrders = () => {
                         </div>
                       </div>
                     )) || <p className="text-gray-500"><TranslatedText text="No items found" /></p>}
-                    
+
                     {/* Total Amount */}
                     <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg mt-4">
                       <div className="flex justify-between items-center">

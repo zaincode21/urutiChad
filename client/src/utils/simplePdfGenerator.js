@@ -12,7 +12,7 @@ export const generateSewingInfoPDF = async (orderData, tSync) => {
     tempDiv.style.padding = '20px';
     tempDiv.style.backgroundColor = 'white';
     tempDiv.style.fontFamily = 'Arial, sans-serif';
-    
+
     document.body.appendChild(tempDiv);
 
     // Convert to canvas
@@ -29,7 +29,7 @@ export const generateSewingInfoPDF = async (orderData, tSync) => {
     // Create PDF
     const pdf = new jsPDF('p', 'mm', 'a4');
     const imgData = canvas.toDataURL('image/png');
-    
+
     const imgWidth = 210; // A4 width in mm
     const pageHeight = 297; // A4 height in mm
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
@@ -97,7 +97,7 @@ const getSewingInfoHTML = (orderData, tSync) => {
   const measurementsHTML = Object.entries(measurements).map(([key, value]) => `
     <div style="border: 1px solid #d1d5db; padding: 10px; text-align: center; border-radius: 6px; background: #f9fafb;">
       <div style="font-weight: bold; color: #374151; font-size: 12px; margin-bottom: 5px;">
-        ${key.replace('_', ' ').replace(/\\b\\w/g, l => l.toUpperCase())}
+        ${tSync(key.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()))}
       </div>
       <div style="font-size: 18px; color: #1f2937; font-weight: bold;">${value} cm</div>
     </div>
