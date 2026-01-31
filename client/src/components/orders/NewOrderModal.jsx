@@ -414,6 +414,31 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
     const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 5));
     const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
+    const resetForm = () => {
+        setCurrentStep(1);
+        setSearchQuery("");
+        setSelectedClient(null);
+        setQuickClient({ fullName: "", phone: "", email: "" });
+        setTargetDate("");
+        setFirstFittingDate("");
+        setOrderPriority("Standard");
+        setAssignedReceptionist("Elena Gilbert (Current)");
+        setMeasurementValues({});
+        setGarmentType('suit');
+        setUseLastRecorded(true);
+        setSelectedOrderItems([]);
+        setSelectedMaterialTab('fabric');
+        setSelectedTailorId("");
+        setOrderDescription("");
+        setMaterialCost(0);
+        setLaborCost(0);
+        setTaxAmount(0);
+        setTotalOrderCost(0);
+        setCreatedOrderNumber(null);
+        setCreatedOrderId(null);
+        setShowInvoice(false);
+    };
+
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-200">
             <div className="bg-[#f6f6f8] dark:bg-[#111421] rounded-2xl w-full max-w-6xl h-[95vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-300 font-sans">
@@ -1200,7 +1225,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
                                 <MaterialIcon name="check_circle" className="text-green-600 text-5xl" />
                             </div>
                             <h2 className="text-3xl font-bold mb-2">Order #{createdOrderNumber} Created!</h2>
-                            <button onClick={onClose} className="mt-8 px-6 py-3 bg-blue-700 text-white rounded-lg font-bold shadow-lg">
+                            <button onClick={() => { resetForm(); onClose(); }} className="mt-8 px-6 py-3 bg-blue-700 text-white rounded-lg font-bold shadow-lg">
                                 Return to Dashboard
                             </button>
 
@@ -1237,7 +1262,7 @@ export default function NewOrderModal({ isOpen, onClose, onOrderCreated }) {
 
                     {/* Next/Submit button - Right aligned on desktop, full width on mobile */}
                     <button
-                        onClick={currentStep === 4 ? handleSubmitOrder : (currentStep === 5 ? onClose : nextStep)}
+                        onClick={currentStep === 4 ? handleSubmitOrder : (currentStep === 5 ? () => { resetForm(); onClose(); } : nextStep)}
                         disabled={isSubmitting}
                         className="w-full sm:w-auto order-1 sm:order-2 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 sm:px-8 py-3 sm:py-3.5 rounded-lg text-sm font-bold shadow-lg shadow-blue-700/30 hover:shadow-xl hover:shadow-blue-700/40 hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 min-h-[48px]"
                     >

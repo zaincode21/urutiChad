@@ -388,4 +388,13 @@ export const brandsAPI = {
   getStats: () => api.get('/brands/stats'),
 }
 
+// Measurements API
+export const measurementsAPI = {
+  getByCustomerId: (customerId) => api.get(`/measurements/customer/${customerId}`),
+  getByOrderId: (orderId) => api.get(`/measurements/order/${orderId}`),
+  create: (data) => api.post('/measurements', data),
+  update: (id, data) => api.put(`/measurements/${id}`, data),
+  delete: (id) => api.delete(`/measurements/${id}`),
+}
+
 export { api } 

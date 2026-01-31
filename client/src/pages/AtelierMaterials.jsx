@@ -54,6 +54,33 @@ const AtelierMaterials = () => {
         min_stock_level: 0
     });
 
+    const [markupPercentage, setMarkupPercentage] = useState(50);
+
+    const calculateSellingPrice = (cost, markup) => {
+        const costValue = parseFloat(cost) || 0;
+        const markupValue = parseFloat(markup) || 0;
+        return costValue * (1 + markupValue / 100);
+    };
+
+    const handleCostChange = (value, isEditing = false) => {
+        const cost = parseFloat(value) || 0;
+        const sellingPrice = calculateSellingPrice(cost, markupPercentage);
+        
+        if (isEditing) {
+            setEditingMaterial({
+                ...editingMaterial,
+                cost_per_unit: value,
+                selling_price: sellingPrice
+            });
+        } else {
+            setNewMaterial({
+                ...newMaterial,
+                cost_per_unit: value,
+                selling_price: sellingPrice
+            });
+        }
+    };
+
     useEffect(() => {
         fetchMaterials();
     }, [currentPage, searchTerm, selectedCategory]);
@@ -411,14 +438,17 @@ const AtelierMaterials = () => {
                                         type="number"
                                         step="0.01"
                                         value={newMaterial.cost_per_unit}
-                                        onChange={(e) => setNewMaterial({ ...newMaterial, cost_per_unit: e.target.value })}
+                                        onChange={(e) => handleCostChange(e.target.value)}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
                                         placeholder="e.g., 300"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">{tSync('Price')} (CFA)</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        {tSync('Price')} (CFA)
+                                        <span className="text-xs text-gray-500 ml-1">({markupPercentage}% markup)</span>
+                                    </label>
                                     <input
                                         type="number"
                                         step="0.01"
@@ -430,15 +460,34 @@ const AtelierMaterials = () => {
                                 </div>
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{tSync('Supplier')}</label>
-                                <input
-                                    type="text"
-                                    value={newMaterial.supplier_name}
-                                    onChange={(e) => setNewMaterial({ ...newMaterial, supplier_name: e.target.value })}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
-                                    placeholder="e.g., Loro Piana"
-                                />
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">{tSync('Supplier')}</label>
+                                    <input
+                                        type="text"
+                                        value={newMaterial.supplier_name}
+                                        onChange={(e) => setNewMaterial({ ...newMaterial, supplier_name: e.target.value })}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
+                                        placeholder="e.g., Loro Piana"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">{tSync('Markup')} (%)</label>
+                                    <input
+                                        type="number"
+                                        value={markupPercentage}
+                                        onChange={(e) => {
+                                            const markup = e.target.value;
+                                            setMarkupPercentage(markup);
+                                            if (newMaterial.cost_per_unit) {
+                                                handleCostChange(newMaterial.cost_per_unit);
+                                            }
+                                        }}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
+                                        placeholder="e.g., 50"
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -514,21 +563,43 @@ const AtelierMaterials = () => {
                                         type="number"
                                         step="0.01"
                                         value={editingMaterial.cost_per_unit}
-                                        onChange={(e) => setEditingMaterial({ ...editingMaterial, cost_per_unit: e.target.value })}
+                                        onChange={(e) => handleCostChange(e.target.value, true)}
                                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
                                     />
                                 </div>
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{tSync('Price')} (CFA)</label>
-                                <input
-                                    type="number"
-                                    step="0.01"
-                                    value={editingMaterial.selling_price}
-                                    onChange={(e) => setEditingMaterial({ ...editingMaterial, selling_price: e.target.value })}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
-                                />
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        {tSync('Price')} (CFA)
+                                        <span className="text-xs text-gray-500 ml-1">({markupPercentage}% markup)</span>
+                                    </label>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        value={editingMaterial.selling_price}
+                                        onChange={(e) => setEditingMaterial({ ...editingMaterial, selling_price: e.target.value })}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">{tSync('Markup')} (%)</label>
+                                    <input
+                                        type="number"
+                                        value={markupPercentage}
+                                        onChange={(e) => {
+                                            const markup = e.target.value;
+                                            setMarkupPercentage(markup);
+                                            if (editingMaterial.cost_per_unit) {
+                                                handleCostChange(editingMaterial.cost_per_unit, true);
+                                            }
+                                        }}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
+                                        placeholder="e.g., 50"
+                                    />
+                                </div>
                             </div>
                         </div>
 

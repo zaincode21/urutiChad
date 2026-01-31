@@ -658,4 +658,116 @@
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Print styles */
+  @media print {
+    /* Hide everything by default */
+    body * {
+      visibility: hidden;
+    }
+    
+    /* Show only the sewing info content */
+    .print-content,
+    .print-content * {
+      visibility: visible;
+    }
+    
+    /* Position the print content */
+    .print-content {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      margin: 0 !important;
+      padding: 10px !important;
+      background: white;
+      font-size: 10pt !important;
+      line-height: 1.2 !important;
+    }
+    
+    /* Hide print buttons and modal controls */
+    .print\:hidden {
+      display: none !important;
+    }
+    
+    /* Compact headings */
+    .print-content h1 {
+      font-size: 14pt !important;
+      margin: 8pt 0 4pt 0 !important;
+    }
+    
+    .print-content h2 {
+      font-size: 12pt !important;
+      margin: 6pt 0 3pt 0 !important;
+    }
+    
+    .print-content h3 {
+      font-size: 10pt !important;
+      margin: 4pt 0 2pt 0 !important;
+    }
+    
+    /* Compact spacing */
+    .print-content .border-b {
+      border-bottom: 1px solid #000 !important;
+      padding-bottom: 8pt !important;
+      margin-bottom: 8pt !important;
+    }
+    
+    .print-content .mb-6,
+    .print-content .pb-6 {
+      margin-bottom: 8pt !important;
+      padding-bottom: 8pt !important;
+    }
+    
+    .print-content .mb-4 {
+      margin-bottom: 4pt !important;
+    }
+    
+    .print-content .gap-4 {
+      gap: 4pt !important;
+    }
+    
+    .print-content .p-4,
+    .print-content .p-3 {
+      padding: 3pt !important;
+    }
+    
+    .print-content .rounded-lg {
+      border: 1px solid #ccc !important;
+      border-radius: 0 !important;
+    }
+    
+    /* Remove background colors */
+    .print-content .bg-gray-50,
+    .print-content .bg-yellow-50,
+    .print-content .bg-blue-50,
+    .print-content .bg-green-50,
+    .print-content .bg-purple-50 {
+      background: transparent !important;
+      border: 1px solid #ccc !important;
+    }
+    
+    /* Compact grid */
+    .print-content .grid {
+      display: grid !important;
+      gap: 4pt !important;
+    }
+    
+    .print-content .space-y-3 > * + * {
+      margin-top: 3pt !important;
+    }
+    
+    /* Force single page */
+    @page {
+      margin: 0.5in;
+      size: A4;
+    }
+    
+    .print-content {
+      page-break-inside: avoid;
+      transform: scale(0.8);
+      transform-origin: top left;
+      width: 125%;
+    }
+  }
 } 
