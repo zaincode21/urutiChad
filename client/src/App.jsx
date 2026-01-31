@@ -85,7 +85,7 @@ const Layout = ({ children }) => {
       <Navigation />
       <div className={`transition-all duration-300 ease-in-out ${isDesktopSidebarOpen ? 'lg:pl-64' : 'lg:pl-0'}`}>
         <TopNavigation />
-        <main className="flex-1 px-4 sm:px-6 pb-4 sm:pb-6 safe-area-inset-left safe-area-inset-right">
+        <main className="flex-1 px-4 sm:px-6 pb-4 sm:pb-6 pt-4 sm:pt-6 safe-area-inset-left safe-area-inset-right">
           <div className="max-w-full mx-auto">
             {children}
           </div>
@@ -255,7 +255,9 @@ const AppContent = () => {
         element={
           <RoleBasedRoute allowedRoles={['admin']}>
             <ProtectedRoute>
-              <Shops />
+              <Layout>
+                <Shops />
+              </Layout>
             </ProtectedRoute>
           </RoleBasedRoute>
         }
@@ -266,7 +268,9 @@ const AppContent = () => {
         element={
           <RoleBasedRoute allowedRoles={['admin', 'manager', 'inventory']}>
             <ProtectedRoute>
-              <Perfumes />
+              <Layout>
+                <Perfumes />
+              </Layout>
             </ProtectedRoute>
           </RoleBasedRoute>
         }
@@ -294,7 +298,9 @@ const AppContent = () => {
         element={
           <RoleBasedRoute allowedRoles={['admin', 'inventory']}>
             <ProtectedRoute>
-              <Production />
+              <Layout>
+                <Production />
+              </Layout>
             </ProtectedRoute>
           </RoleBasedRoute>
         }
@@ -305,7 +311,9 @@ const AppContent = () => {
         element={
           <RoleBasedRoute allowedRoles={['admin', 'inventory']}>
             <ProtectedRoute>
-              <Production />
+              <Layout>
+                <Production />
+              </Layout>
             </ProtectedRoute>
           </RoleBasedRoute>
         }
@@ -316,7 +324,9 @@ const AppContent = () => {
         element={
           <RoleBasedRoute allowedRoles={['admin', 'inventory']}>
             <ProtectedRoute>
-              <Inventory />
+              <Layout>
+                <Inventory />
+              </Layout>
             </ProtectedRoute>
           </RoleBasedRoute>
         }
@@ -327,7 +337,9 @@ const AppContent = () => {
         element={
           <RoleBasedRoute allowedRoles={['admin', 'inventory']}>
             <ProtectedRoute>
-              <Inventory />
+              <Layout>
+                <Inventory />
+              </Layout>
             </ProtectedRoute>
           </RoleBasedRoute>
         }
@@ -338,7 +350,9 @@ const AppContent = () => {
         element={
           <RoleBasedRoute allowedRoles={['admin', 'manager', 'inventory']}>
             <ProtectedRoute>
-              <Stocks />
+              <Layout>
+                <Stocks />
+              </Layout>
             </ProtectedRoute>
           </RoleBasedRoute>
         }
@@ -349,7 +363,9 @@ const AppContent = () => {
         element={
           <RoleBasedRoute allowedRoles={['admin', 'cashier']}>
             <ProtectedRoute>
-              <Notifications />
+              <Layout>
+                <Notifications />
+              </Layout>
             </ProtectedRoute>
           </RoleBasedRoute>
         }
@@ -359,7 +375,9 @@ const AppContent = () => {
         path="/integrations"
         element={
           <ProtectedRoute>
-            <Integrations />
+            <Layout>
+              <Integrations />
+            </Layout>
           </ProtectedRoute>
         }
       />
@@ -379,7 +397,9 @@ const AppContent = () => {
         path="/layaway"
         element={
           <ProtectedRoute>
-            <Layaway />
+            <Layout>
+              <Layaway />
+            </Layout>
           </ProtectedRoute>
         }
       />
@@ -400,7 +420,9 @@ const AppContent = () => {
         element={
           <RoleBasedRoute allowedRoles={['admin', 'cashier']}>
             <ProtectedRoute>
-              <Expenses />
+              <Layout>
+                <Expenses />
+              </Layout>
             </ProtectedRoute>
           </RoleBasedRoute>
         }
@@ -411,7 +433,9 @@ const AppContent = () => {
         element={
           <RoleBasedRoute allowedRoles={['admin', 'manager']}>
             <ProtectedRoute>
-              <GLAccounts />
+              <Layout>
+                <GLAccounts />
+              </Layout>
             </ProtectedRoute>
           </RoleBasedRoute>
         }
@@ -422,7 +446,9 @@ const AppContent = () => {
         element={
           <RoleBasedRoute allowedRoles={['admin']}>
             <ProtectedRoute>
-              <Analytics />
+              <Layout>
+                <Analytics />
+              </Layout>
             </ProtectedRoute>
           </RoleBasedRoute>
         }
@@ -446,7 +472,9 @@ const AppContent = () => {
         element={
           <RoleBasedRoute allowedRoles={['admin']}>
             <ProtectedRoute>
-              <PricingManagement />
+              <Layout>
+                <PricingManagement />
+              </Layout>
             </ProtectedRoute>
           </RoleBasedRoute>
         }
@@ -469,7 +497,9 @@ const AppContent = () => {
         path="/translation-demo"
         element={
           <ProtectedRoute>
-            <TranslationDemo />
+            <Layout>
+              <TranslationDemo />
+            </Layout>
           </ProtectedRoute>
         }
       />
