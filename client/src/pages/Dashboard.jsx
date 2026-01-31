@@ -116,8 +116,8 @@ const Dashboard = () => {
         error={error}
         onRetry={() => window.location.reload()}
         onGoHome={() => navigate('/dashboard')}
-        title="Dashboard Error"
-        message="We couldn't load your dashboard data. This might be a temporary issue."
+        title="Erreur du Tableau de Bord"
+        message="Nous n'avons pas pu charger les données de votre tableau de bord. Il pourrait s'agir d'un problème temporaire."
       />
     );
   }
@@ -171,18 +171,18 @@ const Dashboard = () => {
 
       {/* Professional Header */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-header">
-        <div className="px-6 py-4">
-          <div className="flex items-center justify-between">
+        <div className="px-4 sm:px-6 py-4">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div className="flex items-center space-x-4">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+                <h1 className="text-xl lg:text-2xl font-bold text-gray-900 tracking-tight">
                   {user?.role === 'cashier' ? (
                     <TranslatedText text="Cashier Dashboard" />
                   ) : (
                     <TranslatedText text="Dashboard" />
                   )}
                 </h1>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-xs lg:text-sm text-gray-600 mt-1">
                   {user?.role === 'cashier' ? (
                     <TranslatedText text="Your daily sales overview and quick actions" />
                   ) : (
@@ -192,38 +192,41 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-3">
-              {/* Notifications */}
-              <button className="relative p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-                <Bell className="h-5 w-5" />
-                <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
-              </button>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              {/* Mobile Action Buttons */}
+              <div className="flex items-center space-x-2 lg:space-x-3">
+                {/* Notifications */}
+                <button className="relative p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center">
+                  <Bell className="h-5 w-5" />
+                  <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
+                </button>
 
-              {/* Refresh */}
-              <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-                <RefreshCw className="h-5 w-5" />
-              </button>
+                {/* Refresh */}
+                <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center">
+                  <RefreshCw className="h-5 w-5" />
+                </button>
 
-              {/* Settings */}
-              <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-                <Settings className="h-5 w-5" />
-              </button>
+                {/* Settings */}
+                <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center">
+                  <Settings className="h-5 w-5" />
+                </button>
+              </div>
 
               {/* Filters */}
-              <div className="flex items-center space-x-2">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
                 {user?.role !== 'cashier' && (
                   <div className="relative">
                     <select
                       value={selectedShop}
                       onChange={(e) => setSelectedShop(e.target.value)}
-                      className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-8 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors w-full sm:w-auto min-w-[140px]"
                     >
                       <option value="all">{tSync("All Locations")}</option>
                       {shops?.map(shop => (
                         <option key={shop.id} value={shop.id}>{shop.name}</option>
                       ))}
                     </select>
-                    <Filter className="absolute right-2 top-2.5 h-4 w-4 text-gray-400 pointer-events-none" />
+                    <Filter className="absolute right-2 top-3.5 h-4 w-4 text-gray-400 pointer-events-none" />
                   </div>
                 )}
 
@@ -231,14 +234,14 @@ const Dashboard = () => {
                   <select
                     value={period}
                     onChange={(e) => setPeriod(e.target.value)}
-                    className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-3 pr-8 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors w-full sm:w-auto min-w-[140px]"
                   >
                     <option value="7">{tSync('Last 7 days')}</option>
                     <option value="30">{tSync('Last 30 days')}</option>
                     <option value="90">{tSync('Last 90 days')}</option>
                     <option value="365">{tSync('Last year')}</option>
                   </select>
-                  <Calendar className="absolute right-2 top-2.5 h-4 w-4 text-gray-400 pointer-events-none" />
+                  <Calendar className="absolute right-2 top-3.5 h-4 w-4 text-gray-400 pointer-events-none" />
                 </div>
               </div>
             </div>
@@ -246,109 +249,16 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="px-4 sm:px-6 py-4 sm:py-8 space-y-6 sm:space-y-8">
-
-        {/* Professional Quick Actions */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-          <div className="px-4 sm:px-6 py-4 border-b border-gray-200">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-              <h2 className="text-lg font-semibold text-gray-900">
-                <TranslatedText text="Quick Actions" />
-              </h2>
-              <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-500">
-                <Zap className="h-4 w-4" />
-                <span className="hidden sm:inline">
-                  <TranslatedText text="Frequently Used" />
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="p-4 sm:p-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-              <button
-                onClick={() => navigate('/orders/create')}
-                className="group relative bg-gradient-to-br from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200 rounded-xl p-6 transition-all duration-200 hover:shadow-lg border border-blue-200"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="p-3 bg-blue-500 rounded-lg group-hover:scale-110 transition-transform">
-                    <ShoppingCart className="h-6 w-6 text-white" />
-                  </div>
-                  <ArrowUpRight className="h-4 w-4 text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-1">
-                  <TranslatedText text="New Sale" />
-                </h3>
-                <p className="text-sm text-gray-600">
-                  <TranslatedText text="Create a new sales order" />
-                </p>
-              </button>
-
-              <button
-                onClick={() => navigate('/customers')}
-                className="group relative bg-gradient-to-br from-emerald-50 to-emerald-100 hover:from-emerald-100 hover:to-emerald-200 rounded-xl p-6 transition-all duration-200 hover:shadow-lg border border-emerald-200"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="p-3 bg-emerald-500 rounded-lg group-hover:scale-110 transition-transform">
-                    <Users className="h-6 w-6 text-white" />
-                  </div>
-                  <ArrowUpRight className="h-4 w-4 text-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-1">
-                  <TranslatedText text="Customers" />
-                </h3>
-                <p className="text-sm text-gray-600">
-                  <TranslatedText text="Manage customer information" />
-                </p>
-              </button>
-
-              <button
-                onClick={() => navigate('/products')}
-                className="group relative bg-gradient-to-br from-purple-50 to-purple-100 hover:from-purple-100 hover:to-purple-200 rounded-xl p-6 transition-all duration-200 hover:shadow-lg border border-purple-200"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="p-3 bg-purple-500 rounded-lg group-hover:scale-110 transition-transform">
-                    <Package className="h-6 w-6 text-white" />
-                  </div>
-                  <ArrowUpRight className="h-4 w-4 text-purple-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-1">
-                  <TranslatedText text="Inventory" />
-                </h3>
-                <p className="text-sm text-gray-600">
-                  <TranslatedText text="Manage products and stock" />
-                </p>
-              </button>
-
-              <button
-                onClick={() => navigate('/expenses')}
-                className="group relative bg-gradient-to-br from-amber-50 to-amber-100 hover:from-amber-100 hover:to-amber-200 rounded-xl p-6 transition-all duration-200 hover:shadow-lg border border-amber-200"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="p-3 bg-amber-500 rounded-lg group-hover:scale-110 transition-transform">
-                    <DollarSign className="h-6 w-6 text-white" />
-                  </div>
-                  <ArrowUpRight className="h-4 w-4 text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-1">
-                  <TranslatedText text="Expenses" />
-                </h3>
-                <p className="text-sm text-gray-600">
-                  <TranslatedText text="Track business expenses" />
-                </p>
-              </button>
-            </div>
-          </div>
-        </div>
+      <div className="px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6">
 
         {/* Professional KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
           {/* Revenue KPI */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-200">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg">
-                  <DollarSign className="h-6 w-6 text-white" />
+            <div className="p-4 lg:p-6">
+              <div className="flex items-center justify-between mb-3 lg:mb-4">
+                <div className="p-2 lg:p-3 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg">
+                  <DollarSign className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
                 </div>
                 <div className={`flex items-center px-2 py-1 rounded-full text-xs font-medium ${getPercentageChange(data.total_revenue, data.previous_revenue) >= 0
                   ? 'bg-emerald-100 text-emerald-700'
@@ -363,7 +273,8 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-medium text-gray-600">
+                <p className="text-xl lg:text-2xl font-bold text-gray-900">{formatCurrency(data.total_revenue || 0)}</p>
+                <h3 className="text-xs lg:text-sm font-medium text-gray-600">
                   <TranslatedText text="Total Revenue" />
                 </h3>
                 <p className="text-xs text-gray-500">
@@ -376,10 +287,10 @@ const Dashboard = () => {
 
           {/* Orders KPI */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-200">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
-                  <ShoppingCart className="h-6 w-6 text-white" />
+            <div className="p-4 lg:p-6">
+              <div className="flex items-center justify-between mb-3 lg:mb-4">
+                <div className="p-2 lg:p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
+                  <ShoppingCart className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
                 </div>
                 <div className={`flex items-center px-2 py-1 rounded-full text-xs font-medium ${getPercentageChange(data.total_orders, data.previous_orders) >= 0
                   ? 'bg-emerald-100 text-emerald-700'
@@ -394,7 +305,8 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-medium text-gray-600">
+                <p className="text-xl lg:text-2xl font-bold text-gray-900">{formatNumber(data.total_orders || 0)}</p>
+                <h3 className="text-xs lg:text-sm font-medium text-gray-600">
                   <TranslatedText text="Total Orders" />
                 </h3>
                 <p className="text-xs text-gray-500">
@@ -407,10 +319,10 @@ const Dashboard = () => {
 
           {/* Customers KPI */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-200">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg">
-                  <Users className="h-6 w-6 text-white" />
+            <div className="p-4 lg:p-6">
+              <div className="flex items-center justify-between mb-3 lg:mb-4">
+                <div className="p-2 lg:p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg">
+                  <Users className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
                 </div>
                 <div className={`flex items-center px-2 py-1 rounded-full text-xs font-medium ${getPercentageChange(data.total_customers, data.previous_customers) >= 0
                   ? 'bg-emerald-100 text-emerald-700'
@@ -425,7 +337,8 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-medium text-gray-600">
+                <p className="text-xl lg:text-2xl font-bold text-gray-900">{formatNumber(data.total_customers || 0)}</p>
+                <h3 className="text-xs lg:text-sm font-medium text-gray-600">
                   <TranslatedText text="Total Customers" />
                 </h3>
                 <p className="text-xs text-gray-500">
@@ -438,10 +351,10 @@ const Dashboard = () => {
 
           {/* AOV KPI */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-200">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl shadow-lg">
-                  <Target className="h-6 w-6 text-white" />
+            <div className="p-4 lg:p-6">
+              <div className="flex items-center justify-between mb-3 lg:mb-4">
+                <div className="p-2 lg:p-3 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl shadow-lg">
+                  <Target className="h-5 w-5 lg:h-6 lg:w-6 text-white" />
                 </div>
                 <div className={`flex items-center px-2 py-1 rounded-full text-xs font-medium ${getPercentageChange(data.avg_order_value, data.previous_avg_order_value) >= 0
                   ? 'bg-emerald-100 text-emerald-700'
@@ -456,7 +369,8 @@ const Dashboard = () => {
                 </div>
               </div>
               <div className="space-y-1">
-                <h3 className="text-sm font-medium text-gray-600">
+                <p className="text-xl lg:text-2xl font-bold text-gray-900">{formatCurrency(data.avg_order_value || 0)}</p>
+                <h3 className="text-xs lg:text-sm font-medium text-gray-600">
                   <TranslatedText text="Average Order Value" />
                 </h3>
                 <p className="text-xs text-gray-500">
@@ -468,222 +382,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Professional Analytics Dashboard */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Sales Performance Chart */}
-          <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Sales Performance" /></h3>
-                  <p className="text-sm text-gray-600"><TranslatedText text="Revenue trend over the last 7 days" /></p>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-                    <Download className="h-4 w-4" />
-                  </button>
-                  <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-                    <MoreHorizontal className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6">
-              <div className="h-80 flex items-end justify-between space-x-3">
-                {(() => {
-                  // Get real revenue trend data from API
-                  const revenueData = data.revenue_trend || [];
-
-                  // Create last 7 days array with real data (Monday to Sunday)
-                  const last7Days = [];
-                  const today = new Date();
-
-                  // Get the most recent Monday
-                  const getMonday = (date) => {
-                    const day = date.getDay();
-                    const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
-                    return new Date(date.setDate(diff));
-                  };
-
-                  const monday = getMonday(new Date(today));
-
-                  // Create 7 days starting from Monday
-                  for (let i = 0; i < 7; i++) {
-                    const date = new Date(monday);
-                    date.setDate(monday.getDate() + i);
-                    const dateStr = date.toISOString().split('T')[0];
-
-                    // Find matching data from API
-                    const dayData = revenueData.find(d => d.date === dateStr);
-
-                    // Get day name
-                    const dayNames = [tSync('Sun'), tSync('Mon'), tSync('Tue'), tSync('Wed'), tSync('Thu'), tSync('Fri'), tSync('Sat')];
-                    const dayName = dayNames[date.getDay()];
-
-                    // Determine color based on weekend/weekday
-                    const isWeekend = date.getDay() === 0 || date.getDay() === 6;
-                    const color = isWeekend ? 'from-emerald-500 to-emerald-600' : 'from-blue-500 to-blue-600';
-
-                    last7Days.push({
-                      day: dayName,
-                      sales: dayData?.amount || 0,
-                      orders: dayData?.order_count || 0,
-                      color: color,
-                      date: dateStr
-                    });
-                  }
-
-                  // Calculate max sales for scaling
-                  const maxSales = Math.max(...last7Days.map(d => d.sales), 1);
-
-                  return last7Days.map((day, index) => {
-                    const height = (day.sales / maxSales) * 100;
-
-                    return (
-                      <div key={index} className="flex-1 flex flex-col items-center group">
-                        <div className="relative w-full">
-                          <div
-                            className={`w-full bg-gradient-to-t ${day.color} rounded-t-lg transition-all duration-500 hover:shadow-lg cursor-pointer group-hover:scale-105`}
-                            style={{ height: `${height}%`, minHeight: height > 0 ? '12px' : '4px' }}
-                          >
-                            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-3 py-2 rounded-lg text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">
-                              <div className="font-semibold">{formatCurrency(day.sales)}</div>
-                              <div className="text-xs text-gray-300">{day.orders} {tSync('orders')}</div>
-                              <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="mt-4 text-center">
-                          <div className="text-sm font-medium text-gray-900">{day.day}</div>
-                          <div className="text-xs text-gray-500 mt-1">{day.orders} {tSync('orders')}</div>
-                        </div>
-                      </div>
-                    );
-                  });
-                })()}
-              </div>
-
-              {/* Chart Legend */}
-              <div className="mt-6 flex items-center justify-center space-x-6">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"></div>
-                  <span className="text-sm text-gray-600"><TranslatedText text="Weekdays" /></span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full"></div>
-                  <span className="text-sm text-gray-600"><TranslatedText text="Weekends" /></span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Key Metrics Summary */}
-          <div className="space-y-6">
-            {/* Today's Performance */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Today's Performance" /></h3>
-              </div>
-              <div className="p-6 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-emerald-100 rounded-lg">
-                      <DollarSign className="h-5 w-5 text-emerald-600" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-gray-900"><TranslatedText text="Sales" /></p>
-                      <p className="text-xs text-gray-500">{tSync('Today')}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold text-gray-900">{formatCurrency(data.today_sales || 0)}</p>
-                    <div className="flex items-center text-xs text-emerald-600">
-                      <TrendingUpIcon className="h-3 w-3 mr-1" />
-                      +8.3%
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-blue-100 rounded-lg">
-                      <ShoppingCart className="h-5 w-5 text-blue-600" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-gray-900"><TranslatedText text="Orders" /></p>
-                      <p className="text-xs text-gray-500">{tSync('Today')}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold text-gray-900">{formatNumber(data.today_orders || 0)}</p>
-                    <div className="flex items-center text-xs text-emerald-600">
-                      <TrendingUpIcon className="h-3 w-3 mr-1" />
-                      +12.5%
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-purple-100 rounded-lg">
-                      <Clock className="h-5 w-5 text-purple-600" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-gray-900"><TranslatedText text="Peak Hour" /></p>
-                      <p className="text-xs text-gray-500"><TranslatedText text="Best performance" /></p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold text-gray-900">2:00 PM</p>
-                    <p className="text-xs text-gray-500"><TranslatedText text="Highest activity" /></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Customer Insights */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Customer Insights" /></h3>
-              </div>
-              <div className="p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 bg-orange-100 rounded-lg">
-                        <Award className="h-5 w-5 text-orange-600" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-900"><TranslatedText text="Retention Rate" /></p>
-                        <p className="text-xs text-gray-500"><TranslatedText text="Customer loyalty" /></p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg font-bold text-gray-900">78%</p>
-                      <div className="flex items-center text-xs text-emerald-600">
-                        <TrendingUpIcon className="h-3 w-3 mr-1" />
-                        +5.7%
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full" style={{ width: '78%' }}></div>
-                  </div>
-
-                  <div className="flex items-center justify-between text-xs text-gray-500">
-                    <span>{tSync('Target')}: 75%</span>
-                    <span className="text-emerald-600 font-medium"><TranslatedText text="Above target" /></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Professional Data Tables */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
           {/* Top Products Performance */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200">

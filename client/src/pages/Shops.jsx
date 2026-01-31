@@ -227,7 +227,7 @@ const Shops = () => {
   console.log('Shops component rendering main content...', { shops, isLoading, error });
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 px-4 sm:px-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

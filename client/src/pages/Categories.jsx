@@ -353,7 +353,7 @@ const Categories = () => {
     return (
       <div className="flex items-center justify-center py-12">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <span className="ml-3 text-gray-600">Loading categories...</span>
+        <span className="ml-3 text-gray-600">Chargement des catégories...</span>
       </div>
     );
   }
@@ -369,14 +369,14 @@ const Categories = () => {
           className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700"
         >
           <RefreshCw className="h-4 w-4 mr-2" />
-          Retry
+          Réessayer
         </button>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4 sm:space-y-8">
+    <div className="space-y-4 sm:space-y-6 px-4 sm:px-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>

@@ -116,13 +116,13 @@ const Brands = () => {
   if (error) {
     return (
       <div className="text-center py-8">
-        <p className="text-red-600">Error loading brands: {error.message}</p>
+        <p className="text-red-600">Erreur de chargement des marques : {error.message}</p>
       </div>
     )
   }
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="space-y-4 sm:space-y-6 px-4 sm:px-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <div>

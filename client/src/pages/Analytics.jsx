@@ -164,11 +164,11 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
         <div className="max-w-7xl mx-auto">
           <div className="bg-white rounded-xl p-6 shadow-sm border border-red-200">
-            <h1 className="text-2xl font-bold text-red-600 mb-4"><TranslatedText text="Analytics Page" /></h1>
-            <p className="text-gray-600 mb-4">There was an error loading analytics data:</p>
-            {dashboardError && <p className="text-sm text-red-500">Dashboard API Error: {dashboardError.message}</p>}
-            {salesError && <p className="text-sm text-red-500">Sales Analytics API Error: {salesError.message}</p>}
-            <p className="text-sm text-gray-500 mt-4">This might be due to authentication issues or API connectivity problems.</p>
+            <h1 className="text-2xl font-bold text-red-600 mb-4"><TranslatedText text="Page d'Analyse" /></h1>
+            <p className="text-gray-600 mb-4">Il y a eu une erreur lors du chargement des données d'analyse :</p>
+            {dashboardError && <p className="text-sm text-red-500">Erreur API Tableau de Bord : {dashboardError.message}</p>}
+            {salesError && <p className="text-sm text-red-500">Erreur API Analyse des Ventes : {salesError.message}</p>}
+            <p className="text-sm text-gray-500 mt-4">Cela pourrait être dû à des problèmes d'authentification ou de connectivité API.</p>
           </div>
         </div>
       </div>
@@ -199,13 +199,13 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="px-4 sm:px-6 py-4 sm:py-6">
         {/* Header */}
         <div className="mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-900"><TranslatedText text="Analytics & Reports" /></h1>
-              <p className="text-gray-600 mt-2">Advanced insights and business intelligence</p>
+              <p className="text-gray-600 mt-2">Informations avancées et intelligence d'affaires</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
               <button 
@@ -218,7 +218,7 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
                 }`}
               >
                 <Download className="h-5 w-5 mr-2" />
-                {isExportingReport ? 'Exporting...' : 'Export Report'}
+                {isExportingReport ? 'Exportation...' : 'Exporter Rapport'}
               </button>
               <button 
                 onClick={handleGenerateReport}
@@ -230,7 +230,7 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
                 }`}
               >
                 <Eye className="h-5 w-5 mr-2" />
-                {isGeneratingReport ? 'Generating...' : 'Generate Report'}
+                {isGeneratingReport ? 'Génération...' : 'Générer Rapport'}
               </button>
             </div>
           </div>
@@ -240,26 +240,26 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
           <div className="flex flex-col sm:flex-row gap-4 analytics-filters">
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Time Period</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Période</label>
               <select
                 value={selectedPeriod}
                 onChange={(e) => setSelectedPeriod(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="7">Last 7 days</option>
-                <option value="30">Last 30 days</option>
-                <option value="90">Last 90 days</option>
-                <option value="365">Last year</option>
+                <option value="7">7 derniers jours</option>
+                <option value="30">30 derniers jours</option>
+                <option value="90">90 derniers jours</option>
+                <option value="365">Dernière année</option>
               </select>
             </div>
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Shop</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Boutique</label>
               <select
                 value={selectedShop}
                 onChange={(e) => setSelectedShop(e.target.value)}
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="all">All Shops</option>
+                <option value="all">Toutes les Boutiques</option>
                 {shopsData?.shops?.map((shop) => (
                   <option key={shop.id} value={shop.id}>
                     {shop.name}
@@ -283,12 +283,12 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
                 <TrendingUp className="h-6 w-6 text-green-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Revenue</p>
+                <p className="text-sm font-medium text-gray-600">Chiffre d'Affaires Total</p>
                 <p className="text-2xl font-bold text-gray-900">
                   ${(parseFloat(dashboardData.sales_stats?.total_revenue) || 0).toLocaleString()}
                 </p>
                 <p className="text-xs text-green-600">
-                  {salesData.trends?.revenueGrowth ? `+${salesData.trends.revenueGrowth}%` : 'vs last period'}
+                  {salesData.trends?.revenueGrowth ? `+${salesData.trends.revenueGrowth}%` : 'vs période précédente'}
                 </p>
               </div>
             </div>
@@ -300,12 +300,12 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
                 <Users className="h-6 w-6 text-blue-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Orders</p>
+                <p className="text-sm font-medium text-gray-600">Total Commandes</p>
                 <p className="text-2xl font-bold text-gray-900">
                   {dashboardData.sales_stats?.total_orders || '0'}
                 </p>
                 <p className="text-xs text-blue-600">
-                  {salesData.trends?.orderGrowth ? `+${salesData.trends.orderGrowth}%` : 'vs last period'}
+                  {salesData.trends?.orderGrowth ? `+${salesData.trends.orderGrowth}%` : 'vs période précédente'}
                 </p>
               </div>
             </div>
@@ -317,11 +317,11 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
                 <ShoppingCart className="h-6 w-6 text-purple-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Avg Order Value</p>
+                <p className="text-sm font-medium text-gray-600">Valeur Moyenne Commande</p>
                 <p className="text-2xl font-bold text-gray-900">
                   ${(parseFloat(dashboardData.sales_stats?.avg_order_value) || 0).toFixed(2)}
                 </p>
-                <p className="text-xs text-purple-600">per order</p>
+                <p className="text-xs text-purple-600">par commande</p>
               </div>
             </div>
           </div>
@@ -332,11 +332,11 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
                 <Package className="h-6 w-6 text-orange-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Products</p>
+                <p className="text-sm font-medium text-gray-600">Total Produits</p>
                 <p className="text-2xl font-bold text-gray-900">
                   {dashboardData.inventory_stats?.total_products || '0'}
                 </p>
-                <p className="text-xs text-orange-600">in inventory</p>
+                <p className="text-xs text-orange-600">en inventaire</p>
               </div>
             </div>
           </div>
@@ -347,7 +347,7 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
           {/* Revenue Chart */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Revenue Trend" /></h3>
+              <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Tendance du Chiffre d'Affaires" /></h3>
               <BarChart3 className="h-5 w-5 text-gray-400" />
             </div>
             <div className="h-64 flex items-end justify-between gap-2">
@@ -388,7 +388,7 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
           {/* Sales Distribution */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Sales by Category" /></h3>
+              <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Ventes par Catégorie" /></h3>
               <PieChart className="h-5 w-5 text-gray-400" />
             </div>
             <div className="space-y-4">
@@ -415,28 +415,28 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="w-4 h-4 bg-blue-500 rounded-full mr-3"></div>
-                  <span className="text-sm text-gray-700">Perfumes</span>
+                  <span className="text-sm text-gray-700">Parfums</span>
                 </div>
                 <span className="text-sm font-semibold text-gray-900">45%</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="w-4 h-4 bg-green-500 rounded-full mr-3"></div>
-                  <span className="text-sm text-gray-700">Clothing</span>
+                  <span className="text-sm text-gray-700">Vêtements</span>
                 </div>
                 <span className="text-sm font-semibold text-gray-900">30%</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="w-4 h-4 bg-purple-500 rounded-full mr-3"></div>
-                  <span className="text-sm text-gray-700">Accessories</span>
+                  <span className="text-sm text-gray-700">Accessoires</span>
                 </div>
                 <span className="text-sm font-semibold text-gray-900">15%</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <div className="w-4 h-4 bg-orange-500 rounded-full mr-3"></div>
-                  <span className="text-sm text-gray-700">Other</span>
+                  <span className="text-sm text-gray-700">Autre</span>
                 </div>
                 <span className="text-sm font-semibold text-gray-900">10%</span>
               </div>
@@ -451,7 +451,7 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
           {/* Top Performing Products */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Top Products" /></h3>
+              <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Meilleurs Produits" /></h3>
               <Package className="h-5 w-5 text-gray-400" />
             </div>
             <div className="space-y-4">
@@ -460,11 +460,11 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
                   <div key={index} className="flex items-center justify-between">
                     <div>
                       <p className="text-sm font-medium text-gray-900">{product.name}</p>
-                      <p className="text-xs text-gray-500">{product.total_sold} units sold</p>
+                      <p className="text-xs text-gray-500">{product.total_sold} unités vendues</p>
                     </div>
                     <div className="text-right">
                       <p className="text-sm font-semibold text-gray-900">${(parseFloat(product.total_revenue) || 0).toFixed(2)}</p>
-                      <p className="text-xs text-green-600">${(parseFloat(product.avg_price) || 0).toFixed(2)} avg</p>
+                      <p className="text-xs text-green-600">${(parseFloat(product.avg_price) || 0).toFixed(2)} moy</p>
                     </div>
                   </div>
                 ))
@@ -480,7 +480,7 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
                 <div key={index} className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-gray-900">{product.name}</p>
-                    <p className="text-xs text-gray-500">{product.sales} units sold</p>
+                    <p className="text-xs text-gray-500">{product.sales} unités vendues</p>
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-semibold text-gray-900">${product.revenue}</p>
@@ -495,7 +495,7 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
           {/* Customer Insights */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Customer Insights" /></h3>
+              <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Informations Client" /></h3>
               <Users className="h-5 w-5 text-gray-400" />
             </div>
             <div className="space-y-4">
@@ -503,20 +503,20 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
                 <p className="text-2xl font-bold text-blue-600">
                   {salesData.summary?.uniqueCustomers || dashboardData.customer_stats?.total_customers || '0'}
                 </p>
-                <p className="text-sm text-blue-600">Total Customers</p>
+                <p className="text-sm text-blue-600">Total Clients</p>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-3 bg-green-50 rounded-lg">
                   <p className="text-lg font-bold text-green-600">
                     {salesData.summary?.conversionRate || '0'}%
                   </p>
-                  <p className="text-xs text-green-600">Conversion Rate</p>
+                  <p className="text-xs text-green-600">Taux de Conversion</p>
                 </div>
                 <div className="text-center p-3 bg-purple-50 rounded-lg">
                   <p className="text-lg font-bold text-purple-600">
                     ${(parseFloat(dashboardData.sales_stats?.avg_order_value) || 0).toFixed(0)}
                   </p>
-                  <p className="text-xs text-purple-600">Avg Order Value</p>
+                  <p className="text-xs text-purple-600">Valeur Moy Commande</p>
                 </div>
               </div>
               <div className="text-center p-3 bg-orange-50 rounded-lg">
@@ -525,7 +525,7 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
                     ? (salesData.summary.totalOrders / salesData.summary.uniqueCustomers).toFixed(1)
                     : '0'}
                 </p>
-                <p className="text-xs text-orange-600">Avg Orders per Customer</p>
+                <p className="text-xs text-orange-600">Commandes Moy par Client</p>
               </div>
             </div>
           </div>
@@ -533,7 +533,7 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
           {/* Recent Activity */}
           <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Recent Activity" /></h3>
+              <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Activité Récente" /></h3>
               <Activity className="h-5 w-5 text-gray-400" />
             </div>
             <div className="space-y-4">
@@ -556,11 +556,11 @@ ${report.salesData.categorySales?.slice(0, 4).map(category => {
               ) : (
                 // Fallback to static data
                 [
-                { action: 'New order placed', time: '2 min ago', type: 'order' },
-                { action: 'Customer registered', time: '5 min ago', type: 'customer' },
-                { action: 'Payment received', time: '8 min ago', type: 'payment' },
-                { action: 'Stock updated', time: '12 min ago', type: 'inventory' },
-                { action: 'Expense recorded', time: '15 min ago', type: 'expense' }
+                { action: 'Nouvelle commande passée', time: 'il y a 2 min', type: 'order' },
+                { action: 'Client enregistré', time: 'il y a 5 min', type: 'customer' },
+                { action: 'Paiement reçu', time: 'il y a 8 min', type: 'payment' },
+                { action: 'Stock mis à jour', time: 'il y a 12 min', type: 'inventory' },
+                { action: 'Dépense enregistrée', time: 'il y a 15 min', type: 'expense' }
               ].map((activity, index) => (
                 <div key={index} className="flex items-center space-x-3">
                   <div className={`w-2 h-2 rounded-full ${

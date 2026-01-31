@@ -1,7 +1,9 @@
 /* Mobile-first responsive utilities */
 @media (max-width: 640px) {
   .mobile-container {
-    padding: 1rem;
+    padding: 0.5rem;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
   
   .mobile-header {
@@ -74,6 +76,8 @@
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
     border: 1px solid #e5e7eb;
     transition: all 0.2s;
+    max-width: 100%;
+    overflow: hidden;
   }
   
   .mobile-card:active {
@@ -90,12 +94,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    max-width: 100%;
+    word-wrap: break-word;
   }
   
   .mobile-input {
     padding: 0.75rem;
     border-radius: 0.5rem;
     min-height: 44px;
+    width: 100%;
+    max-width: 100%;
   }
   
   .mobile-loading {
@@ -124,6 +132,18 @@
     padding: 3rem 1rem;
     text-align: center;
     gap: 1rem;
+  }
+  
+  /* Ensure all content fits within viewport */
+  * {
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+  
+  /* Prevent horizontal overflow on mobile */
+  body, html {
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 }
 

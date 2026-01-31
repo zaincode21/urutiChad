@@ -388,86 +388,6 @@ const Settings = () => {
           count: 0
         }
       ]
-    },
-    notifications: {
-      title: tSync('Notifications'),
-      description: tSync('Configure email, SMS, and in-app notifications'),
-      icon: Bell,
-      color: 'orange',
-      sections: [
-        {
-          id: 'email',
-          title: tSync('Email Notifications'),
-          description: tSync('Configure email notification settings'),
-          count: 0
-        },
-        {
-          id: 'in-app',
-          title: tSync('In-App Notifications'),
-          description: tSync('Manage in-app notification preferences'),
-          count: 0
-        }
-      ]
-    },
-    integrations: {
-      title: tSync('Integrations'),
-      description: tSync('Connect with third-party services and APIs'),
-      icon: Globe,
-      color: 'indigo',
-      sections: [
-        {
-          id: 'payment',
-          title: tSync('Payment Gateways'),
-          description: tSync('Configure payment processing integrations'),
-          count: 0
-        },
-        {
-          id: 'shipping',
-          title: tSync('Shipping Providers'),
-          description: tSync('Set up shipping and delivery integrations'),
-          count: 0
-        }
-      ]
-    },
-    billing: {
-      title: tSync('Billing & Subscription'),
-      description: tSync('Manage billing, invoices, and subscription plans'),
-      icon: CreditCard,
-      color: 'emerald',
-      sections: [
-        {
-          id: 'subscription',
-          title: tSync('Subscription Plan'),
-          description: tSync('Current plan and billing information'),
-          count: 0
-        },
-        {
-          id: 'invoices',
-          title: tSync('Billing History'),
-          description: tSync('View and manage invoices'),
-          count: 0
-        }
-      ]
-    },
-    database: {
-      title: tSync('Database & System'),
-      description: tSync('Database maintenance, backups, and system health'),
-      icon: Database,
-      color: 'slate',
-      sections: [
-        {
-          id: 'backups',
-          title: tSync('Backups & Recovery'),
-          description: tSync('Database backup and recovery settings'),
-          count: 0
-        },
-        {
-          id: 'maintenance',
-          title: tSync('System Maintenance'),
-          description: tSync('Database optimization and maintenance'),
-          count: 0
-        }
-      ]
     }
   };
 
@@ -897,7 +817,7 @@ const Settings = () => {
         {usersLoading ? (
           <div className="text-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="text-gray-500 mt-2"><TranslatedText text="Loading users..." /></p>
+            <p className="text-gray-500 mt-2">Chargement des utilisateurs...</p>
           </div>
         ) : users.length === 0 ? (
           <div className="text-center py-16">
@@ -1336,7 +1256,7 @@ const Settings = () => {
                   {addUserMutation.isPending ? (
                     <div className="flex items-center space-x-2">
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      <span><TranslatedText text="Creating User..." /></span>
+                      <span><TranslatedText text="Création de l'utilisateur..." /></span>
                     </div>
                   ) : (
                     <div className="flex items-center space-x-2">
@@ -1621,7 +1541,7 @@ const Settings = () => {
                   {updateUserMutation.isPending ? (
                     <div className="flex items-center space-x-2">
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      <span><TranslatedText text="Updating..." /></span>
+                      <span><TranslatedText text="Mise à jour..." /></span>
                     </div>
                   ) : (
                     <div className="flex items-center space-x-2">
@@ -2264,7 +2184,7 @@ const Settings = () => {
               {isSavingAppearance || saveAppearanceMutation.isPending ? (
                 <div className="flex items-center space-x-2">
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  <span>Saving...</span>
+                  <span>Sauvegarde...</span>
                 </div>
               ) : (
                 <div className="flex items-center space-x-2">
@@ -3676,12 +3596,6 @@ const Settings = () => {
         return renderSecuritySettings();
       case 'appearance':
         return renderAppearanceBranding();
-      case 'notifications':
-        return renderNotifications();
-      case 'billing':
-        return renderBillingSubscription();
-      case 'database':
-        return renderDatabaseSystem();
       default:
         return renderComingSoon();
     }

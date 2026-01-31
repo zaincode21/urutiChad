@@ -20,14 +20,14 @@ import {
 } from 'lucide-react'
 
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Products', href: '/products', icon: Package },
-  { name: 'Categories', href: '/categories', icon: Tags },
-  { name: 'Customers', href: '/customers', icon: Users },
-  { name: 'Orders', href: '/orders', icon: ShoppingCart },
-  { name: 'Shops', href: '/shops', icon: Store },
-  { name: 'Inventory', href: '/inventory', icon: Warehouse },
-  { name: 'Settings', href: '/settings', icon: Settings },
+  { name: 'Tableau de Bord', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Produits', href: '/products', icon: Package },
+  { name: 'Catégories', href: '/categories', icon: Tags },
+  { name: 'Clients', href: '/customers', icon: Users },
+  { name: 'Commandes', href: '/orders', icon: ShoppingCart },
+  { name: 'Boutiques', href: '/shops', icon: Store },
+  { name: 'Inventaire', href: '/inventory', icon: Warehouse },
+  { name: 'Paramètres', href: '/settings', icon: Settings },
 ]
 
 export default function Layout() {
@@ -125,7 +125,7 @@ export default function Layout() {
               <Search className="pointer-events-none absolute inset-y-0 left-0 h-full w-5 text-gray-400 pl-3" />
               <input
                 type="text"
-                placeholder="Search..."
+                placeholder="Rechercher..."
                 className="block h-full w-full border-0 py-0 pl-10 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
               />
             </div>
@@ -157,7 +157,7 @@ export default function Layout() {
                   className="flex items-center gap-x-2 text-sm text-gray-500 hover:text-gray-700"
                 >
                   <LogOut size={16} />
-                  <span className="hidden lg:block">Logout</span>
+                  <span className="hidden lg:block">Déconnexion</span>
                 </button>
               </div>
             </div>

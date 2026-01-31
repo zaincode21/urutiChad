@@ -435,33 +435,33 @@ export default function Customers() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 px-4 sm:px-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">{tSync('Customers')}</h1>
-          <p className="mt-2 text-gray-600">{tSync('Manage customer relationships and loyalty')}</p>
+          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">{tSync('Customers')}</h1>
+          <p className="mt-2 text-gray-600 text-sm lg:text-base">{tSync('Manage customer relationships and loyalty')}</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           {/* View Mode Toggle */}
           <div className="flex items-center bg-gray-100 rounded-lg p-1">
             <button
               onClick={() => setViewMode('table')}
-              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${viewMode === 'table' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
+              className={`px-2 lg:px-3 py-2 text-xs lg:text-sm font-medium rounded-md transition-colors ${viewMode === 'table' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
                 }`}
             >
               {tSync('Table')}
             </button>
             <button
               onClick={() => setViewMode('cards')}
-              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${viewMode === 'cards' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
+              className={`px-2 lg:px-3 py-2 text-xs lg:text-sm font-medium rounded-md transition-colors ${viewMode === 'cards' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
                 }`}
             >
               {tSync('Cards')}
             </button>
             <button
               onClick={() => setViewMode('insights')}
-              className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${viewMode === 'insights' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
+              className={`px-2 lg:px-3 py-2 text-xs lg:text-sm font-medium rounded-md transition-colors ${viewMode === 'insights' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
                 }`}
             >
               {tSync('Insights')}
@@ -470,98 +470,97 @@ export default function Customers() {
 
           <button
             onClick={() => setShowCampaignModal(true)}
-            className="bg-green-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-green-700 transition-colors"
+            className="bg-green-600 text-white px-3 lg:px-4 py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-green-700 transition-colors min-h-[44px]"
           >
             <Send className="h-5 w-5" />
-            {tSync('Campaign')}
+            <span className="text-sm lg:text-base">{tSync('Campaign')}</span>
           </button>
 
           <button
             onClick={() => setShowAddModal(true)}
-            className="bg-blue-600 text-white px-3 sm:px-4 py-2.5 sm:py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors min-h-[44px] touch-target text-sm sm:text-base"
+            className="bg-blue-600 text-white px-3 lg:px-4 py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-700 transition-colors min-h-[44px]"
           >
             <Plus className="h-5 w-5" />
-            <span className="hidden sm:inline">{tSync('Add Customer')}</span>
-            <span className="sm:hidden">{tSync('Add')}</span>
+            <span className="text-sm lg:text-base">{tSync('Add Customer')}</span>
           </button>
         </div>
       </div>
 
       {/* Enhanced Stats Cards */}
       {loyaltyStats && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-6">
-          <div className="bg-white rounded-xl p-6 shadow-sm">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 lg:gap-4 xl:gap-6">
+          <div className="bg-white rounded-xl p-4 lg:p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-500">{tSync('Total Customers')}</p>
-                <p className="text-2xl font-bold text-gray-900">{nonWalkInCustomers.length}</p>
+                <p className="text-xs lg:text-sm font-medium text-gray-500">{tSync('Total Customers')}</p>
+                <p className="text-lg lg:text-2xl font-bold text-gray-900">{nonWalkInCustomers.length}</p>
                 <p className="text-xs text-green-600 mt-1">{tSync('All registered customers')}</p>
               </div>
-              <Users className="h-8 w-8 text-blue-500" />
+              <Users className="h-6 w-6 lg:h-8 lg:w-8 text-blue-500" />
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm">
+          <div className="bg-white rounded-xl p-4 lg:p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-500">{tSync('Avg Health Score')}</p>
-                <p className={`text-2xl font-bold ${getHealthScoreColor(avgHealthScore)}`}>{avgHealthScore}%</p>
+                <p className="text-xs lg:text-sm font-medium text-gray-500">{tSync('Avg Health Score')}</p>
+                <p className={`text-lg lg:text-2xl font-bold ${getHealthScoreColor(avgHealthScore)}`}>{avgHealthScore}%</p>
                 <p className="text-xs text-gray-500 mt-1">{tSync('Based on activity & spend')}</p>
               </div>
-              <Activity className="h-8 w-8 text-green-500" />
+              <Activity className="h-6 w-6 lg:h-8 lg:w-8 text-green-500" />
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm">
+          <div className="bg-white rounded-xl p-4 lg:p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-500">{tSync('VIP Members')}</p>
-                <p className="text-2xl font-bold text-purple-600">{segmentCounts.vip || 0}</p>
+                <p className="text-xs lg:text-sm font-medium text-gray-500">{tSync('VIP Members')}</p>
+                <p className="text-lg lg:text-2xl font-bold text-purple-600">{segmentCounts.vip || 0}</p>
                 <p className="text-xs text-gray-500 mt-1">{tSync('Gold tier or high spenders')}</p>
               </div>
-              <Crown className="h-8 w-8 text-purple-600" />
+              <Crown className="h-6 w-6 lg:h-8 lg:w-8 text-purple-600" />
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm">
+          <div className="bg-white rounded-xl p-4 lg:p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-500">{tSync('At Risk')}</p>
-                <p className="text-2xl font-bold text-red-600">{segmentCounts.at_risk || 0}</p>
+                <p className="text-xs lg:text-sm font-medium text-gray-500">{tSync('At Risk')}</p>
+                <p className="text-lg lg:text-2xl font-bold text-red-600">{segmentCounts.at_risk || 0}</p>
                 <p className="text-xs text-gray-500 mt-1">{tSync('No recent activity')}</p>
               </div>
-              <AlertTriangle className="h-8 w-8 text-red-500" />
+              <AlertTriangle className="h-6 w-6 lg:h-8 lg:w-8 text-red-500" />
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm">
+          <div className="bg-white rounded-xl p-4 lg:p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-500">{tSync('Total Points')}</p>
-                <p className="text-2xl font-bold text-yellow-600">{loyaltyStats.total_points?.toLocaleString() || 0}</p>
+                <p className="text-xs lg:text-sm font-medium text-gray-500">{tSync('Total Points')}</p>
+                <p className="text-lg lg:text-2xl font-bold text-yellow-600">{loyaltyStats.total_points?.toLocaleString() || 0}</p>
                 <p className="text-xs text-gray-500 mt-1">{tSync('Points in circulation')}</p>
               </div>
-              <Award className="h-8 w-8 text-yellow-500" />
+              <Award className="h-6 w-6 lg:h-8 lg:w-8 text-yellow-500" />
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm">
+          <div className="bg-white rounded-xl p-4 lg:p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-500">{tSync('New Customers')}</p>
-                <p className="text-2xl font-bold text-green-600">{segmentCounts.new || 0}</p>
+                <p className="text-xs lg:text-sm font-medium text-gray-500">{tSync('New Customers')}</p>
+                <p className="text-lg lg:text-2xl font-bold text-green-600">{segmentCounts.new || 0}</p>
                 <p className="text-xs text-gray-500 mt-1">{tSync('Joined this month')}</p>
               </div>
-              <Star className="h-8 w-8 text-green-500" />
+              <Star className="h-6 w-6 lg:h-8 lg:w-8 text-green-500" />
             </div>
           </div>
         </div>
       )}
 
       {/* Enhanced Search and Filters */}
-      <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm">
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <div className="flex-1 relative">
+      <div className="bg-white rounded-xl p-4 lg:p-6 shadow-sm">
+        <div className="flex flex-col gap-4">
+          <div className="w-full relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
             <input
               ref={searchInputRef}
@@ -586,15 +585,15 @@ export default function Customers() {
               onMouseUp={(e) => {
                 cursorPositionRef.current = e.target.selectionStart;
               }}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
             />
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-col sm:flex-row gap-3">
             <select
               value={selectedTier}
               onChange={(e) => setSelectedTier(e.target.value)}
-              className="px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-[100px] sm:min-w-[120px] text-sm sm:text-base"
+              className="flex-1 px-3 lg:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
             >
               <option value="all">{tSync('All Tiers')}</option>
               <option value="bronze">{tSync('Bronze')}</option>
@@ -605,7 +604,7 @@ export default function Customers() {
             <select
               value={selectedSegment}
               onChange={(e) => setSelectedSegment(e.target.value)}
-              className="px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent min-w-[120px] sm:min-w-[140px] text-sm sm:text-base"
+              className="flex-1 px-3 lg:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-base"
             >
               <option value="all">{tSync('All Segments')}</option>
               <option value="vip">{tSync('VIP')}</option>
@@ -625,7 +624,7 @@ export default function Customers() {
                 setCurrentPage(1);
                 setItemsPerPage(10);
               }}
-              className="px-3 sm:px-4 py-2.5 sm:py-3 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px] flex items-center justify-center"
+              className="px-3 lg:px-4 py-3 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px] flex items-center justify-center"
               title="Clear Filters"
             >
               <RefreshCw className="h-5 w-5" />

@@ -42,15 +42,17 @@ const TopNavigation = () => {
 
   return (
     <div className="sticky top-0 z-navigation bg-white/95 backdrop-blur-sm border-b border-gray-200">
-      <div className="flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        {/* Mobile menu button */}
-        <button
-          onClick={() => setIsMobileMenuOpen(true)}
-          className="lg:hidden touch-target p-2 rounded-lg hover:bg-gray-100 transition-colors"
-          aria-label="Open mobile menu"
-        >
-          <Menu className="h-5 w-5 text-gray-600" />
-        </button>
+      <div className="flex items-center justify-between px-4 py-3 sm:px-6">
+        {/* Mobile menu button - Hidden on desktop */}
+        <div className="lg:hidden">
+          <button
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="p-3 rounded-lg hover:bg-gray-100 transition-colors min-h-[48px] min-w-[48px]"
+            aria-label="Open mobile menu"
+          >
+            <Menu className="h-5 w-5 text-gray-600" />
+          </button>
+        </div>
 
         {/* Desktop sidebar toggle button */}
         <button
@@ -77,13 +79,13 @@ const TopNavigation = () => {
                     <input
                       type="text"
                       placeholder={tSync('Search...')}
-                      className="mobile-input w-full pl-10 pr-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50"
+                      className="w-full pl-10 pr-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50"
                       autoFocus
                     />
                   </div>
                   <button
                     onClick={() => setIsSearchExpanded(false)}
-                    className="touch-target p-2 text-gray-500 hover:text-gray-700"
+                    className="p-3 text-gray-500 hover:text-gray-700 min-h-[48px] min-w-[48px]"
                   >
                     <X className="h-5 w-5" />
                   </button>
@@ -91,7 +93,7 @@ const TopNavigation = () => {
               ) : (
                 <button
                   onClick={() => setIsSearchExpanded(true)}
-                  className="touch-target p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="p-3 rounded-lg hover:bg-gray-100 transition-colors min-h-[48px] min-w-[48px]"
                 >
                   <Search className="h-5 w-5 text-gray-600" />
                 </button>
@@ -112,13 +114,13 @@ const TopNavigation = () => {
 
         {/* Right side actions */}
         <div className="flex items-center space-x-2 sm:space-x-4">
-          {/* Language switcher - Hidden on small screens */}
-          <div className="hidden sm:block">
+          {/* Language switcher - Always visible */}
+          <div>
             <LanguageSwitcher />
           </div>
 
-          {/* Notifications */}
-          <div className="relative">
+          {/* Notifications - Hidden on mobile */}
+          <div className="relative hidden sm:block">
             <button
               onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
               className="touch-target p-2 rounded-lg hover:bg-gray-100 transition-colors relative"
@@ -127,73 +129,43 @@ const TopNavigation = () => {
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
             </button>
 
-            {/* Mobile-optimized notifications dropdown */}
+            {/* Desktop: Regular dropdown */}
             {isNotificationsOpen && (
-              <>
-                {/* Mobile: Bottom sheet */}
-                <div className="sm:hidden mobile-dropdown">
-                  <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-gray-900"><TranslatedText text="Notifications" /></h3>
-                    <button
-                      onClick={() => setIsNotificationsOpen(false)}
-                      className="touch-target p-1 text-gray-400 hover:text-gray-600"
-                    >
-                      <X className="h-5 w-5" />
-                    </button>
+              <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-dropdown">
+                <div className="px-4 py-2 border-b border-gray-200">
+                  <h3 className="text-sm font-semibold text-gray-900"><TranslatedText text="Notifications" /></h3>
+                </div>
+                <div className="max-h-64 overflow-y-auto">
+                  <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer">
+                    <p className="text-sm font-medium text-gray-900">Low stock alert</p>
+                    <p className="text-xs text-gray-500">Product "Lavender Fields" is running low</p>
+                    <p className="text-xs text-gray-400 mt-1">2 minutes ago</p>
                   </div>
-                  <div className="max-h-64 overflow-y-auto">
-                    <div className="px-4 py-4 border-b border-gray-100 active:bg-gray-50">
-                      <p className="text-sm font-medium text-gray-900">Low stock alert</p>
-                      <p className="text-xs text-gray-500 mt-1">Product "Lavender Fields" is running low</p>
-                      <p className="text-xs text-gray-400 mt-2">2 minutes ago</p>
-                    </div>
-                    <div className="px-4 py-4 border-b border-gray-100 active:bg-gray-50">
-                      <p className="text-sm font-medium text-gray-900">New order received</p>
-                      <p className="text-xs text-gray-500 mt-1">Order #1234 from John Doe</p>
-                      <p className="text-xs text-gray-400 mt-2">5 minutes ago</p>
-                    </div>
-                  </div>
-                  <div className="px-4 py-3 border-t border-gray-200">
-                    <button className="mobile-btn w-full bg-blue-600 text-white hover:bg-blue-700">
-                      View all notifications
-                    </button>
+                  <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer">
+                    <p className="text-sm font-medium text-gray-900">New order received</p>
+                    <p className="text-xs text-gray-500">Order #1234 from John Doe</p>
+                    <p className="text-xs text-gray-400 mt-1">5 minutes ago</p>
                   </div>
                 </div>
-                
-                {/* Desktop: Regular dropdown */}
-                <div className="hidden sm:block absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-dropdown">
-                  <div className="px-4 py-2 border-b border-gray-200">
-                    <h3 className="text-sm font-semibold text-gray-900"><TranslatedText text="Notifications" /></h3>
-                  </div>
-                  <div className="max-h-64 overflow-y-auto">
-                    <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer">
-                      <p className="text-sm font-medium text-gray-900">Low stock alert</p>
-                      <p className="text-xs text-gray-500">Product "Lavender Fields" is running low</p>
-                      <p className="text-xs text-gray-400 mt-1">2 minutes ago</p>
-                    </div>
-                    <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer">
-                      <p className="text-sm font-medium text-gray-900">New order received</p>
-                      <p className="text-xs text-gray-500">Order #1234 from John Doe</p>
-                      <p className="text-xs text-gray-400 mt-1">5 minutes ago</p>
-                    </div>
-                  </div>
-                  <div className="px-4 py-2 border-t border-gray-200">
-                    <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
-                      View all notifications
-                    </button>
-                  </div>
+                <div className="px-4 py-2 border-t border-gray-200">
+                  <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+                    View all notifications
+                  </button>
                 </div>
-              </>
+              </div>
             )}
           </div>
 
           {/* Profile dropdown */}
           <div className="relative">
             <button
-              onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
-              className="flex items-center space-x-2 sm:space-x-3 p-2 rounded-lg hover:bg-gray-100 transition-colors touch-target"
+              onClick={() => {
+                console.log('Profile clicked, current state:', isProfileDropdownOpen);
+                setIsProfileDropdownOpen(!isProfileDropdownOpen);
+              }}
+              className="flex items-center space-x-2 sm:space-x-3 p-2 sm:p-2 rounded-lg hover:bg-gray-100 transition-colors min-h-[48px]"
             >
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+              <div className="w-8 h-8 sm:w-8 sm:h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
                 {getInitials(user?.firstName + ' ' + user?.lastName)}
               </div>
               <div className="hidden sm:block text-left">
@@ -205,18 +177,24 @@ const TopNavigation = () => {
               <ChevronDown className="hidden sm:block h-4 w-4 text-gray-400" />
             </button>
 
-            {/* Mobile-optimized profile dropdown */}
+            {/* Profile dropdown */}
             {isProfileDropdownOpen && (
               <>
                 {/* Mobile: Bottom sheet */}
-                <div className="sm:hidden mobile-dropdown">
-                  <div className="px-4 py-4 border-b border-gray-200">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+                <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl border-t border-gray-200 max-h-[80vh] overflow-y-auto" style={{zIndex: 1000}}>
+                  {/* Handle bar */}
+                  <div className="flex justify-center pt-3 pb-2">
+                    <div className="w-10 h-1 bg-gray-300 rounded-full"></div>
+                  </div>
+                  
+                  {/* Profile header */}
+                  <div className="px-6 py-4 border-b border-gray-200">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white text-lg font-bold">
                         {getInitials(user?.firstName + ' ' + user?.lastName)}
                       </div>
-                      <div>
-                        <p className="text-lg font-medium text-gray-900">
+                      <div className="flex-1">
+                        <p className="text-lg font-semibold text-gray-900">
                           {user?.firstName} {user?.lastName}
                         </p>
                         <p className="text-sm text-gray-500 capitalize">{user?.role}</p>
@@ -224,32 +202,31 @@ const TopNavigation = () => {
                     </div>
                   </div>
                   
-                  <div className="py-2">
-                    <Link
-                      to="/profile"
-                      className="mobile-nav-item flex items-center px-4 text-gray-700 hover:bg-gray-50"
-                      onClick={() => setIsProfileDropdownOpen(false)}
-                    >
-                      <User className="mr-3 h-5 w-5" />
-                      Profile
-                    </Link>
-                    <Link
-                      to="/settings"
-                      className="mobile-nav-item flex items-center px-4 text-gray-700 hover:bg-gray-50"
-                      onClick={() => setIsProfileDropdownOpen(false)}
-                    >
-                      <Settings className="mr-3 h-5 w-5" />
-                      Settings
-                    </Link>
-                    <div className="block sm:hidden px-4 py-2">
-                      <LanguageSwitcher />
-                    </div>
-                  </div>
+                  {/* Profile Link */}
+                  <Link
+                    to="/profile"
+                    className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 border-b border-gray-100"
+                    onClick={() => setIsProfileDropdownOpen(false)}
+                  >
+                    <User className="mr-4 h-5 w-5 text-gray-500" />
+                    <span className="text-base font-medium">Profile</span>
+                  </Link>
                   
-                  <div className="px-4 py-3 border-t border-gray-200">
+                  {/* Settings Link */}
+                  <Link
+                    to="/settings"
+                    className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 border-b border-gray-100"
+                    onClick={() => setIsProfileDropdownOpen(false)}
+                  >
+                    <Settings className="mr-4 h-5 w-5 text-gray-500" />
+                    <span className="text-base font-medium">Settings</span>
+                  </Link>
+                  
+                  {/* Logout button */}
+                  <div className="px-6 py-4">
                     <button
                       onClick={handleLogout}
-                      className="mobile-btn w-full bg-red-600 text-white hover:bg-red-700 flex items-center justify-center"
+                      className="w-full flex items-center justify-center py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold text-base transition-colors"
                     >
                       <LogOut className="mr-2 h-5 w-5" />
                       Logout
@@ -258,29 +235,29 @@ const TopNavigation = () => {
                 </div>
                 
                 {/* Desktop: Regular dropdown */}
-                <div className="hidden sm:block absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-dropdown">
+                <div className="hidden sm:block absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-200 py-2" style={{zIndex: 1000}}>
                   <Link
                     to="/profile"
-                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                     onClick={() => setIsProfileDropdownOpen(false)}
                   >
-                    <User className="mr-3 h-4 w-4" />
+                    <User className="mr-3 h-5 w-5 text-gray-400" />
                     Profile
                   </Link>
                   <Link
                     to="/settings"
-                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                    className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
                     onClick={() => setIsProfileDropdownOpen(false)}
                   >
-                    <Settings className="mr-3 h-4 w-4" />
+                    <Settings className="mr-3 h-5 w-5 text-gray-400" />
                     Settings
                   </Link>
-                  <hr className="my-2" />
+                  <hr className="my-2 border-gray-200" />
                   <button
                     onClick={handleLogout}
-                    className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                    className="flex items-center w-full px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors"
                   >
-                    <LogOut className="mr-3 h-4 w-4" />
+                    <LogOut className="mr-3 h-5 w-5" />
                     Logout
                   </button>
                 </div>
@@ -291,12 +268,11 @@ const TopNavigation = () => {
       </div>
 
       {/* Mobile backdrop for dropdowns */}
-      {(isProfileDropdownOpen || isNotificationsOpen) && (
+      {isProfileDropdownOpen && (
         <div
-          className="sm:hidden fixed inset-0 bg-black bg-opacity-50 z-dropdown-backdrop"
+          className="sm:hidden fixed inset-0 bg-black bg-opacity-50 z-[998]"
           onClick={() => {
             setIsProfileDropdownOpen(false);
-            setIsNotificationsOpen(false);
           }}
         />
       )}

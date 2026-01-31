@@ -249,7 +249,7 @@ const Inventory = () => {
                       <div className="flex-1">
                         <h3 className="text-base font-medium text-gray-900">{item.product_name}</h3>
                         <p className="text-sm text-gray-500">{item.category_name || item.category || 'Non catégorisé'}</p>
-                        <p className="text-sm text-gray-600 mt-1">Stock: {item.quantity}</p>
+                        <p className="text-sm text-gray-600 mt-1">Stock : {item.quantity}</p>
                       </div>
                       <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-semibold ${getStockStatusColor(item.quantity, item.min_stock_level)}`}>
                         {getStockStatusText(item.quantity, item.min_stock_level)}

@@ -642,7 +642,7 @@ const Products = () => {
     return (
       <div className="flex items-center justify-center py-12">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <span className="ml-3 text-gray-600">Loading products...</span>
+        <span className="ml-3 text-gray-600">Chargement des produits...</span>
       </div>
     );
   }
@@ -651,21 +651,21 @@ const Products = () => {
     return (
       <div className="text-center py-12">
         <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">Error Loading Products</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Erreur de Chargement des Produits</h3>
         <p className="text-gray-600 mb-4">{error.message}</p>
         <button
           onClick={() => queryClient.invalidateQueries(['products'])}
           className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700"
         >
           <RefreshCw className="h-4 w-4 mr-2" />
-          Retry
+          Réessayer
         </button>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4 sm:space-y-8">
+    <div className="space-y-4 sm:space-y-6 px-4 sm:px-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>

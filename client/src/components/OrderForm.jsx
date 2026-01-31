@@ -2451,43 +2451,43 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
 
         {/* Order Summary Popup Modal */}
         {showOrderSummary && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-xl max-w-2xl w-full max-h-[95vh] overflow-y-auto">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
+            <div className="bg-white rounded-xl max-w-2xl w-full max-h-[98vh] sm:max-h-[95vh] overflow-y-auto">
               {/* Store Information Header */}
-              <div className="bg-primary-600 border-b-2 border-primary-700 p-6">
-                <div className="flex items-center justify-between">
+              <div className="bg-primary-600 border-b-2 border-primary-700 p-4 sm:p-6">
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                   <div className="flex-1">
-                    <h1 className="text-3xl font-bold text-white"><TranslatedText text="LikaBoutiques" /></h1>
-                    <p className="text-primary-100 mt-1"><TranslatedText text="Your Trusted Shopping Destination" /></p>
-                    <div className="mt-3 text-sm text-primary-100 space-y-1">
-                      <p>📍 {tSync('Store Address')}</p>
+                    <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white"><TranslatedText text="LikaBoutiques" /></h1>
+                    <p className="text-primary-100 mt-1 text-sm sm:text-base"><TranslatedText text="Your Trusted Shopping Destination" /></p>
+                    <div className="mt-3 text-xs sm:text-sm text-primary-100 space-y-1">
+                      <p>📍 {tSync('123 Rue Principale, Centre-Ville, Pays')}</p>
                       <p>📞 +1 (555) 123-4567 | 📧 info@likaboutiques.com</p>
                       <p>🌐 likaboutiques.com</p>
                     </div>
                   </div>
-                  <div className="text-right border-l-2 border-primary-500 pl-6">
-                    <div className="text-2xl font-bold text-white"><TranslatedText text="INVOICE" /></div>
-                    <div className="mt-2 text-sm text-primary-100 space-y-1">
-                      <p><span className="font-medium"><TranslatedText text="Invoice" /> #:</span> {generateInvoiceNumber()}</p>
-                      <p><span className="font-medium"><TranslatedText text="Order Ref" />:</span> {orderReference || generateOrderReference()}</p>
-                      <p><span className="font-medium"><TranslatedText text="Date" />:</span> {new Date().toLocaleDateString('en-GB')}</p>
-                      <p><span className="font-medium"><TranslatedText text="Time" />:</span> {new Date().toLocaleTimeString('en-GB', { hour12: false })}</p>
+                  <div className="text-left lg:text-right lg:border-l-2 lg:border-primary-500 lg:pl-6">
+                    <div className="text-xl sm:text-2xl font-bold text-white"><TranslatedText text="Facture" /></div>
+                    <div className="mt-2 text-xs sm:text-sm text-primary-100 space-y-1">
+                      <p><span className="font-medium"><TranslatedText text="Facture" /> #:</span> {generateInvoiceNumber()}</p>
+                      <p><span className="font-medium"><TranslatedText text="Réf commande" />:</span> {orderReference || generateOrderReference()}</p>
+                      <p><span className="font-medium"><TranslatedText text="Date" />:</span> {new Date().toLocaleDateString('fr-FR')}</p>
+                      <p><span className="font-medium"><TranslatedText text="Horaire" />:</span> {new Date().toLocaleTimeString('fr-FR', { hour12: false })}</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Invoice Content */}
-              <div className="p-6" id="invoice-content">
+              <div className="p-4 sm:p-6" id="invoice-content">
                 {/* Invoice Info Section */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-gray-900 mb-3 text-lg"><TranslatedText text="Customer Information" /></h4>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                    <h4 className="font-semibold text-gray-900 mb-3 text-base sm:text-lg"><TranslatedText text="Informations client" /></h4>
                     <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600"><TranslatedText text="Name" />:</span>
-                        <span className="font-medium">
-                          {selectedCustomer ? `${selectedCustomer.first_name} ${selectedCustomer.last_name}` : <TranslatedText text="Guest Customer" />}
+                      <div className="flex justify-between items-start">
+                        <span className="text-gray-600 text-sm sm:text-base"><TranslatedText text="Nom" />:</span>
+                        <span className="font-medium text-sm sm:text-base text-right max-w-[60%]">
+                          {selectedCustomer ? `${selectedCustomer.first_name} ${selectedCustomer.last_name}` : <TranslatedText text="Client invité" />}
                         </span>
                       </div>
                       {selectedCustomer && (
@@ -2510,34 +2510,34 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                           )}
                         </>
                       )}
-                      <div className="flex justify-between">
-                        <span className="text-gray-600"><TranslatedText text="Payment Method" />:</span>
-                        <span className="font-medium capitalize">{paymentMethod}</span>
+                      <div className="flex justify-between items-start">
+                        <span className="text-gray-600 text-sm sm:text-base"><TranslatedText text="Méthode de paiement" />:</span>
+                        <span className="font-medium capitalize text-sm sm:text-base">{paymentMethod}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600"><TranslatedText text="Payment Status" />:</span>
-                        <span className={`font-medium capitalize ${paymentStatus === 'pending' ? 'text-orange-600' : 'text-green-600'
+                      <div className="flex justify-between items-start">
+                        <span className="text-gray-600 text-sm sm:text-base"><TranslatedText text="Statut de paiement" />:</span>
+                        <span className={`font-medium capitalize text-sm sm:text-base ${paymentStatus === 'pending' ? 'text-orange-600' : 'text-green-600'
                           }`}>
-                          {paymentStatus === 'pending' ? <TranslatedText text="Partial Payment (50%)" /> : <TranslatedText text="Complete Payment" />}
+                          {paymentStatus === 'pending' ? <TranslatedText text="Procéder au paiement" /> : <TranslatedText text="Paiement complet" />}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h4 className="font-semibold text-gray-900 mb-3 text-lg"><TranslatedText text="Order Information" /></h4>
+                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                    <h4 className="font-semibold text-gray-900 mb-3 text-base sm:text-lg"><TranslatedText text="Détails de la commande" /></h4>
                     <div className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600"><TranslatedText text="Items" />:</span>
-                        <span className="font-medium">{orderItems.length}</span>
+                      <div className="flex justify-between items-start">
+                        <span className="text-gray-600 text-sm sm:text-base"><TranslatedText text="Libellés" />:</span>
+                        <span className="font-medium text-sm sm:text-base">{orderItems.length}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600"><TranslatedText text="Total Items" />:</span>
-                        <span className="font-medium">{orderItems.reduce((sum, item) => sum + item.quantity, 0)}</span>
+                      <div className="flex justify-between items-start">
+                        <span className="text-gray-600 text-sm sm:text-base"><TranslatedText text="Total des éléments" />:</span>
+                        <span className="font-medium text-sm sm:text-base">{orderItems.reduce((sum, item) => sum + item.quantity, 0)}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600"><TranslatedText text="Subtotal" />:</span>
-                        <span className="font-medium">{formatCurrency(calculateSubtotal())}</span>
+                      <div className="flex justify-between items-start">
+                        <span className="text-gray-600 text-sm sm:text-base"><TranslatedText text="Sous-total" />:</span>
+                        <span className="font-medium text-sm sm:text-base">{formatCurrency(calculateSubtotal())}</span>
                       </div>
                       {discountAmount > 0 && (
                         <div className="flex justify-between">
@@ -2564,33 +2564,55 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                 </div>
 
                 {/* Invoice Items Table */}
-                <div className="mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-3 text-lg"><TranslatedText text="Order Items" /></h4>
-                  <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <div className="mb-4 sm:mb-6">
+                  <h4 className="font-semibold text-gray-900 mb-3 text-base sm:text-lg"><TranslatedText text="Articles de la commande" /></h4>
+                  
+                  {/* Mobile Card Layout */}
+                  <div className="block sm:hidden space-y-3">
+                    {orderItems.map(item => (
+                      <div key={item.product_id} className="bg-white border border-gray-200 rounded-lg p-3">
+                        <div className="flex justify-between items-start mb-2">
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-gray-900 text-sm truncate">{item.name}</p>
+                            <p className="text-xs text-gray-500">SKU: {item.sku || item.product_sku || 'N/A'}</p>
+                          </div>
+                          <div className="text-right ml-2">
+                            <p className="text-sm font-medium text-gray-900">{formatCurrency(parseFloat(item.total) || 0)}</p>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center text-xs text-gray-600">
+                          <span>{item.quantity} unité × {formatCurrency(item.price)}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* Desktop Table Layout */}
+                  <div className="hidden sm:block bg-white border border-gray-200 rounded-lg overflow-hidden">
                     <table className="w-full">
                       <thead className="bg-gray-50">
                         <tr>
-                          <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Item" /></th>
-                          <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Qty" /></th>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Price" /></th>
-                          <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Total" /></th>
+                          <th className="px-3 sm:px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Rubrique" /></th>
+                          <th className="px-3 sm:px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Qté" /></th>
+                          <th className="px-3 sm:px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Prix" /></th>
+                          <th className="px-3 sm:px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"><TranslatedText text="Total" /></th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-200">
                         {orderItems.map(item => (
                           <tr key={item.product_id} className="hover:bg-gray-50">
-                            <td className="px-4 py-3">
+                            <td className="px-3 sm:px-4 py-3">
                               <div>
-                                <p className="font-medium text-gray-900">{item.name}</p>
+                                <p className="font-medium text-gray-900 text-sm">{item.name}</p>
                                 <p className="text-xs text-gray-500">SKU: {item.sku || item.product_sku || 'N/A'}</p>
                                 {item.barcode && (
                                   <p className="text-xs text-gray-500">📊 {item.barcode}</p>
                                 )}
                               </div>
                             </td>
-                            <td className="px-4 py-3 text-center text-sm font-medium text-gray-900">{item.quantity} {tSync('unit')}</td>
-                            <td className="px-4 py-3 text-right text-sm text-gray-600">{formatCurrency(item.price)}</td>
-                            <td className="px-4 py-3 text-right text-sm font-medium text-gray-900">{formatCurrency(parseFloat(item.total) || 0)}</td>
+                            <td className="px-3 sm:px-4 py-3 text-center text-sm font-medium text-gray-900">{item.quantity} unité</td>
+                            <td className="px-3 sm:px-4 py-3 text-right text-sm text-gray-600">{formatCurrency(item.price)}</td>
+                            <td className="px-3 sm:px-4 py-3 text-right text-sm font-medium text-gray-900">{formatCurrency(parseFloat(item.total) || 0)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -2664,22 +2686,22 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
               </div>
 
               {/* Invoice Footer Actions */}
-              <div className="flex justify-between items-center gap-3 p-6 border-t bg-gray-50 rounded-b-xl">
-                <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 p-4 sm:p-6 border-t bg-gray-50 rounded-b-xl">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   <button
                     onClick={() => handlePrint('invoice-content')}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
-                    title="Print Invoice"
+                    className="px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center min-h-[44px]"
+                    title="Imprimer la facture"
                   >
                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                     </svg>
-                    <TranslatedText text="Print" />
+                    <TranslatedText text="Imprimer" />
                   </button>
                   <button
                     onClick={() => handleExportPDF('invoice-content')}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center"
-                    title="Export as PDF"
+                    className="px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center min-h-[44px]"
+                    title="Exporter en PDF"
                   >
                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -2688,25 +2710,25 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
                   </button>
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={() => setShowOrderSummary(false)}
-                    className="px-6 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors"
+                    className="px-6 py-3 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors min-h-[44px]"
                   >
-                    <TranslatedText text="Close" />
+                    <TranslatedText text="Fermer" />
                   </button>
                   <button
                     onClick={() => saveOrderToDatabase()}
                     disabled={loading}
-                    className="px-6 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                    className="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-h-[44px]"
                   >
                     {loading ? (
                       <>
                         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                        <TranslatedText text="Saving Order..." />
+                        <TranslatedText text="Enregistrement..." />
                       </>
                     ) : (
-                      <TranslatedText text="Complete Sale" />
+                      <TranslatedText text="Terminer la vente" />
                     )}
                   </button>
                 </div>
@@ -3598,26 +3620,26 @@ const OrderForm = ({ onOrderCreated, onClose, isFullPage = false, modernPOS = fa
               </div>
 
               {/* Financial Summary */}
-              <div className="bg-gray-50 rounded-lg p-6">
-                <h4 className="font-semibold text-gray-900 mb-4 text-lg"><TranslatedText text="Financial Summary" /></h4>
+              <div className="bg-gray-50 rounded-lg p-4 sm:p-6">
+                <h4 className="font-semibold text-gray-900 mb-4 text-base sm:text-lg"><TranslatedText text="Résumé financier" /></h4>
 
                 <div className="space-y-3">
-                  <div className="flex justify-between text-base">
-                    <span className="text-gray-600"><TranslatedText text="Subtotal" />:</span>
+                  <div className="flex justify-between items-start text-sm sm:text-base">
+                    <span className="text-gray-600"><TranslatedText text="Sous-total" />:</span>
                     <span className="font-medium">{formatCurrency(calculateSubtotal())}</span>
                   </div>
                   {discountAmount > 0 && (
-                    <div className="flex justify-between text-base text-green-600">
-                      <span><TranslatedText text="Discount" />:</span>
+                    <div className="flex justify-between items-start text-sm sm:text-base text-green-600">
+                      <span><TranslatedText text="Remise" />:</span>
                       <span>-{formatCurrency(discountAmount)}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-base">
-                    <span className="text-gray-600"><TranslatedText text="Tax (18%)" />:</span>
+                  <div className="flex justify-between items-start text-sm sm:text-base">
+                    <span className="text-gray-600"><TranslatedText text="*Taxe = 18%" />:</span>
                     <span className="font-medium">{formatCurrency(calculateTax())}</span>
                   </div>
                   <div className="border-t border-gray-300 pt-3 mt-4">
-                    <div className="flex justify-between text-xl font-bold text-primary-600">
+                    <div className="flex justify-between items-start text-lg sm:text-xl font-bold text-primary-600">
                       <span><TranslatedText text="Total" />:</span>
                       <span>{formatCurrency(calculateTotal())}</span>
                     </div>

@@ -201,25 +201,25 @@ const OrderList = ({ onViewOrder, onEditOrder }) => {
   return (
     <div className="space-y-6">
       {/* Search and Filters */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="bg-white rounded-lg shadow p-4 sm:p-6">
+        <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between sm:space-x-4">
           <div className="flex-1">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <input
                 type="text"
-                placeholder={t('Search orders by number, customer, product name...') || "Search orders by number, customer, product name..."}
+                placeholder={t('Search orders...') || "Search orders..."}
                 value={filters.search}
                 onChange={(e) => handleFilterChange('search', e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent min-h-[44px]"
               />
             </div>
           </div>
 
-          <div className="flex items-center space-x-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className={`inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium ${showFilters
+              className={`inline-flex items-center justify-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium min-h-[44px] ${showFilters
                 ? 'bg-primary-50 text-primary-700 border-primary-300'
                 : 'bg-white text-gray-700 hover:bg-gray-50'
                 }`}
@@ -233,21 +233,23 @@ const OrderList = ({ onViewOrder, onEditOrder }) => {
               )}
             </button>
 
-            <button
-              onClick={exportOrders}
-              className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium bg-white text-gray-700 hover:bg-gray-50"
-            >
-              <Download className="h-4 w-4 mr-2" />
-              {t('Export')}
-            </button>
+            <div className="hidden sm:flex space-x-3">
+              <button
+                onClick={exportOrders}
+                className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium bg-white text-gray-700 hover:bg-gray-50"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                {t('Export')}
+              </button>
 
-            <button
-              onClick={printOrders}
-              className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium bg-white text-gray-700 hover:bg-gray-50"
-            >
-              <Printer className="h-4 w-4 mr-2" />
-              {t('Print')}
-            </button>
+              <button
+                onClick={printOrders}
+                className="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md text-sm font-medium bg-white text-gray-700 hover:bg-gray-50"
+              >
+                <Printer className="h-4 w-4 mr-2" />
+                {t('Print')}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -394,7 +396,99 @@ const OrderList = ({ onViewOrder, onEditOrder }) => {
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
+            {/* Mobile view */}
+            <div className="block sm:hidden">
+              <div className="space-y-4 p-4">
+                {orders.map((order) => (
+                  <div key={order.id} className="bg-gray-50 rounded-lg p-4 space-y-3">
+                    {/* Order header */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Package className="h-4 w-4 text-gray-400" />
+                        <span className="text-sm font-medium text-gray-900">Order #{order.id}</span>
+                      </div>
+                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
+                        {getStatusIcon(order.status)}
+                        <span className="ml-1 capitalize">{order.status}</span>
+                      </span>
+                    </div>
+
+                    {/* Products */}
+                    {order.items && order.items.length > 0 && (
+                      <div>
+                        <p className="text-xs font-medium text-gray-500 mb-1">{t('Products')}</p>
+                        <div className="space-y-1">
+                          {order.items.slice(0, 2).map((item, index) => (
+                            <div key={index} className="text-sm text-gray-900">
+                              <div className="font-medium">{item.product_name || item.name || 'Unknown Product'}</div>
+                              <div className="text-xs text-gray-500">SKU: {item.sku || item.product_sku || 'N/A'} • Qty: {item.quantity || 0}</div>
+                            </div>
+                          ))}
+                          {order.items.length > 2 && (
+                            <div className="text-xs text-gray-500">+{order.items.length - 2} more items</div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Order details */}
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <p className="text-xs font-medium text-gray-500">{t('Total')}</p>
+                        <p className="font-medium text-gray-900">{formatCurrency(order.total_amount, order.currency)}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-gray-500">{t('Payment')}</p>
+                        <p className="text-gray-900 capitalize">{order.payment_method || t('Not specified')}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-gray-500">{t('Shop')}</p>
+                        <p className="text-gray-900">{order.shop_name || t('No shop assigned')}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-gray-500">{t('Date')}</p>
+                        <p className="text-gray-900">{formatDate(order.created_at)}</p>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex items-center justify-between pt-2 border-t border-gray-200">
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={() => onViewOrder && onViewOrder(order)}
+                          className="inline-flex items-center px-3 py-1 text-xs font-medium text-primary-600 bg-primary-50 rounded-md hover:bg-primary-100"
+                        >
+                          <Eye className="h-3 w-3 mr-1" />
+                          {t('View')}
+                        </button>
+                        <button
+                          onClick={() => onEditOrder && onEditOrder(order)}
+                          className="inline-flex items-center px-3 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200"
+                        >
+                          <Edit className="h-3 w-3 mr-1" />
+                          {t('Edit')}
+                        </button>
+                      </div>
+                      {order.status !== 'completed' && order.status !== 'cancelled' && (
+                        <select
+                          value={order.status}
+                          onChange={(e) => updateOrderStatus(order.id, e.target.value)}
+                          className="text-xs border border-gray-300 rounded px-2 py-1 focus:ring-1 focus:ring-primary-500"
+                        >
+                          <option value="pending">Pending</option>
+                          <option value="processing">Processing</option>
+                          <option value="completed">Complete</option>
+                          <option value="cancelled">Cancel</option>
+                        </select>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop table view */}
+            <div className="hidden sm:block overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
@@ -564,27 +658,31 @@ const OrderList = ({ onViewOrder, onEditOrder }) => {
               </table>
             </div>
 
-            {/* Pagination */}
+            {/* Mobile pagination */}
             {pagination.totalPages > 1 && (
-              <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">
-                <div className="flex-1 flex justify-between sm:hidden">
+              <div className="bg-white px-4 py-3 border-t border-gray-200">
+                <div className="flex justify-between sm:hidden">
                   <button
                     onClick={() => handlePageChange(pagination.page - 1)}
                     disabled={pagination.page <= 1}
-                    className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
                   >
                     {t('Previous')}
                   </button>
+                  <span className="flex items-center text-sm text-gray-700">
+                    {pagination.page} / {pagination.totalPages}
+                  </span>
                   <button
                     onClick={() => handlePageChange(pagination.page + 1)}
                     disabled={pagination.page >= pagination.totalPages}
-                    className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
                   >
                     {t('Next')}
                   </button>
                 </div>
 
-                <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                {/* Desktop pagination */}
+                <div className="hidden sm:flex sm:items-center sm:justify-between">
                   <div>
                     <p className="text-sm text-gray-700">
                       {t('Showing')}{' '}

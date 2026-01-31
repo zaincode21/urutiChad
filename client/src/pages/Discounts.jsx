@@ -478,30 +478,30 @@ export default function Discounts() {
     <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 flex items-center">
-              <Percent className="h-8 w-8 mr-3 text-primary-500" />
+            <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 flex items-center">
+              <Percent className="h-6 w-6 lg:h-8 lg:w-8 mr-2 lg:mr-3 text-primary-500" />
               {tSync('Discount Management')}
             </h1>
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-gray-600 text-sm lg:text-base">
               {tSync('Manage discounts, campaigns, and promotional offers')}
             </p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={() => setShowCampaignModal(true)}
-              className="flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+              className="flex items-center justify-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors min-h-[44px]"
             >
               <Target className="h-5 w-5 mr-2" />
-              {tSync('New Campaign')}
+              <span className="text-sm lg:text-base">{tSync('New Campaign')}</span>
             </button>
             <button
               onClick={() => setShowAddModal(true)}
-              className="flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              className="flex items-center justify-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors min-h-[44px]"
             >
               <Plus className="h-5 w-5 mr-2" />
-              {tSync('New Discount')}
+              <span className="text-sm lg:text-base">{tSync('New Discount')}</span>
             </button>
           </div>
         </div>
@@ -549,8 +549,8 @@ export default function Discounts() {
       {activeTab === 'discounts' && (
         <>
           {/* Search and Filters */}
-          <div className="mb-6 flex flex-col md:flex-row gap-4">
-            <div className="flex-1">
+          <div className="mb-6 space-y-4">
+            <div className="w-full">
               <div className="relative">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                 <input
@@ -558,15 +558,15 @@ export default function Discounts() {
                   placeholder={tSync('Search discounts...')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base"
                 />
               </div>
             </div>
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <select
                 value={filterType}
                 onChange={(e) => setFilterType(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base"
               >
                 <option value="all">{tSync('All Types')}</option>
                 <option value="percentage">{tSync('Percentage')}</option>
@@ -576,7 +576,7 @@ export default function Discounts() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base"
               >
                 <option value="all">{tSync('All Status')}</option>
                 <option value="active">{tSync('Active')}</option>
@@ -586,23 +586,23 @@ export default function Discounts() {
           </div>
 
           {/* Discounts Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
             {filteredDiscounts.map((discount) => (
-              <div key={discount.id} className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className={`p-2 rounded-lg ${getDiscountTypeColor(discount.type)}`}>
+              <div key={discount.id} className="bg-white border border-gray-200 rounded-lg p-4 lg:p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-3">
+                  <div className="flex items-start space-x-3 flex-1">
+                    <div className={`p-2 rounded-lg ${getDiscountTypeColor(discount.type)} flex-shrink-0`}>
                       {getDiscountIcon(discount.type)}
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900">{discount.name}</h3>
-                      <p className="text-sm text-gray-600">{discount.description}</p>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-semibold text-gray-900 text-sm lg:text-base truncate">{discount.name}</h3>
+                      <p className="text-xs lg:text-sm text-gray-600 line-clamp-2">{discount.description}</p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center justify-end sm:justify-start">
                     <button
                       onClick={() => handleToggleStatus(discount.id, discount.is_active)}
-                      className={`p-2 rounded-lg ${discount.is_active
+                      className={`p-2 rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center ${discount.is_active
                         ? 'text-green-600 hover:bg-green-50'
                         : 'text-gray-400 hover:bg-gray-50'
                         }`}
@@ -614,8 +614,8 @@ export default function Discounts() {
 
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">{tSync('Value')}:</span>
-                    <span className="font-medium">
+                    <span className="text-xs lg:text-sm text-gray-600">{tSync('Value')}:</span>
+                    <span className="font-medium text-xs lg:text-sm text-right">
                       {discount.type === 'percentage' ? `${discount.value}%` :
                         discount.type === 'fixed_amount' ? `CFA ${discount.value.toLocaleString()}` :
                           `${discount.bottle_return_count || 5} ${tSync('bottles')}`}
@@ -624,41 +624,41 @@ export default function Discounts() {
 
                   {discount.min_purchase_amount && (
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">{tSync('Min. Purchase')}:</span>
-                      <span className="font-medium">CFA {discount.min_purchase_amount.toLocaleString()}</span>
+                      <span className="text-xs lg:text-sm text-gray-600">{tSync('Min. Purchase')}:</span>
+                      <span className="font-medium text-xs lg:text-sm text-right">CFA {discount.min_purchase_amount.toLocaleString()}</span>
                     </div>
                   )}
 
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">{tSync('Valid Until')}:</span>
-                    <span className="font-medium">
+                    <span className="text-xs lg:text-sm text-gray-600">{tSync('Valid Until')}:</span>
+                    <span className="font-medium text-xs lg:text-sm text-right">
                       {discount.end_date ? new Date(discount.end_date).toLocaleDateString() : tSync('No expiry')}
                     </span>
                   </div>
 
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">{tSync('Usage')}:</span>
-                    <span className="font-medium">
+                    <span className="text-xs lg:text-sm text-gray-600">{tSync('Usage')}:</span>
+                    <span className="font-medium text-xs lg:text-sm text-right">
                       {discount.used_count || 0}/{discount.usage_limit || '∞'}
                     </span>
                   </div>
                 </div>
 
-                <div className="mt-6 flex justify-between items-center">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${discount.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                <div className="mt-4 lg:mt-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                  <span className={`px-3 py-1 rounded-full text-xs font-medium self-start ${discount.is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
                     }`}>
                     {discount.is_active ? tSync('Active') : tSync('Inactive')}
                   </span>
-                  <div className="flex space-x-2">
+                  <div className="flex space-x-2 self-end sm:self-auto">
                     <button
                       onClick={() => openEditModal(discount)}
-                      className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"
+                      className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
                     >
                       <Edit className="h-4 w-4" />
                     </button>
                     <button
                       onClick={() => handleDeleteDiscount(discount.id)}
-                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg"
+                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -672,11 +672,11 @@ export default function Discounts() {
 
       {/* Add/Edit Discount Modal */}
       {(showAddModal || showEditModal) && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
           <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b">
+            <div className="p-4 lg:p-6 border-b">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">
+                <h2 className="text-lg lg:text-xl font-semibold">
                   {showAddModal ? tSync('Create New Discount') : tSync('Edit Discount')}
                 </h2>
                 <button
@@ -685,14 +685,14 @@ export default function Discounts() {
                     setShowEditModal(false);
                     resetForm();
                   }}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 hover:text-gray-600 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
                 >
                   <X className="h-6 w-6" />
                 </button>
               </div>
             </div>
 
-            <form onSubmit={showAddModal ? handleCreateDiscount : handleUpdateDiscount} className="p-6 space-y-6">
+            <form onSubmit={showAddModal ? handleCreateDiscount : handleUpdateDiscount} className="p-4 lg:p-6 space-y-4 lg:space-y-6">
               {/* Validation Errors */}
               {validationErrors.length > 0 && (
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4">
@@ -1032,7 +1032,7 @@ export default function Discounts() {
               </div>
 
               {/* Submit Buttons */}
-              <div className="flex justify-end space-x-3 pt-6 border-t">
+              <div className="flex flex-col sm:flex-row sm:justify-end space-y-3 sm:space-y-0 sm:space-x-3 pt-4 lg:pt-6 border-t">
                 <button
                   type="button"
                   onClick={() => {
@@ -1040,13 +1040,13 @@ export default function Discounts() {
                     setShowEditModal(false);
                     resetForm();
                   }}
-                  className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                  className="w-full sm:w-auto px-4 py-3 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors min-h-[44px]"
                 >
                   {tSync('Cancel')}
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                  className="w-full sm:w-auto px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors min-h-[44px]"
                 >
                   {showAddModal ? tSync('Create Discount') : tSync('Update Discount')}
                 </button>

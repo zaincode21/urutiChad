@@ -454,13 +454,13 @@ const Navigation = () => {
       {/* Mobile menu backdrop */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       {/* Mobile menu */}
-      <div className={`fixed inset-y-0 left-0 z-navigation w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out lg:hidden flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+      <div className={`fixed inset-y-0 left-0 z-dropdown w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out lg:hidden flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <div className="flex items-center">
@@ -639,17 +639,10 @@ const Navigation = () => {
       <div className={`hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:z-navigation transition-transform duration-300 ease-in-out ${isDesktopSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex flex-col flex-grow bg-white border-r border-gray-200 shadow-sm">
           {/* Logo */}
-          <div className="flex items-center justify-between px-6 py-6 border-b border-gray-200">
+          <div className="flex items-center px-6 py-6 border-b border-gray-200">
             <div className="flex items-center">
               <UrutiLaRoseLogo className="h-16 w-48" />
             </div>
-            <button
-              onClick={() => setIsDesktopSidebarOpen(false)}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              title="Close sidebar"
-            >
-              <PanelLeftClose className="h-5 w-5 text-gray-600" />
-            </button>
           </div>
 
           {/* Navigation */}
@@ -836,18 +829,6 @@ const Navigation = () => {
 
 
 
-
-
-      {/* Floating sidebar toggle button (when sidebar is closed) */}
-      {!isDesktopSidebarOpen && (
-        <button
-          onClick={() => setIsDesktopSidebarOpen(true)}
-          className="fixed left-4 top-20 z-navigation hidden lg:flex p-3 bg-white border border-gray-200 rounded-lg shadow-lg hover:bg-gray-50 transition-all duration-200"
-          title="Open sidebar"
-        >
-          <PanelLeftOpen className="h-5 w-5 text-gray-600" />
-        </button>
-      )}
 
 
     </>
